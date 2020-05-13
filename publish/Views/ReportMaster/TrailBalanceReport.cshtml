@@ -1,0 +1,163 @@
+﻿@model IOAS.Models.AccountTypeModel
+
+@{
+    ViewBag.Title = "Report";
+    ViewBag.Subtitle = "Reports";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+
+
+<div class="row hd-tt-bg ">
+    <div class="col-md-12">
+        <h4><b>TrailBalance</b></h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="page-wrapper">
+        <div class="col-md-12 mt30">
+
+
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="vh-tt-bg vh-tt-bg-adj mt-null">
+                        <div class="vh-frm-bg bl-lg-panel-box pb-null br-adj-null">
+                            <div class="row">
+
+                                <div class="">
+                                    <div class="col-md-12">
+                                        <div class="grey-bg-adj mb-lg">
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+
+                                                    <div class="row mt-md">
+
+                                                        <div class="col-md-3 ">
+                                                            <div class="form-group custom-form-group ">
+                                                                <label>Financial Year </label><br />
+                                                                @Html.DropDownListFor(m => m.Financial, new SelectList(ViewBag.FinYr, "FinancialId", "FinancialYear"), "Select FinancialYear", new { @class = "form-control", @id = "Fiyr" })
+                                                            </div>
+                                                        </div>
+
+
+                                                        @* <div class="col-md-3">
+                                                                <div class="form-group custom-form-group ">
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group custom-form-group ">
+
+                                                                </div>
+                                                            </div>*@
+                                                        @*<div class="col-md-3">
+                                                                <div class="form-group custom-form-group ">
+
+                                                                </div>
+                                                            </div>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mt-md mb-lg text-center">
+                <input type="submit" value="Generate Report to Pdf" class="btn btn-primary" id="btnSubmit" />
+                <input type="submit" value="Generate Report to Excel" class="btn btn-primary" id="btnSubmit1" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="delsuccess" class="modal fade modal-success" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <i class="ion-android-checkmark-circle"></i>
+                <h3 class="modal-title">No Record found!...</h3>
+            </div>
+            <div class="modal-body">
+
+                <p> No Record found!...</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+
+    $('#btnSubmit').click(function () {
+
+        var Finyear = $('#Fiyr').val();
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify({ 'Finyear': Finyear }),
+            url: '@Url.Action("GetDataForTrailBalance2", "ReportMaster")',
+            contentType: "application/json",
+            success: function (result) {
+                if (result.em==1)
+                {
+                    var format=1;
+                  var win = window.open('', '_blank');
+                  var url = "@Url.RouteUrl(new {Controller = "ReportMaster", Action = "TrailBalanceRep" })?Finyear=" + Finyear + "&format=" + format;
+                  win.location.href = url;
+                }
+                else {
+                  //  $("#ErrorMsg").text("No Record Found!..").css("color", "Green")
+                    $("#delsuccess").modal('toggle');
+                }
+            }
+        })
+    });
+
+    
+    $('#btnSubmit1').click(function () {
+
+        var Finyear = $('#Fiyr').val();
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify({ 'Finyear': Finyear }),
+            url: '@Url.Action("GetDataForTrailBalance2", "ReportMaster")',
+            contentType: "application/json",
+            success: function (result) {
+                if (result.em==1)
+                {
+                    var format=2;
+                   // var win = window.open('', '_blank');
+                    var url = "@Url.RouteUrl(new {Controller = "ReportMaster", Action = "TrailBalanceRep" })?Finyear=" + Finyear + "&format=" + format;
+                    location.href = url;
+                }
+                else {
+                    //  $("#ErrorMsg").text("No Record Found!..").css("color", "Green")
+                    $("#delsuccess").modal('toggle');
+                }
+            }
+        })
+    });
+
+</script>

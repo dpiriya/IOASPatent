@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PatentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Agreement">
+    <Key>
+      <PropertyRef Name="ContractNo" />
+    </Key>
+    <Property Name="EntryDt" Type="smalldatetime" Nullable="false" />
+    <Property Name="ContractNo" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="AgreementType" Type="varchar" MaxLength="5" />
+    <Property Name="AgreementNo" Type="varchar" MaxLength="50" />
+    <Property Name="Title" Type="varchar" MaxLength="250" />
+    <Property Name="Scope" Type="varchar" MaxLength="250" />
+    <Property Name="Party" Type="varchar" MaxLength="150" />
+    <Property Name="CoordinatingPerson" Type="varchar" MaxLength="100" />
+    <Property Name="CoorCode" Type="varchar" MaxLength="4" />
+    <Property Name="Dept" Type="varchar" MaxLength="3" />
+    <Property Name="EffectiveDt" Type="smalldatetime" />
+    <Property Name="ExpiryDt" Type="smalldatetime" />
+    <Property Name="Remark" Type="varchar" MaxLength="200" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Request" Type="smalldatetime" />
+    <Property Name="TechTransfer" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Attorney">
+    <Key>
+      <PropertyRef Name="AttorneyName" />
+    </Key>
+    <Property Name="SlNo" Type="int" />
+    <Property Name="AttorneyID" Type="varchar" MaxLength="10" />
+    <Property Name="AttorneyName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Address1" Type="varchar" MaxLength="50" />
+    <Property Name="Address2" Type="varchar" MaxLength="50" />
+    <Property Name="Address3" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="PinCode" Type="varchar" MaxLength="15" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="50" />
+    <Property Name="FaxNo" Type="varchar" MaxLength="50" />
+    <Property Name="EmailID" Type="varchar" MaxLength="50" />
+    <Property Name="Category" Type="nvarchar" MaxLength="300" />
+    <Property Name="Country" Type="nvarchar" MaxLength="100" />
+    <Property Name="Mobile_No" Type="nvarchar" MaxLength="14" />
+    <Property Name="RangeOfServices" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="CompanyMaster">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="EntryDt" Type="smalldatetime" Nullable="false" />
+    <Property Name="CompanyID" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Address1" Type="varchar" MaxLength="80" />
+    <Property Name="Address2" Type="varchar" MaxLength="80" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="State" Type="varchar" MaxLength="50" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="Pincode" Type="varchar" MaxLength="15" />
+    <Property Name="Phone1" Type="varchar" MaxLength="13" />
+    <Property Name="Phone2" Type="varchar" MaxLength="13" />
+    <Property Name="FaxNo" Type="varchar" MaxLength="13" />
+    <Property Name="EmailID1" Type="varchar" MaxLength="70" />
+    <Property Name="EmailID2" Type="varchar" MaxLength="70" />
+    <Property Name="IndustryType" Type="varchar" MaxLength="70" />
+  </EntityType>
+  <EntityType Name="International">
+    <Key>
+      <PropertyRef Name="FileNo" />
+      <PropertyRef Name="subFileNo" />
+    </Key>
+    <Property Name="InputDt" Type="smalldatetime" />
+    <Property Name="FileNo" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="subFileNo" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="RequestDt" Type="smalldatetime" />
+    <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Partner" Type="varchar" MaxLength="50" />
+    <Property Name="PartnerNo" Type="varchar" MaxLength="25" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="Attorney" Type="varchar" MaxLength="100" />
+    <Property Name="ApplicationNo" Type="varchar" MaxLength="50" />
+    <Property Name="FilingDt" Type="smalldatetime" />
+    <Property Name="PublicationNo" Type="varchar" MaxLength="50" />
+    <Property Name="PublicationDt" Type="smalldatetime" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="SubStatus" Type="varchar" MaxLength="50" />
+    <Property Name="PatentNo" Type="varchar" MaxLength="25" />
+    <Property Name="PatentDt" Type="smalldatetime" />
+    <Property Name="Commercial" Type="nvarchar" MaxLength="50" />
+    <Property Name="Remark" Type="varchar" MaxLength="100" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="date" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="date" />
+  </EntityType>
+  <EntityType Name="IPCountry">
+    <Key>
+      <PropertyRef Name="IPName" />
+    </Key>
+    <Property Name="IPName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="Remark" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="IPR_Category">
+    <Key>
+      <PropertyRef Name="IPRNO" />
+    </Key>
+    <Property Name="IPRNO" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="IPRNAME" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="ListItemMaster">
+    <Key>
+      <PropertyRef Name="trx_id" />
+    </Key>
+    <Property Name="trx_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SlNo" Type="int" />
+    <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ItemList" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ItemText" Type="nvarchar" MaxLength="50" />
+    <Property Name="Grouping" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="PatDetails">
+    <Key>
+      <PropertyRef Name="FileNo" />
+    </Key>
+    <Property Name="EntryDt" Type="smalldatetime" />
+    <Property Name="FileNo" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="PatentOfAddition" Type="bigint" />
+    <Property Name="Title" Type="varchar" MaxLength="300" />
+    <Property Name="InitialFiling" Type="varchar" MaxLength="50" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="Commercial" Type="varchar" MaxLength="15" />
+    <Property Name="Assign_fileno" Type="varchar" MaxLength="50" />
+    <Property Name="FirstApplicant" Type="varchar" MaxLength="50" />
+    <Property Name="SecondApplicant" Type="varchar" MaxLength="50" />
+    <Property Name="InstID" Type="varchar" MaxLength="15" />
+    <Property Name="InventorType" Type="varchar" MaxLength="20" />
+    <Property Name="Inventor1" Type="varchar" MaxLength="70" />
+    <Property Name="DeptCode" Type="varchar" MaxLength="3" />
+    <Property Name="Department" Type="varchar" MaxLength="150" />
+    <Property Name="Request_Dt" Type="smalldatetime" />
+    <Property Name="Specification" Type="nvarchar(max)" />
+    <Property Name="InventionSourceFromProject" Type="bit" />
+    <Property Name="Comments" Type="varchar" MaxLength="250" />
+    <Property Name="InventionNo" Type="varchar" MaxLength="30" />
+    <Property Name="Applcn_no" Type="varchar" MaxLength="100" />
+    <Property Name="Filing_dt" Type="smalldatetime" />
+    <Property Name="CompleteDt" Type="smalldatetime" />
+    <Property Name="PatentSearch" Type="varchar" MaxLength="30" />
+    <Property Name="Patent_searchDt" Type="smalldatetime" />
+    <Property Name="Examination" Type="varchar" MaxLength="3" />
+    <Property Name="Exam_dt" Type="smalldatetime" />
+    <Property Name="Publication" Type="varchar" MaxLength="10" />
+    <Property Name="Pub_Dt" Type="smalldatetime" />
+    <Property Name="Pat_no" Type="varchar" MaxLength="15" />
+    <Property Name="Pat_dt" Type="smalldatetime" />
+    <Property Name="Validity_from_dt" Type="smalldatetime" />
+    <Property Name="Validity_to_dt" Type="smalldatetime" />
+    <Property Name="PCT" Type="varchar" MaxLength="10" />
+    <Property Name="Status" Type="varchar" MaxLength="250" />
+    <Property Name="Sub_Status" Type="varchar" MaxLength="50" />
+    <Property Name="Attorney" Type="varchar" MaxLength="100" />
+    <Property Name="Industry1" Type="varchar" MaxLength="150" />
+    <Property Name="Industry2" Type="varchar" MaxLength="150" />
+    <Property Name="Industry3" Type="nvarchar" MaxLength="150" />
+    <Property Name="IPC_Code" Type="varchar" MaxLength="150" />
+    <Property Name="Abstract" Type="varchar" MaxLength="50" />
+    <Property Name="DevelopmentStatus" Type="varchar" MaxLength="150" />
+    <Property Name="Commercialized" Type="varchar" MaxLength="20" />
+    <Property Name="PatentLicense" Type="varchar" MaxLength="50" />
+    <Property Name="TechTransNo" Type="varchar" MaxLength="20" />
+    <Property Name="Remarks" Type="varchar" MaxLength="250" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Direct_Strategy" Type="varchar" MaxLength="5" />
+    <Property Name="Appln_Post" Type="nvarchar" MaxLength="5" />
+    <Property Name="Post_Dated" Type="smalldatetime" />
+    <Property Name="Abstract_TT" Type="nvarchar(max)" />
+    <Property Name="Design" Type="nvarchar" MaxLength="150" />
+    <Property Name="OtherIP" Type="nvarchar" MaxLength="150" />
+    <Property Name="Solution_Packages" Type="nvarchar" MaxLength="150" />
+    <Property Name="Software" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_mst_filepath">
+    <Key>
+      <PropertyRef Name="trx_id" />
+    </Key>
+    <Property Name="trx_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FilePath" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_trx_dispute">
+    <Key>
+      <PropertyRef Name="DisputeNo" />
+    </Key>
+    <Property Name="DisputeNo" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="DGroup" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="DSource" Type="nvarchar" MaxLength="50" />
+    <Property Name="EstimatedValue" Type="nvarchar" MaxLength="50" />
+    <Property Name="PartyName" Type="nvarchar" MaxLength="50" />
+    <Property Name="RealizationValue" Type="nvarchar" MaxLength="50" />
+    <Property Name="Coordinator" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="CreatedOn" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_trx_DisputeActivity">
+    <Key>
+      <PropertyRef Name="DisputeNo" />
+      <PropertyRef Name="SNo" />
+    </Key>
+    <Property Name="DisputeNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SNo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ActivityDate" Type="nvarchar" MaxLength="50" />
+    <Property Name="Forum" Type="nvarchar" MaxLength="50" />
+    <Property Name="ActivityType" Type="nvarchar(max)" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="FilePath" Type="nvarchar" MaxLength="50" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_trx_DisputeAgreement">
+    <Key>
+      <PropertyRef Name="agreement_trx_id" />
+    </Key>
+    <Property Name="agreement_trx_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Sno" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="DisputeNo" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="ContractNo" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_trx_disputeIDF">
+    <Key>
+      <PropertyRef Name="idf_trx_id" />
+    </Key>
+    <Property Name="idf_trx_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Sno" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="DisputeNo" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="FileNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_trx_duediligence">
+    <Key>
+      <PropertyRef Name="tranx_id" />
+    </Key>
+    <Property Name="tranx_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Sno" Type="int" Nullable="false" />
+    <Property Name="FileNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="EntryDt" Type="date" Nullable="false" />
+    <Property Name="SRNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="RequestDt" Type="date" />
+    <Property Name="ReportDt" Type="date" />
+    <Property Name="ReportType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Mode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Allocation" Type="nvarchar" MaxLength="50" />
+    <Property Name="Participants" Type="nvarchar" MaxLength="255" />
+    <Property Name="IPCCode" Type="nvarchar" MaxLength="255" />
+    <Property Name="TechnologyAction" Type="nvarchar" MaxLength="255" />
+    <Property Name="Summary" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="50" />
+    <Property Name="InventorInput" Type="nvarchar" MaxLength="50" />
+    <Property Name="Followup" Type="nvarchar" MaxLength="50" />
+    <Property Name="FilePath" Type="nvarchar" MaxLength="50" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreatedOn" Type="date" Nullable="false" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ModifiedOn" Type="date" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_trx_servicerequest">
+    <Key>
+      <PropertyRef Name="SRNo" />
+      <PropertyRef Name="Sno" />
+    </Key>
+    <Property Name="SRNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Sno" Type="smallint" Nullable="false" />
+    <Property Name="FileNo" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="AttorneyID" Type="nvarchar" MaxLength="100" />
+    <Property Name="SharingParty" Type="nvarchar" MaxLength="100" />
+    <Property Name="Action" Type="nvarchar" MaxLength="50" />
+    <Property Name="Share" Type="smallint" />
+    <Property Name="MDocNo" Type="nchar" MaxLength="10" />
+    <Property Name="IntimationDt" Type="date" />
+    <Property Name="TargetDt" Type="date" />
+    <Property Name="ActualDt" Type="date" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="date" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UpdatedOn" Type="date" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityContainer Name="PatentModelStoreContainer">
+    <EntitySet Name="Agreement" EntityType="Self.Agreement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Attorney" EntityType="Self.Attorney" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CompanyMaster" EntityType="Self.CompanyMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="International" EntityType="Self.International" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IPCountry" EntityType="Self.IPCountry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IPR_Category" EntityType="Self.IPR_Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ListItemMaster" EntityType="Self.ListItemMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatDetails" EntityType="Self.PatDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_mst_filepath" EntityType="Self.tbl_mst_filepath" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_trx_dispute" EntityType="Self.tbl_trx_dispute" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_trx_DisputeActivity" EntityType="Self.tbl_trx_DisputeActivity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_trx_DisputeAgreement" EntityType="Self.tbl_trx_DisputeAgreement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_trx_disputeIDF" EntityType="Self.tbl_trx_disputeIDF" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_trx_duediligence" EntityType="Self.tbl_trx_duediligence" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_trx_servicerequest" EntityType="Self.tbl_trx_servicerequest" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,220 @@
+﻿@model IOAS.Models.DailyBalanceVerificationModel
+
+@{
+    ViewBag.Title = "Daily Balance Verification";
+    ViewBag.Subtitle = "Reports";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+
+<div class="row hd-tt-bg">
+    <div class="col-md-12">
+        <h4><b>Daily Balance Verification</b> </h4>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="bl-lg-panel-box pb-null">
+                
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <div class="cmn-panel-box">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group custom-form-group">
+                                                        <label class="required">Date</label>
+                                                        @Html.EditorFor(m => m.Date, new { @class = "form-control",@id="date" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group custom-form-group">
+                                                        <label class="required">Type</label>
+                                                        @Html.DropDownListFor(m => m.Type, new SelectList(ViewBag.ProjectType, "codevalAbbr", "CodeValDetail"), "Select ProjectType",  new { @class = "form-control",@id="type" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group custom-form-group">
+                                                        <label class="required">Project No</label>
+                                                        @Html.TextBoxFor(m => m.Project, new { @class = "form-control", @id = "projectno" })
+                                                        @Html.TextBoxFor(m => m.ProjectId, new { @class = "form-control dis-none", @id = "projectid" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 mt-md mb-lg">
+                                                    <label>&nbsp;</label>
+                                                    <input type="submit" value="View Report" class="btn btn-primary" id="btnSubmit" />
+                                                </div>
+                                                </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="vh-grid-tb mt-null mb-lg">
+                                                        <div class="vh-grid-cell grey-bg">
+                                                            <div class="grey-bg-adj">
+                                                                <div class="col-md-6">
+
+                                                                    <div class="form-group custom-form-group">
+
+                                                                        @*Project Number : @Html.TextBoxFor(m => m.ProjectNo, new { @class = "form-control", @id = "tlprojectno", @readonly = true }) <br /><br />*@
+                                                                        PI : @Html.TextBoxFor(m => m.PI, new { @class = "form-control", @id = "pi", @readonly = true })<br /><br />
+                                                                        Type : @Html.TextBoxFor(m => m.TypeName, new { @class = "form-control", @id = "typename", @readonly = true })<br /><br />
+                                                                        Available Balance : @Html.TextBoxFor(m => m.TotalAvailBalance, new { @class = "form-control", @id = "tlavailbalance", @readonly = true })<br /><br />
+                                                                        Total Sanction : @Html.TextBoxFor(m => m.TotalSanction, new { @class = "form-control", @id = "tlsanction", @readonly = true })<br /><br />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group custom-form-group">
+
+                                                                        Total Receipt : @Html.TextBoxFor(m => m.TotalReceipt, new { @class = "form-control", @id = "tlreceipt", @readonly = true })<br /><br />
+                                                                        Total Negative Balance : @Html.TextBoxFor(m => m.TotalNegativeBalance, new { @class = "form-control", @id = "tlnegativebalance", @readonly = true })<br /><br />
+                                                                        Total Expenditure : @Html.TextBoxFor(m => m.TotalExpent, new { @class = "form-control", @id = "tlexpent",  @readonly = true })<br /><br />
+                                                                        Total Commitment :@Html.TextBoxFor(m => m.TotalCommitment, new { @class = "form-control", @id = "tlcommitment", @readonly = true })<br /><br />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="vh-grid-tb mt-null mb-lg">
+                                                        <div class="vh-grid-cell grey-bg">
+                                                            <div class="grey-bg-adj">
+                                                                <div class="col-md-12">
+                                                          Balance Report As on &nbsp;<label> @Html.TextBoxFor(m => m.CurrDate, new { @class = "form-control", @id = "currdate", @readonly = true })</label><br /><br />
+                                                              </div>
+                                                                <div class="col-md-6">
+
+                                                                    <div class="form-group custom-form-group">
+
+                                                                        Opening Balance : @Html.TextBoxFor(m => m.OpeningBalance, new { @class = "form-control", @id = "openingbalance", @readonly = true })<br /><br />
+                                                                        Receipt : @Html.TextBoxFor(m => m.Receipt, new { @class = "form-control", @id = "receipt", @readonly = true })<br /><br />
+                                                                        Commitment : @Html.TextBoxFor(m => m.PreviousCommitment, new { @class = "form-control", @id = "commitment", @readonly = true })<br /><br />
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group custom-form-group">
+
+                                                                        Negative Balance : @Html.TextBoxFor(m => m.NetBalance, new { @class = "form-control", @id = "netbalance", @readonly = true })<br /><br />
+                                                                        Expenditure : @Html.TextBoxFor(m => m.AmountSpent, new { @class = "form-control", @id = "amountspent", @readonly = true })<br /><br />
+                                                                        Closing Balance : @Html.TextBoxFor(m => m.ClosingBalance, new { @class = "form-control", @id = "closingbalance", @readonly = true })<br /><br />
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          
+                                        </div>
+                                        <div class="col-md-12">
+
+
+                                          
+                                           
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#Date').datepicker({ maxDate: 0, dateFormat: 'dd-MM-yy', changeYear: true });
+   
+    @*$(document).on('click', '#projectno', function () {
+      //var ty = $("#projectno").val();
+        //aplyAutoComplete($("#projectno"), $("#type"), "../CoreAccounts/LoadProjectNumber");
+       // var Projecttype = $("#type").val();
+       // var searchData = {type :Projecttype, classification : 1}
+        applyAutoComplete($('#projectno'), $('#projectid'), "@Url.Action("LoadProjectList", "CoreAccounts")", undefined, undefined, undefined, searchData);
+       
+    });*@
+    function aplyAutoComplete(ele, url)
+    {
+        $(ele).autocomplete({
+            select: function (event, ui) {
+                event.preventDefault();
+                $(ele).val(ui.item.label);
+                //$(hiddenEle).val(ui.item.value);
+                $("#projectid").val(ui.item.value);
+                $("#projectno").val(ui.item.label);
+            },
+            focus: function (event, ui) {
+                event.preventDefault();
+                $(ele).val(ui.item.label);
+            },
+            source: function (request, response) {
+                $.getJSON(url, { term: request.term },
+                 function (locationdata) {
+                     response(locationdata);
+                 });
+            },
+            minLength: 3
+        }).autocomplete("widget").addClass("your_custom_class");
+        //.autocomplete("widget").addClass("your_custom_class");
+    }
+    $(document).on('change', '#Date', function ()
+    {
+        var Projecttype = $("#type").val();
+        var searchData = {type :Projecttype, classification : 1}
+        applyAutoComplete($('#projectno'), $('#projectid'), "@Url.Action("LoadProjectList", "CoreAccounts")", undefined, undefined, undefined, searchData);
+       
+    });
+    $(document).on('change', '#type', function ()
+    {
+        $("#projectno").val("");
+        $("#projectid").val("");
+        var Projecttype = $("#type").val();
+        var searchData = {type :Projecttype, classification : 1}
+        applyAutoComplete($('#projectno'), $('#projectid'), "@Url.Action("LoadProjectList", "CoreAccounts")", undefined, undefined, undefined, searchData);
+       
+    });
+    $('#btnSubmit').click(function () {
+        var projectid = $("#projectid").val();
+        var SerDate = $("#Date").val();
+        if (projectid != "") {
+            $.getJSON("@Url.Action("GetDailyBalSummary", "ReportMaster")", { projectid: projectid, SerDate: SerDate },
+                              function (locationdata) {
+                                  var dat = $("#Date").val();
+                                  $("#currdate").val(dat);
+                                  $("#tlprojectno").val(locationdata.ProjectNo);
+                                  $("#pi").val(locationdata.PI);
+                                  $("#typename").val(locationdata.TypeName);
+                                  $("#tlavailbalance").val(locationdata.TotalAvailBalance);
+                                  $("#tlnegativebalance").val(locationdata.TotalNegativeBalance);
+                                  $("#tlsanction").val(locationdata.TotalSanction);
+                                  $("#tlreceipt").val(locationdata.TotalReceipt);
+                                  $("#tlexpent").val(locationdata.TotalExpent);
+                                  $("#tlcommitment").val(locationdata.TotalCommitment);
+                                  $("#openingbalance").val(locationdata.OpeningBalance);
+                                  $("#receipt").val(locationdata.Receipt);
+                                  $("#commitment").val(locationdata.PreviousCommitment);
+                                  $("#netbalance").val(locationdata.NetBalance);
+                                  $("#amountspent").val(locationdata.AmountSpent);
+                                  $("#closingbalance").val(locationdata.ClosingBalance);
+                              });
+        }
+    });
+</script>
+
+

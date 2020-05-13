@@ -1,0 +1,402 @@
+﻿@model List<IOAS.Models.Patent.ServiceRequestVM>
+@{
+    ViewBag.Title = "Service Request";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div class="row hd-tt-bg" id="addnewpage">
+    <div class="col-md-4 pull-left">
+        <h3>Service Request</h3>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("ServiceRequest", "Patent", FormMethod.Post, new { @class = "", role = "form", @id = "formCP", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12">
+            <div class="page-wrapper" id="createServiceRequest">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">Service Request</h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> Service Request Number </label>
+                                    @Html.TextBoxFor(m => Model[0].SRNo, new { @class = "form-control", @id = "srno", @readonly = "readonly",Name=getname("SRNo",0) })
+                                    @Html.HiddenFor(m=>Model[0].isUpdate,new { Name =getname("isUpdate",0)})
+                                    <div class="txt-error txt-red">@Html.ValidationMessage("SRNo")</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label class="required"> Intimation Date </label>
+                                @Html.TextBoxFor(m => Model[0].IntimationDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", Name = getname("IntimationDt", 0) })
+                                <div class="txt-error txt-red">@Html.ValidationMessage("IntimationDt")</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Service Provider</label>
+                                @Html.DropDownListFor(m => Model[0].AttorneyID, new SelectList(ViewBag.att, Model.First().AttorneyID), "Select Attorney", new { @class = "form-control", Name = getname("AttorneyID", 0) })
+                                <div class="txt-error txt-red">@Html.ValidationMessage("AttorneyID")</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">Services to be provided</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-lg">
+                            <table class="table alter-table">
+                                <thead>
+                                    <tr>
+                                        <th>SNo</th>
+                                        <th>IDF</th>
+                                        <th>Action</th>
+                                        <th>Party</th>
+                                        <th>Share</th>
+                                        <th>MDoc</th>
+                                        <th>TargetDt</th>
+                                        <th>ActualDt</th>
+                                        <th>Status</th>
+                                        <th>Remarks</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyservice">
+                                    @{var count = 0;
+                                        var cls = "clr";
+                                    }
+                                    @*@foreach(var item in Model)
+                                    {
+
+                                        var sno = count + 1;
+                                        <tr>
+                                            <td>
+                                                @Html.TextBox("sno", sno, new { @class = "form-control", @id = "sno", style = "width:50px" })
+                                                @Html.Hidden("Model.Index", count)
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => Model[count].FileNo, new SelectList(ViewBag.IDF, Model[count].FileNo), new { @class = "form-control", @id = "FileNo", style = "width:80px", Name = getname("FileNo", count) })
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => Model[count].Action, new SelectList(ViewBag.act, Model[count].Action), new { @class = "form-control", @id = "action", Name = getname("Action", count) })
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => Model[count].SharingParty, new SelectList(ViewBag.party, Model[count].SharingParty), "", new { @class = "form-control", @id = "shparty", Name = getname("SharingParty", count) })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => Model[count].Share, new { @class = "form-control", @id = "share", Name = getname("Share", count) })
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => Model[count].MDocNo, new SelectList(ViewBag.MDOC, Model[count].MDocNo), "", new { @class = "form-control", @id = "mdoc", Name = getname("MDocNo", count) })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => Model[count].TargetDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @id = "tgtdt", Name = getname("TargetDt", count) })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => Model[count].ActualDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @id = "actdt", Name = getname("ActualDt", count) })
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => Model[count].Status, new SelectList(ViewBag.st, Model[count].Status), new { @class = "form-control", Name = getname("Status", count), @id = "status" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => Model[count].Remarks, new { @class = "form-control", @id = "remarks", Name = getname("Remarks", count) })
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" class="btn-sm btn btn-danger @cls"><i class="ion-android-close"></i></a>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                        cls = "removeservice";
+
+
+                                    }*@
+                                    @*@if (Model.Count > 0)
+                                        {
+                                            var count = 0;
+                                            var cls = "clr";
+                                            foreach (var item in Model)
+                                            {
+                                                var fno = "ServiceRequestVM["+count+"].FileNo";
+                                                var act = "ServiceRequestVM[" + count + "].Action";
+                                                var shparty = "ServiceRequestVM[" + count + "].SharingParty";
+                                                var sh = "ServiceRequestVM[" + count + "].Share";
+                                                var mdoc = "ServiceRequestVM[" + count + "].MDocNo";
+                                                var actdt = "ServiceRequestVM[" + count + "].TargetDt";
+                                                var tdt = "ServiceRequestVM[" + count + "].ActualDt";
+                                                var sta = "ServiceRequestVM[" + count + "].Status";
+                                                var re = "ServiceRequestVM[" + count + "].Remarks";
+                                                var sno = count + 1;
+                                                <tr>
+                                                    <td>
+                                                        @Html.TextBox("sno", sno, new { @class = "form-control", @id = "sno", style = "width:50px" })
+                                                        @Html.Hidden("ServiceRequestVM.Index", count)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DropDownList(fno, new SelectList(ViewBag.IDF, item.FileNo), new { @class = "form-control", @id = "FileNo", style = "width:80px", })
+                                                    </td>
+                                                    <td>
+                                                        @Html.DropDownList(act, new SelectList(ViewBag.act, item.Action), new { @class = "form-control", @id = "action" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.DropDownList(shparty, new SelectList(ViewBag.party, item.SharingParty), "", new { @class = "form-control", @id = "shparty" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox(sh, item.Share, new { @class = "form-control", @id = "share" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.DropDownList(mdoc, new SelectList(ViewBag.MDOC, item.MDocNo), "", new { @class = "form-control", @id = "mdoc" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox(tdt, item.TargetDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @id = "tgtdt" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox(actdt, item.ActualDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @id = "actdt" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.DropDownList(sta, new SelectList(ViewBag.st, item.Status), new { @class = "form-control", @id = "status" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox(re,item.Remarks, new { @class = "form-control", @id = "remarks" })
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" class="btn-sm btn btn-danger @cls"><i class="ion-android-close"></i></a>
+                                                    </td>
+                                                </tr>
+                                                count++;
+                                                cls = "removeservice";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.TextBox("sno", 1, new { @class = "form-control", @id = "sno", style = "width:50px" })
+                                                    @Html.Hidden("ServiceRequestVM.Index", 0)
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList(getname("FileNo",0), new SelectList(ViewBag.IDF, ""), new { @class = "form-control", @id = "FileNo", style = "width:80px", })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList(getname("Action",0), new SelectList(ViewBag.act, ""), new { @class = "form-control", @id = "action" })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList(getname("SharingParty", 0), new SelectList(ViewBag.party,""), "", new { @class = "form-control", @id = "shparty" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox(getname("Share", 0),"", new { @class = "form-control", @id = "share" })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList(getname("MDocNo", 0), new SelectList(ViewBag.MDOC, ""), "", new { @class = "form-control", @id = "mdoc" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox(getname("TargetDt", 0), "", "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @id = "tgtdt" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox(getname("ActualDt", 0), "", "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @id = "actdt" })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList(getname("Status", 0), new SelectList(ViewBag.st, ""), new { @class = "form-control", @id = "status" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox(getname("Remarks", 0),"", new { @class = "form-control", @id = "remarks" })
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="btn-sm btn btn-danger clr"><i class="ion-android-close"></i></a>
+                                                </td>
+                                            </tr>
+                                        }*@
+                                    @for (int i = 0; i < Model.Count(); i++)
+                                        {
+                                            var sno = count + 1;
+                                            <tr>
+                                                <td>
+                                                    @Html.TextBoxFor(m=>Model[i].Sno,sno.ToString(), new { @class = "form-control", @id = "sno", style = "width:50px",Name=getname("Sno",i) })
+                                                    @Html.Hidden("Model.Index", count)
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model[i].FileNo, new SelectList(ViewBag.IDF, Model[i].FileNo), new { @class = "form-control", @id = "FileNo", style = "width:80px",Name=getname("FileNo",i) })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model[i].Action, new SelectList(ViewBag.act, Model[i].Action), new { @class = "form-control", @id = "action", Name = getname("Action", i) })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model[i].SharingParty, new SelectList(ViewBag.party, Model[i].SharingParty), "", new { @class = "form-control", @id = "shparty", Name = getname("SharingParty", i) })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => Model[i].Share, new { @class = "form-control", @id = "share", Name = getname("Share", i) })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model[i].MDocNo, new SelectList(ViewBag.MDOC, Model[i].MDocNo), "", new { @class = "form-control", @id = "mdoc", Name = getname("MDocNo", i) })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => Model[i].TargetDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @id = "tgtdt", Name = getname("TargetDt", i) })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => Model[i].ActualDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @id = "actdt", Name = getname("ActualDt", i) })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model[i].Status, new SelectList(ViewBag.st, Model[i].Status), new { @class = "form-control", Name = getname("Status",i), @id = "status"})
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => Model[i].Remarks, new { @class = "form-control", @id = "remarks", Name = getname("Remarks", i) })
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="btn-sm btn btn-danger @cls"><i class="ion-android-close"></i></a>
+                                                </td>
+                                            </tr>
+                                            count++;
+                                            cls = "removeservice";
+
+
+                                        }
+                                    <tr>
+                                        <td colspan="10"></td>
+                                        <td><a href="javascript:void(0)" id="btnAddservice" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" id="saveServiceRequest">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Save" name="Button" id="btnSave" />
+                        <input type="button" onclick="window.location.href='@Url.Action("ServiceRequestList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+                <div class="row" id="updateServiceRequest">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Update" name="Button" id="btnupdate" />
+                        <input type="button" onclick="window.location.href='@Url.Action("ServiceRequestList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@functions{
+    string getname(string name, int i)
+    {
+        return "Model[" + i + "]." + name;
+    }
+}
+@if (ViewBag.succMsg != null)
+{
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("ServiceRequestList", "Patent")';">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+                    <p>@ViewBag.succMsg</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("ServiceRequestList", "Patent")';">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+}
+@if (ViewBag.errMsg != null)
+{
+    <div id="myModal1" class="modal fade modal-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-cancel"></i>
+                    <h3 class="modal-title">Error Message</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.errMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal1').modal('show');
+        });
+    </script>
+}
+<script type="text/javascript">
+    $('.datepicker').datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+    $(function () {
+        if ($('#isUpdate').val() == "True") {
+            $('#saveServiceRequest').hide();
+            $('#updateServiceRequest').show();
+        }
+        else {
+            $('#updateServiceRequest').hide();
+            $('#saveServiceRequest').show();
+        }
+    });
+    var counter = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddservice').click(function () {
+        var sno = counter();
+        var cln = $('#tbodyservice tr:first').clone().find("input[id!='sno'],select ").val("").end();
+        $(cln).find('a.clr').removeClass('clr').addClass('removeservice');
+        $(cln).find("input[id='sno']").val(sno);
+        var index = $('#tbodyservice tr:last').prev().find("input[name='Model.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='Model.Index']").val(index);
+        $(cln).find("input, select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+        });
+        $('#tbodyservice tr:last').before(cln);
+    });
+    $('.clr').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("select[id='FileNo']").val("");
+        thy.closest('tr').find("select[id='action']").val("");
+        thy.closest('tr').find("select[id='shparty']").val("");
+        thy.closest('tr').find("input[id='share']").val("");
+        thy.closest('tr').find("select[id='mdoc']").val("");
+        thy.closest('tr').find("input[id='actdt']").val("");
+        thy.closest('tr').find("input[id='tgtdt']").val("");
+        thy.closest('tr').find("select[id='status']").val("");
+        thy.closest('tr').find("input[id='remarks']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeservice', function () {        
+        $(this).closest('tr').remove();
+    });
+    
+</script>

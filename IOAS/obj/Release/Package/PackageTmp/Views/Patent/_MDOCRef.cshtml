@@ -1,0 +1,268 @@
+﻿@model IEnumerable<IOAS.Models.Patent.AgreementVM>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="spl-title">
+            <a href="#" id="btnmdocSearch" data-toggle="modal" data-target="#PopMdocModel"> List of MDOC Reference<i class="ion-search"></i></a>
+        </h3>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 mb-lg">
+        <table class="table alter-table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>MDOC</th>
+                    <th>Title</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyMdoc">
+                @if (Model.Count() > 0)
+                {
+                    var count = 0;
+                    string cl = "clr";
+                    foreach (var item in Model)
+                    {
+                        var mdoc = "MDOC[" + count + "].ContractNo";
+                        var title = "MDOC[" + count + "].Title";
+                        var owner = "MDOC[" + count + "].CoordinatingPerson";
+                        var status = "MDOC[" + count + "].Status";
+                        var sno = count + 1;
+                        <tr>
+                            <td>
+                                @Html.TextBox("sno", sno, new { @id = "sno", @style = "width:30px" })
+                                @Html.Hidden("MDOC.Index", @count)
+                            </td>
+                            <td>
+                                @Html.DropDownList(mdoc, new SelectList(ViewBag.agree, item.ContractNo), new { @id = "Mdoc", @class = "required form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(title, item.Title, new { @id = "title", @readonly = "readonly" })
+                            </td>
+                            <td>
+                                @Html.TextBox(owner, item.CoordinatingPerson, new { @id = "owner", @readonly = "readonly" })
+                            </td>
+                            <td>
+                                @Html.TextBox(status, item.Status, new { @id = "status", @readonly = "readonly" })
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" class="btn-sm btn btn-danger @cl"><i class="ion-android-close"></i></a>
+                            </td>
+                        </tr>
+
+                        count++;
+                        cl = "removeMdocDetail";
+                    }
+                    <tr>
+                        <td colspan="5"></td>
+                        <td><a href="javascript:void(0)" id="btnAddMdoc" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBox("sno", "1", new { @id = "sno", @style = "width:30px" })
+                            @Html.Hidden("MDOC.Index", 0)
+                        </td>
+                        <td>
+                            @Html.DropDownList("MDOC[0].ContractNo", new SelectList(ViewBag.agree), "", new { @id = "Mdoc", @class = "required form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("MDOC[0].Title", "", new { @id = "title", @readonly = "readonly" })
+                        </td>
+                        <td>
+                            @Html.TextBox("MDOC[0].CoordinatingPerson", "", new { @id = "owner", @readonly = "readonly" })
+                        </td>
+                        <td>
+                            @Html.TextBox("MDOC[0].Status", "", new { @id = "status", @readonly = "readonly" })
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="btn-sm btn btn-danger clr"><i class="ion-android-close"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"></td>
+                        <td><a href="javascript:void(0)" id="btnAddMdoc" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mt30" id="gridMdoc">
+    <div id="PopMdocModel" class="modal fade" role="dialog">
+        <div class="modal-dialog wdth80">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Select Contract</h3>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Modal content-->
+                    <div class="col-md-12">
+                        <div class="page-wrapper">
+                            <div class="custom-jsgrid-normal">
+                                <div id="gridMdocList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @*<input type="submit" name="Button" value="ADD" class="btn btn-primary" id="btnSave" />&nbsp;&nbsp;*@
+                    <button type="button" class="btn btn-primary mt10" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // $('#Mdoc').change(function () {
+    $(document).on('change', 'select[id="Mdoc"]', function () {
+        var mdoc = this.value;
+        var thy = $(this);
+        if (mdoc != '') {
+            $.ajax({
+                url: '../Patent/GetMdocDetails',
+                type: 'post',
+                dataType: 'json',
+                data: { Mdoc: mdoc },
+                success: function (data) {
+                    if (data.result == "success") {
+                        thy.closest('tr').find("input[id='title']").val(data.tit);
+                        thy.closest('tr').find("input[id='owner']").val(data.owner);
+                        thy.closest('tr').find("input[id='status']").val(data.stat);
+                    }
+                    else {
+                        alert('MDoc is wrong');
+                        thy.closest('tr').find("input[id='title']").val("");
+                        thy.closest('tr').find("input[id='owner']").val("");
+                        thy.closest('tr').find("input[id='status']").val("");
+                    }
+                },
+
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if (xhr.status == 404) {
+                        alert(thrownError)
+                    }
+                }
+            });
+
+        }
+    });
+    var counter = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddMdoc').click(function () {
+        var sno = counter();
+        //var sno =parseInt($('#sno').val(),10);
+        //++sno;
+        var cln = $('#tbodyMdoc tr:first').clone().find("input[name!='sno'],select,input ").val("").end();
+        //$(cln).find('#TravellerId').parent().replaceWith(bootstrapSelect($(cln).find('#TravellerId').parent().clone(), "empty", '', '', false));
+        $(cln).find('a.clr').removeClass('clr').addClass('removeMdocDetail');
+        $(cln).find("input[name='sno']").val(sno);
+        var index = $('#tbodyMdoc tr:last').prev().find("input[name='MDOC.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='MDOC.Index']").val(index);
+        $(cln).find("input, select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+        });
+        $('#tbodyMdoc tr:last').before(cln);
+    });
+    $('.clr').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='Mdoc']").val("");
+        thy.closest('tr').find("input[id='title']").val("");
+        thy.closest('tr').find("input[id='owner']").val("");
+        thy.closest('tr').find("input[id='status']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeMdocDetail', function () {
+        $(this).closest('tr').remove();
+    });
+    var dbMdoc;
+    GetMdoclist();
+    $("#gridMdocList").jsGrid({
+
+        paging: true,
+        pageIndex: 1,
+        pageSize: 5,
+        editing: true,
+        filtering: true,
+
+        controller: {
+
+            loadData: function (filter) {
+                return $.grep(dbMdoc, function (mdoc) {
+
+                    return (!filter.ContractNo || mdoc.ContractNo.toLowerCase().indexOf(filter.ContractNo.toLowerCase()) > -1)
+                        && (!filter.AgreementType || mdoc.AgreementType != null && mdoc.AgreementType.toLowerCase().indexOf(filter.AgreementType.toLowerCase()) > -1)
+                        && (!filter.CoordinatingPerson || mdoc.CoordinatingPerson != null && mdoc.CoordinatingPerson.toLowerCase().indexOf(filter.CoordinatingPerson.toLowerCase()) > -1)
+                        && (!filter.Party || mdoc.Party != null && mdoc.Party.toLowerCase().indexOf(filter.Party.toLowerCase()) > -1);
+
+                });
+            }
+
+        },
+
+        fields: [
+            { name: "SNo", title: "S.No", editing: false, align: "left", width: "50px" },
+            { type: "text", name: "ContractNo", title: "Contract No" },
+            { type: "text", name: "AgreementType", title: "AgreementType", editing: false },
+            { type: "text", name: "CoordinatingPerson", title: "Coordinating Person", editing: false, width: "70px" },
+            { type: "text", name: "Party", title: "Party", editing: false, width: "75px" },
+            {
+                type: "control", editButton: false, deleteButton: false, width: "25px",
+                _createFilterSwitchButton: function () {
+                    return this._createOnOffSwitchButton("filtering", this.searchModeButtonClass, false);
+                }
+            },
+        ],
+    });
+    $("#gridMdocList").jsGrid("option", "filtering", false);
+    //$.ajax({
+    //    type: "GET",
+    //    url: 'GetMdocList',
+    //    data: param = "",
+    //    contentType: "application/json; charset=utf-8",
+    //    success: function (result) {
+    //        // dataProposal = result;
+    //        $("#gridProposalList").jsGrid({ data: result });
+    //        //$('#projectopening').hide();
+    //        //$('#gridproposal').show();
+    //    },
+    //    error: function (err) {
+    //        console.log("error : " + err);
+    //    }
+    //});
+
+    function GetMdoclist() {
+        $.ajax({
+            type: "GET",
+            url: 'GetMdocList',
+            data: param = "",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                // dataProposal = result;
+                $("#gridMdocList").jsGrid({ data: result });
+                //$('#projectopening').hide();
+                //$('#gridproposal').show();
+                dbMdoc = result;
+            },
+            error: function (err) {
+                console.log("error : " + err);
+            }
+        });
+    }
+
+</script>

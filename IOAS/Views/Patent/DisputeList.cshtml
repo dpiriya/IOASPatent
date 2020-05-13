@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "DisputeList";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div class="row hd-tt-bg">
+    <div class="col-md-4">
+        <h3>Dispute List</h3>
+    </div>
+    <div id="addnewpage" class="col-md-8 flt-nav-links">
+
+        @*<a href="Javascript:void(0)" id="btnFilter" class="pull-right"> <i class="ion-android-funnel"></i>Filters</a>*@
+        <a href="@Url.Action("Dispute")"> <i class="ion-plus"></i>Add New</a>
+
+    </div>
+</div>
+<div class="row mt30">
+    <div class="page-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="custom-jsgrid-normal">
+                    <div id="DisputeList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken()
+<div id="popup"></div>
+<script type="text/javascript">
+    var errMsg = '@TempData["errMsg"]';
+    var succMsg = '@TempData["succMsg"]';
+     var role = '@ViewBag.role';
+    $(document).ready(function () {
+        if (succMsg != '') {
+            $('#alertSuccess').html(succMsg);
+            $('#Success').modal('toggle');
+        }
+        else if (errMsg != '') {
+            $('#FailedAlert').html(errMsg);
+            $('#Failed').modal('toggle');
+        }
+    });
+    var DateField = function (config) {
+        jsGrid.Field.call(this, config);
+    };
+    DateField.prototype = new jsGrid.Field({
+        sorter: function (date1, date2) {
+            return new Date(date1) - new Date(date2);
+        },
+
+        itemTemplate: function (value) {
+            return new Date(value).toDateString();
+        },
+
+        filterTemplate: function () {
+            var now = new Date();
+            this._fromPicker = $("<input>").datepicker({ defaultDate: now.setFullYear(now.getFullYear() - 1), changeYear: true });
+            this._toPicker = $("<input>").datepicker({ defaultDate: now.setFullYear(now.getFullYear() + 1), changeYear: true });
+            return $("<div>").append(this._fromPicker).append(this._toPicker);
+        },
+
+        insertTemplate: function (value) {
+            return this._insertPicker = $("<input>").datepicker({ defaultDate: new Date() });
+        },
+
+        editTemplate: function (value) {
+            return this._editPicker = $("<input>").datepicker().datepicker("setDate", new Date(value));
+        },
+
+        insertValue: function () {
+            return this._insertPicker.datepicker("getDate").toISOString();
+        },
+
+        editValue: function () {
+            return this._editPicker.datepicker("getDate").toISOString();
+        },
+
+        filterValue: function () {
+            return {
+                from: this._fromPicker.datepicker("getDate"),
+                to: this._toPicker.datepicker("getDate")
+            };
+        }
+    });
+    jsGrid.fields.date = DateField;
+    var db;
+    $("#DisputeList").jsGrid({
+        paging: true,
+        pageIndex: 1,
+        pageSize: 10,
+        editing: true,
+        filtering: true,
+        controller: {
+
+            loadData: function (filter) {
+                return $.grep(db, function (dispute) {
+                    return (!filter.DisputeNo || dispute.DisputeNo.toLowerCase().indexOf(filter.DisputeNo.toLowerCase()) > -1)
+                    && (!filter.DGroup || dispute.DGroup.toLowerCase().indexOf(filter.DGroup.toLowerCase()) > -1)
+                        && (!filter.Coordinator || dispute.Coordinator.toLowerCase().indexOf(filter.Coordinator.toLowerCase()) > -1)
+                        && (!filter.PartyName || dispute.PartyName.toLowerCase().indexOf(filter.PartyName.toLowerCase()) > -1)
+                        && (!filter.Status||dispute.Status.toLowerCase().indexOf(filter.Status.toLowerCase())>-1);
+
+                });
+            }
+
+        },
+
+        fields: [
+            { type: "text", name: "DisputeNo", title: "DisputeNo", editing: false, width: 80 },
+            { type: "text", name: "DGroup", title: "Group", editing: false },
+            { type: "text", name: "Coordinator", title: "Coordinator", editing: false },
+            { type: "text",name: "PartyName", title: "Party", editing: false },
+            { type: "text",name: "Status", title: "Status", editing: false },
+            {
+                type: "control", title: "Action",
+
+                itemTemplate: function (value, item) {
+                    var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+                    var $customButton = $("<button>")
+                        .attr("type", "button")
+                        .attr("class", "ion ion-ios-trash")
+                        .click(function (e) {
+                            var choice = confirm("Do you want to remove this record?");
+                            if (choice === true) {
+                                var token = $("input[name=__RequestVerificationToken]").val();
+                                $.ajax({
+                                    type: "POST",
+                                    url: 'DeleteDispute',
+                                    data: { __RequestVerificationToken: token, dno: item.DisputeNo },
+                                    success: function (data) {
+                                        if (data.Status == "success") {
+                                            messageBox("Verified dispute record has been removed successfully", "success");
+                                            location.reload();
+                                        } else {
+                                            messageBox("Something went wrong please contact administrator", "error");
+                                        }
+                                    },
+                                    error: function (err) {
+                                        console.log("error1 : " + err);
+                                    }
+                                });
+                            }
+                            e.stopPropagation();
+                        });
+
+                    var $customButtonEdit = $("<button>")
+                        .attr("class", "ion ion-edit")
+                        .click(function (e) {
+                             var url = '@Url.Action("Dispute", "Patent")?DisputeNo=' + item.DisputeNo;
+                             window.location.href = url;
+                            //$.ajax({
+                            //    type: "GET",
+                            //    url: 'EditDispute',
+                            //    data: { "dispno": item.DisputeNo },
+                            //    success: function (result) {
+                            //        if (result == -1) {
+                            //            $("#FailedAlert").text('Error. Try again!');
+                            //            $('#Failed').modal('show');
+                            //        } else {
+                            //            $("#popup").html(result);
+                            //            $('#EditOutwardModal').modal('toggle');
+                            //        }
+                            //    },
+                            //    error: function (err) {
+                            //        console.log("error1 : " + err);
+                            //    }
+                            //});
+                            e.stopPropagation();
+                        });
+                    if (role == "IPM Cell Admin") {
+                        return $("<div>").append($customButtonEdit).append($customButton);
+                    }
+                    else {
+                        return $("<div>").append($customButtonEdit);
+                    }
+                    // return $result.add($customButton);
+
+                }
+            }
+
+        ]
+    });
+    $("#DisputeList").jsGrid("option", "filtering", false);
+    loadDetails();
+    function loadDetails() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDisputeList", "Patent")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                    db = result;
+                    $("#DisputeList").jsGrid({ data: db });
+            },
+            error: function (err) {
+                console.log("error : " + err);
+            }
+
+        });
+    }
+
+</script>
+
+

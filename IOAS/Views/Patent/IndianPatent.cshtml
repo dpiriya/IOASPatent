@@ -1,0 +1,244 @@
+﻿@model IOAS.Models.Patent.IndianPatentVM
+@{
+    ViewBag.Title = "IndianPatent";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div class="row">
+    @using (Html.BeginForm("IndianPatent", "Patent", FormMethod.Post, new { @class = "", role = "form", @id = "formCP", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12">
+            <div class="page-wrapper" id="createInternational">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">Indian Patent File Creation</h3>
+                            @Html.HiddenFor(m => m.FileNo)
+                            @Html.HiddenFor(m => m.isUpdate)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> File Number </label>
+                                    @Html.TextBoxFor(m => m.FileNo, new { @class = "form-control", @id = "fileno", @readonly = "readonly" })
+                                    <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.FileNo)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> Attorney </label>
+                                    @Html.DropDownListFor(m => m.Attorney, new SelectList(ViewBag.att), "Select Attorney", new { @class = "form-control", @id = "att" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">ApplicationNo</label>
+                                @Html.TextBoxFor(m => m.ApplicationNo, new { @class = "form-control", @required = "required", @id = "applno" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Filing Date</label>
+                                @Html.TextBoxFor(m => m.FilingDate, new { @class = "form-control datepicker", @id = "fdt" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Complete Filing Date</label>
+                                @Html.TextBoxFor(m => m.CompleteFilingDate, new { @class = "form-control datepicker", @id = "cdt" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Publication Path</label>
+                                @Html.DropDownListFor(m => m.PublicationPath, new SelectList(ViewBag.pubpath), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Publication No</label>
+                                @Html.TextBoxFor(m => m.PublicationNo, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Publication Date</label>
+                                @Html.TextBoxFor(m => m.PublicationDate, new { @class = "form-control datepicker" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group custom-form-group ">
+                                <label>FER Request Placed</label>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group custom-form-group ">
+                                @Html.RadioButtonFor(m => m.FERPlaced, true)@Html.Label("Yes")
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group custom-form-group ">
+                                @Html.RadioButtonFor(m => m.FERPlaced, false)@Html.Label("No")
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group custom-form-group ">
+                                <label>FER Issued</label>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group custom-form-group ">
+                                @Html.RadioButtonFor(m => m.FERIssued, true)@Html.Label("Yes")
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group custom-form-group ">
+                                @Html.RadioButtonFor(m => m.FERIssued, false)@Html.Label("No")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>FER Issue Date</label>
+                                @Html.TextBoxFor(m => m.FERIssueDate, new { @class = "form-control datepicker" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Status</label>
+                                @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.Stat), new { @class = "form-control", @id = "status" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>SubStatus</label>
+                                @if (ViewBag.subst != null)
+                                {
+                                    @Html.DropDownListFor(m => m.SubStatus, new SelectList(ViewBag.subst), new { @class = "form-control", @id = "substat" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(m => m.SubStatus, new SelectList(""), new { @class = "form-control", @id = "substat" })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="saveIndianPatent">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Save" name="Button" id="btnSave" />
+                        <input type="button" onclick="window.location.href='@Url.Action("FileList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+                <div class="row" id="updateIndianPatent">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Update" name="Button" id="btnupdate" />
+                        <input type="button" onclick="window.location.href='@Url.Action("FileList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (ViewBag.succMsg != null)
+{
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("InternationalList", "Patent")';">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+                    <p>@ViewBag.succMsg</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("InternationalList", "Patent")';">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+}
+
+@if (ViewBag.errMsg != null)
+{
+    <div id="myModal1" class="modal fade modal-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-cancel"></i>
+                    <h3 class="modal-title">Error Message</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.errMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal1').modal('show');
+        });
+
+    </script>
+}
+<script type="text/javascript">
+    $('.datepicker').datepicker({
+        dateFormat: "dd/mm/yy",
+        changeMonth: true,
+        changeYear: true
+    });
+    $('#status').change(function () {
+        $.ajax({
+            url: "GetSubStatus",
+            data: { st: $('#status').val() },
+            success: function (msg) {
+                $('#substat').html("")
+                $.each(msg, function (data, value) {
+                    $('#substat').append($("<option></option>").val(value).html(value));
+                })
+            }
+
+        });
+    });
+    $(function () {
+        if ($('#isUpdate').val() == "True") {
+            $('#saveIndianPatent').hide();
+            $('#updateIndianPatent').show();
+        }
+        else {
+            $('#updateIndianPatent').hide();
+            $('#saveIndianPatent').show();
+        }
+    });
+</script>
+
+

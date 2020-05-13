@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "DuediligenceList";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+
+
+<div class="row hd-tt-bg">
+    <div class="col-md-4">
+        <h3>DueDiligence List</h3>
+    </div>
+    <div id="addnewpage" class="col-md-8 flt-nav-links">
+
+        @*<a href="Javascript:void(0)" id="btnFilter" class="pull-right"> <i class="ion-android-funnel"></i>Filters</a>*@
+        <a href="@Url.Action("Duediligence")"> <i class="ion-plus"></i>Add New</a>
+
+    </div>
+</div>
+<div class="row mt30">
+    <div class="page-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="custom-jsgrid-normal">
+                    <div id="DuediligenceList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken()
+<div id="popup"></div>
+<script type="text/javascript">
+    var errMsg = '@TempData["errMsg"]';
+    var succMsg = '@TempData["succMsg"]';
+    var role = '@ViewBag.role';
+    $(document).ready(function () {
+        if (succMsg != '') {
+            $('#alertSuccess').html(succMsg);
+            $('#Success').modal('toggle');
+        }
+        else if (errMsg != '') {
+            $('#FailedAlert').html(errMsg);
+            $('#Failed').modal('toggle');
+        }
+    });
+    var DateField = function (config) {
+        jsGrid.Field.call(this, config);
+    };
+    DateField.prototype = new jsGrid.Field({
+        sorter: function (date1, date2) {
+            return new Date(date1) - new Date(date2);
+        },
+
+        itemTemplate: function (value) {
+            return new Date(value).toDateString();
+        },
+
+        filterTemplate: function () {
+            var now = new Date();
+            this._fromPicker = $("<input>").datepicker({ defaultDate: now.setFullYear(now.getFullYear() - 1), changeYear: true });
+            this._toPicker = $("<input>").datepicker({ defaultDate: now.setFullYear(now.getFullYear() + 1), changeYear: true });
+            return $("<div>").append(this._fromPicker).append(this._toPicker);
+        },
+
+        insertTemplate: function (value) {
+            return this._insertPicker = $("<input>").datepicker({ defaultDate: new Date() });
+        },
+
+        editTemplate: function (value) {
+            return this._editPicker = $("<input>").datepicker().datepicker("setDate", new Date(value));
+        },
+
+        insertValue: function () {
+            return this._insertPicker.datepicker("getDate").toISOString();
+        },
+
+        editValue: function () {
+            return this._editPicker.datepicker("getDate").toISOString();
+        },
+
+        filterValue: function () {
+            return {
+                from: this._fromPicker.datepicker("getDate"),
+                to: this._toPicker.datepicker("getDate")
+            };
+        }
+    });
+    jsGrid.fields.date = DateField;
+    var db;
+    $("#DuediligenceList").jsGrid({
+        paging: true,
+        pageIndex: 1,
+        pageSize: 10,
+        editing: false,
+        filtering: true,
+        controller: {
+
+            loadData: function (filter) {
+                return $.grep(db, function (dd) {
+                    return (!filter.FileNo || dd.FileNo==filter.FileNo)
+                        && (!filter.Sno || dd.Sno==filter.Sno)
+                        && (!filter.ReportType || dd.ReportType.toLowerCase().indexOf(filter.ReportType.toLowerCase()) > -1)
+                        && (!filter.Allocation || dd.Allocation != null && dd.Allocation.toLowerCase().indexOf(filter.Allocation.toLowerCase()) > -1)
+                        && (!filter.Mode || dd.Mode != null && dd.Mode.toLowerCase().indexOf(filter.Mode.toLowerCase()) > -1);                                       });
+            }
+
+        },
+
+        fields: [
+            { type: "text", name: "FileNo", title: "FileNo", editing: false, width: 80 },
+            { type: "text", name: "Sno", title: "SNo", editing: false, width: 80 },
+            { type: "text", name: "ReportType", title: "ReportType", editing: false },
+            { type: "text", name: "Allocation", title: "Allocation", editing: false },
+            { type: "text", name: "Mode", title: "Mode", editing: false },     
+            {
+                type: "control", title: "Action", 
+
+                itemTemplate: function (value, item) {
+                    var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+                    var $customButton = $("<button>")
+                        .attr("type", "button")
+                        .attr("class", "ion ion-ios-trash")
+                        .click(function (e) {
+                            var choice = confirm("Do you want to remove this record?");
+                            if (choice === true) {
+                                var token = $("input[name=__RequestVerificationToken]").val();
+                                $.ajax({
+                                    type: "POST",
+                                    url: 'DeleteDueDiligence',
+                                    data: { __RequestVerificationToken: token, dno: item.FileNo,sno:item.Sno },
+                                    success: function (data) {
+                                        if (data == "Success") {
+                                            messageBox("Verified Duediligence record has been removed successfully", "success");
+                                            location.reload();
+                                        } else {
+                                            messageBox("Something went wrong please contact administrator", "error");
+                                        }
+                                    },
+                                    error: function (err) {
+                                        console.log("error1 : " + err);
+                                    }
+                                });
+                            }
+                            e.stopPropagation();
+                        });
+
+                    var $customButtonEdit = $("<button>")
+                        .attr("class", "ion ion-edit")
+                        .click(function (e) {
+                            var url = '@Url.Action("Duediligence", "Patent")?FileNo=' + item.FileNo +'&sno='+item.Sno;
+                             window.location.href = url;                            
+                            e.stopPropagation();
+                        });
+                    if (role == "IPM Cell Admin") {
+                        return $("<div>").append($customButtonEdit).append($customButton);
+                    }
+                    else {
+                        return $("<div>").append($customButtonEdit); 
+                    }
+                }
+            }
+
+        ]
+    });
+    $("#DuediligenceList").jsGrid("option", "filtering", false);
+    loadDetails();
+    function loadDetails() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDuediligenceList", "Patent")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                    db = result;
+                    $("#DuediligenceList").jsGrid({ data: db });
+            },
+            error: function (err) {
+                console.log("error : " + err);
+            }
+
+        });
+    }
+
+</script>
+

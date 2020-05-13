@@ -1,0 +1,1180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AE952FA8-A51F-43D2-B3E8-5C89CBBC007B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IOAS</RootNamespace>
+    <AssemblyName>IOAS</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.93.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.93.1\lib\net40\ClosedXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.ReportSource.1.0.0\lib\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.Shared.1.0.0\lib\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.3.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.3\lib\net20\ExcelNumberFormat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastMember.Signed, Version=1.3.0.0, Culture=neutral, PublicKeyToken=9e8f22703bef9a29, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.Signed.1.3.0\lib\net45\FastMember.Signed.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FoolproofValidation">
+      <HintPath>..\packages\Foolproof.0.9.4518\lib\net45\FoolproofValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.0.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.0.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.0.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.0.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.0.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApproveListController.cs" />
+    <Compile Include="Controllers\CoreAccountsController.cs" />
+    <Compile Include="Controllers\CrystalReportController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FacilityController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ITDeclarationController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\OfficeOrderController.cs" />
+    <Compile Include="Controllers\PatentController.cs" />
+    <Compile Include="Controllers\ProcessEngineController.cs" />
+    <Compile Include="Controllers\ProcessGuidelineController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectReportController.cs" />
+    <Compile Include="Controllers\ProposalController.cs" />
+    <Compile Include="Controllers\ProposalReportController.cs" />
+    <Compile Include="Controllers\ReportMasterController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\StaffPaymentController.cs" />
+    <Compile Include="Controllers\TapalReportController.cs" />
+    <Compile Include="CrystalReport\Agencywisesanction.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Agencywisesanction.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\BOATransactionDetails.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BOATransactionDetails.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\CashBook.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CashBook.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\CashBookPayment.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CashBookPayment.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\CashBookReceipt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CashBookReceipt.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\CommitmentReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommitmentReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\Facultywisesanction.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Facultywisesanction.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\NewPropsalssentfunding1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewPropsalssentfunding.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\Postings.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Postings.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\ProjectTransactionReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectTransactionReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\Proposalsponsored.cs">
+      <SubType>Component</SubType>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Proposalsponsored.rpt</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReport\SanctionProjectReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SanctionProjectReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\TapalTransReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TapalTransReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CrystalReport\TrailBalance2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrailBalance2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GenericServices\AccountService.cs" />
+    <Compile Include="GenericServices\AdminService.cs" />
+    <Compile Include="GenericServices\CommonConverter.cs" />
+    <Compile Include="GenericServices\CoreAccountsService.cs" />
+    <Compile Include="GenericServices\Cryptography.cs" />
+    <Compile Include="GenericServices\CrystalReportService.cs" />
+    <Compile Include="GenericServices\MasterService.cs" />
+    <Compile Include="GenericServices\OfficeOrderService.cs" />
+    <Compile Include="GenericServices\PatentService.cs" />
+    <Compile Include="GenericServices\ProcessClarifyService.cs" />
+    <Compile Include="GenericServices\ProcessEngineService.cs" />
+    <Compile Include="GenericServices\ProcessFailureService.cs" />
+    <Compile Include="GenericServices\ProcessGuidelineBO.cs" />
+    <Compile Include="GenericServices\ProcessSuccessService.cs" />
+    <Compile Include="GenericServices\ProjectReportService.cs" />
+    <Compile Include="GenericServices\ProjectService.cs" />
+    <Compile Include="GenericServices\ProposalReportService.cs" />
+    <Compile Include="GenericServices\ProposalService.cs" />
+    <Compile Include="GenericServices\FacilityService.cs" />
+    <Compile Include="GenericServices\ReportService.cs" />
+    <Compile Include="GenericServices\StaffPaymentService.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\AuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\Common.cs" />
+    <Compile Include="Infrastructure\FileHandler.cs" />
+    <Compile Include="Infrastructure\IOASException.cs" />
+    <Compile Include="Infrastructure\Patent.cs" />
+    <Compile Include="Infrastructure\PredicateBuilder.cs" />
+    <Compile Include="Infrastructure\RoleProvider.cs" />
+    <Compile Include="Infrastructure\Utility.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CoreAccountsModels.cs" />
+    <Compile Include="Models\CrystalReportViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ITDeclarationModel.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MasterViewModels.cs" />
+    <Compile Include="Models\OfficeOrderModel.cs" />
+    <Compile Include="Models\Patent\AgreementVM.cs" />
+    <Compile Include="Models\Patent\AnnexureB1_trxVM.cs" />
+    <Compile Include="Models\Patent\Applicant_trxVM.cs" />
+    <Compile Include="Models\Patent\ApplicationAreas_trxVM.cs" />
+    <Compile Include="Models\Patent\CoInventorVM.cs" />
+    <Compile Include="Models\Patent\CoInventor_trxVM.cs" />
+    <Compile Include="Models\Patent\CommercialMode_trxVM.cs" />
+    <Compile Include="Models\Patent\CopyRight_trxVM.cs" />
+    <Compile Include="Models\Patent\CRAuthor_trxVM.cs" />
+    <Compile Include="Models\Patent\CRPublish_trxVM.cs" />
+    <Compile Include="Models\Patent\DisputeActivity.cs" />
+    <Compile Include="Models\Patent\DisputeVM.cs" />
+    <Compile Include="Models\Patent\DueDiligenceVM.cs" />
+    <Compile Include="Models\Patent\FileCreationVM.cs" />
+    <Compile Include="Models\Patent\IDFRequestVM.cs" />
+    <Compile Include="Models\Patent\IDFRequest_trxVM.cs" />
+    <Compile Include="Models\Patent\IdfVM.cs" />
+    <Compile Include="Models\Patent\IndianPatentVM.cs" />
+    <Compile Include="Models\Patent\InternationalSecVM.cs" />
+    <Compile Include="Models\Patent\InternationalVM.cs" />
+    <Compile Include="Models\Patent\NewInternationalVM.cs" />
+    <Compile Include="Models\Patent\PatFilesVM.cs" />
+    <Compile Include="Models\Patent\ReceiptSecVM.cs" />
+    <Compile Include="Models\Patent\ReceiptVM.cs" />
+    <Compile Include="Models\Patent\ServiceProviderVM.cs" />
+    <Compile Include="Models\Patent\ServiceRequestVM.cs" />
+    <Compile Include="Models\Patent\SRReportVM.cs" />
+    <Compile Include="Models\Patent\SRMasterReportVM.cs" />
+    <Compile Include="Models\Patent\TradeApplicant_trxVM.cs" />
+    <Compile Include="Models\Patent\Trade_trxVM.cs" />
+    <Compile Include="Models\ProcessEngineModel.cs" />
+    <Compile Include="Models\ProcessGuidelineModel.cs" />
+    <Compile Include="Models\ProjectModels.cs" />
+    <Compile Include="Models\ProjectReportViewModel.cs" />
+    <Compile Include="Models\ProposalModels.cs" />
+    <Compile Include="Models\FacilityModels.cs" />
+    <Compile Include="Models\ProposalReportViewModel.cs" />
+    <Compile Include="Models\ReportViewModels.cs" />
+    <Compile Include="Models\SalaryHead.cs" />
+    <Compile Include="Models\SqlViewsModel.cs" />
+    <Compile Include="Models\StaffPaymentModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Script\BenetShibin\Script.sql" />
+    <Content Include="App_Data\Script\Ramesh\ramesh.sql" />
+    <Content Include="App_Data\Script\Subash\1-12-18.sql" />
+    <Content Include="App_Data\Script\Thomas\15-11-18.sql" />
+    <Content Include="App_Data\Script\Thomas\16-10-18.sql" />
+    <Content Include="App_Data\Script\Thomas\18-10-18.sql" />
+    <Content Include="App_Data\Script\Thomas\21-11-18.sql" />
+    <Content Include="App_Data\Script\Thomas\31-10-18.sql" />
+    <Content Include="App_Data\Script\Thomas\AD_DB.sql" />
+    <Content Include="App_Data\Script\Thomas\Script.sql" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\InstituteLogo\37616b81-4f25-4a72-a506-d28385afe5bf_IITMadras.png" />
+    <Content Include="Content\InstituteLogo\3bfc6937-04a6-49c4-ae2f-0df2aec617ab_IITG.png" />
+    <Content Include="Content\InstituteLogo\442451dd-dae9-44d9-9154-8acae4258016_IITBBS.png" />
+    <Content Include="Content\InstituteLogo\5c698ed2-1725-45b5-b896-37e3eba2930f_IITP.png" />
+    <Content Include="Content\InstituteLogo\615b77a0-3797-45ed-a4ef-d9257d72ba75_IITI.png" />
+    <Content Include="Content\InstituteLogo\673777cb-1a2b-48c2-a4d7-6902f3e39ad1_IITJ.png" />
+    <Content Include="Content\InstituteLogo\744af94a-ddee-4dd6-8873-48aaef500351_IITKGP.png" />
+    <Content Include="Content\InstituteLogo\83aea50b-c16f-4c50-a9e4-0532a357447e_logicfield-logo.png" />
+    <Content Include="Content\InstituteLogo\893dd939-8415-4102-b415-e03d63c1d88a_IITGN.png" />
+    <Content Include="Content\InstituteLogo\92dd9cde-5534-423f-ac14-2a78d5d087e6_IITD.png" />
+    <Content Include="Content\InstituteLogo\b2c218ce-77bb-4adc-925a-0b6a9cdda315_IITB.png" />
+    <Content Include="Content\InstituteLogo\b3345cef-df5e-4adc-a67a-42a5865802f4_IITMandi.png" />
+    <Content Include="Content\InstituteLogo\b8b855b6-ae35-4e85-a505-87f8b64370dd_IITH.png" />
+    <Content Include="Content\InstituteLogo\d0d1a828-8187-4998-ac3b-adb24d04509f_IITK.png" />
+    <Content Include="Content\InstituteLogo\e57e1721-656a-4100-a5a6-2237ebd5862e_IITR.png" />
+    <Content Include="Content\InstituteLogo\e8b695c8-cd2b-4a4e-8d34-a2e0683ee966_IITRPR.png" />
+    <Content Include="Content\InstituteLogo\f982f76f-18b1-4867-91d4-52ebde89acde_IIT%28BHU%29_Varanasi.png" />
+    <Content Include="Content\InstituteLogo\fba2117c-b9c6-45bc-aee7-9df5ea0a0c8d_IIT%28BHU%29_Varanasi.png" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\css\bootstrap-select.css" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\css\bootstrap-select.min.css" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\bootstrap-select.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\bootstrap-select.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ar_AR.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ar_AR.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-bg_BG.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-bg_BG.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-cro_CRO.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-cro_CRO.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-cs_CZ.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-cs_CZ.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-da_DK.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-da_DK.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-de_DE.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-de_DE.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-en_US.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-en_US.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-es_CL.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-es_CL.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-es_ES.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-es_ES.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-et_EE.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-et_EE.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-eu.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-eu.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-fa_IR.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-fa_IR.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-fi_FI.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-fi_FI.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-fr_FR.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-fr_FR.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-hu_HU.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-hu_HU.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-id_ID.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-id_ID.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-it_IT.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-it_IT.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ja_JP.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ja_JP.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-kh_KM.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-kh_KM.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ko_KR.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ko_KR.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-lt_LT.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-lt_LT.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-nb_NO.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-nb_NO.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-nl_NL.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-nl_NL.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-pl_PL.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-pl_PL.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-pt_BR.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-pt_BR.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-pt_PT.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-pt_PT.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ro_RO.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ro_RO.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ru_RU.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ru_RU.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-sk_SK.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-sk_SK.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-sl_SI.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-sl_SI.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-sv_SE.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-sv_SE.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-tr_TR.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-tr_TR.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ua_UA.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-ua_UA.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-vi_VN.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-vi_VN.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-zh_CN.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-zh_CN.min.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-zh_TW.js" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\i18n\defaults-zh_TW.min.js" />
+    <Content Include="Content\IOASContent\assets\js\contact.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins-js.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\controls.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\imagesloaded.pkgd.min.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\jquery-2.2.4.min.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\jquery.colorbox.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\jquery.easing.1.3.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\jquery.filterizr.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\jquery.scrollUp.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\modernizr.custom.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\owl.carousel.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\owl.carousel.min.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\smooth-scrollbar.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\validator.js" />
+    <Content Include="Content\IOASContent\assets\js\plugins\wow.min.js" />
+    <Content Include="Content\IOASContent\assets\js\scripts.js" />
+    <Content Include="Content\IOASContent\assets\js\scripts_v1.js" />
+    <Content Include="Content\IOASContent\Base\bootstrap-datepicker.js" />
+    <Content Include="Content\IOASContent\Base\bootstrap-datepicker.min.js" />
+    <Content Include="Content\IOASContent\Base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\IOASContent\Base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\IOASContent\Base\jquery-1.12.4.js" />
+    <Content Include="Content\IOASContent\Base\jquery-ui.css" />
+    <Content Include="Content\IOASContent\Base\jquery-ui.js" />
+    <Content Include="Content\IOASContent\Base\jquery.ui.datepicker.css" />
+    <Content Include="Content\IOASContent\Base\style.css" />
+    <Content Include="Content\IOASContent\css\bootstrap-theme.css" />
+    <Content Include="Content\IOASContent\css\bootstrap-theme.min.css" />
+    <Content Include="Content\IOASContent\css\bootstrap.css" />
+    <Content Include="Content\IOASContent\css\bootstrap.min.css" />
+    <Content Include="Content\IOASContent\css\custom-css.css" />
+    <Content Include="Content\IOASContent\css\custom-jsgrid.css" />
+    <Content Include="Content\IOASContent\css\Developercss\Style.css" />
+    <Content Include="Content\IOASContent\css\font-awesome.css" />
+    <Content Include="Content\IOASContent\css\font-awesome.min.css" />
+    <Content Include="Content\IOASContent\css\ioas-icons.css" />
+    <Content Include="Content\IOASContent\css\ionicons.css" />
+    <Content Include="Content\IOASContent\css\ionicons.min.css" />
+    <Content Include="Content\IOASContent\css\jsgrid.css" />
+    <Content Include="Content\IOASContent\css\jsgrid.min.css" />
+    <Content Include="Content\IOASContent\css\owl.carousel.css" />
+    <Content Include="Content\IOASContent\css\theme.css" />
+    <Content Include="Content\IOASContent\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\IOASContent\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\IOASContent\fonts\icomoon.svg" />
+    <Content Include="Content\IOASContent\fonts\ionicons.svg" />
+    <Content Include="Content\IOASContent\img\404-error-img.png" />
+    <Content Include="Content\IOASContent\img\agriculture.png" />
+    <Content Include="Content\IOASContent\img\checkbox-2x.png" />
+    <Content Include="Content\IOASContent\img\event-calender-img.jpg" />
+    <Content Include="Content\IOASContent\img\ICSR-bg.jpg" />
+    <Content Include="Content\IOASContent\img\iit-logo.png" />
+    <Content Include="Content\IOASContent\img\iitm-icsr-logo.png" />
+    <Content Include="Content\IOASContent\img\iitm-logo.png" />
+    <Content Include="Content\IOASContent\img\jsgrid-icons-white.png" />
+    <Content Include="Content\IOASContent\img\jsgrid-icons.png" />
+    <Content Include="Content\IOASContent\img\laptop-img.jpg" />
+    <Content Include="Content\IOASContent\img\login-bg-img.png" />
+    <Content Include="Content\IOASContent\img\login-bg.jpg" />
+    <Content Include="Content\IOASContent\img\pattern-img-01.jpg" />
+    <Content Include="Content\IOASContent\img\question-mark-img.jpg" />
+    <Content Include="Content\IOASContent\img\radio-2x.png" />
+    <Content Include="Content\IOASContent\img\stamp-icon.png" />
+    <Content Include="Content\IOASContent\img\Image_placeholder.png" />
+    <Content Include="Content\IOASContent\img\ux-trends-awwwards-07.jpg" />
+    <Content Include="Content\IOASContent\js\bootstrap.js" />
+    <Content Include="Content\IOASContent\js\bootstrap.min.js" />
+    <Content Include="Content\IOASContent\js\css\icons-2x.png" />
+    <Content Include="Content\IOASContent\js\css\icons.png" />
+    <Content Include="Content\IOASContent\js\css\jsgrid.css" />
+    <Content Include="Content\IOASContent\js\css\theme.css" />
+    <Content Include="Content\IOASContent\js\jquery.min.1.11.3.js" />
+    <Content Include="Content\IOASContent\js\jquery.twbsPagination.js" />
+    <Content Include="Content\IOASContent\js\jquery.twbsPagination.min.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\fields\jsgrid.field.checkbox.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\fields\jsgrid.field.control.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\fields\jsgrid.field.number.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\fields\jsgrid.field.select.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\fields\jsgrid.field.text.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\fields\jsgrid.field.textarea.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\cs.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\de.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\el.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\es.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\fa.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\fr.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\he.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\it.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\ja.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\ka.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\Ko.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\pl.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\pt-br.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\pt.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\ru.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\tr.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\zh-cn.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\i18n\zh-tw.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\jsgrid.core.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\jsgrid.field.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\jsgrid.load-indicator.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\jsgrid.load-strategies.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\jsgrid.min.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\jsgrid.sort-strategies.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\jsgrid.validation.js" />
+    <Content Include="Content\IOASContent\js\JSGrid\jsgrid_exclude_core.min.js" />
+    <Content Include="Content\IOASContent\js\moment.min.js" />
+    <Content Include="Content\IOASContent\js\myscripts.js" />
+    <Content Include="Content\IOASContent\js\owl.carousel.js" />
+    <Content Include="Content\IOASContent\js\owl.carousel.min.js" />
+    <Content Include="Content\IOASContent\js\db.js" />
+    <Content Include="Content\UserImage\cc326846-b3d0-4fcb-94c5-0a94a4ffd0b1_logicfield-logo.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="App_Data\Script\Script.sql" />
+    <Content Include="Scripts\Account\ActiveCommitment.js" />
+    <Content Include="Scripts\Account\Addrole.js" />
+    <Content Include="Scripts\Account\Allocationhead.js" />
+    <Content Include="Scripts\Account\CommitmentList.js" />
+    <Content Include="Scripts\Account\CreateAgency.js" />
+    <Content Include="Scripts\Account\CreatePI.js" />
+    <Content Include="Scripts\Account\CreateUser.js" />
+    <Content Include="Scripts\Account\Department.js" />
+    <Content Include="Scripts\Account\Functionrole.js" />
+    <Content Include="Scripts\Account\Institute.js" />
+    <Content Include="Scripts\ai.0.22.9-build00167.js" />
+    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\IOASContent\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\IOASContent\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\IOASContent\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\IOASContent\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\IOASContent\fonts\FontAwesome.otf" />
+    <Content Include="Content\IOASContent\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\IOASContent\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\IOASContent\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\IOASContent\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\IOASContent\fonts\ionicons.eot" />
+    <Content Include="Content\IOASContent\fonts\ionicons.ttf" />
+    <Content Include="Content\IOASContent\fonts\ionicons.woff" />
+    <Content Include="Content\IOASContent\fonts\icomoon.eot" />
+    <Content Include="Content\IOASContent\fonts\icomoon.ttf" />
+    <Content Include="Content\IOASContent\fonts\icomoon.woff" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\css\bootstrap-select.css.map" />
+    <Content Include="Content\IOASContent\assets\bootstrap-select\js\bootstrap-select.js.map" />
+    <Content Include="Content\ProposalDocuments\06b10ebe-4a0b-4e0e-807d-8ffb3e5e2e30_UAY17_IISC_001P.pdf" />
+    <Content Include="Content\ProposalDocuments\8607f1d2-b522-4baa-9f69-9d07a6a2a49d_UAY17_IISC_001P.pdf" />
+    <Content Include="Content\ProposalDocuments\a7f442b2-52af-409f-93ab-d753bc00376f_UAY17_IISC_002P.pdf" />
+    <Content Include="Content\SRBDocuments\52cc4279-25a4-4245-9e2b-a0ba5ae1bfda_UAY2017_Review_Template.pdf" />
+    <Content Include="Content\SRBDocuments\5cc10e8d-a9f5-464e-bd14-277ef3b016b0_UAY2017_Review_Template.pdf" />
+    <Content Include="Content\SRBDocuments\74268507-e2de-44dd-8dd2-0f51e4ee3853_UAY2017_Review_Template.pdf" />
+    <Content Include="Content\SRBDocuments\caaca346-5db7-4bdd-a809-4801bc60b6b7_UAY2017_Review_Template.pdf" />
+    <Content Include="Content\TapalDocuments\2da3cdb2-1f6a-4391-ba86-68a9596f3a25_cash.pdf" />
+    <Content Include="Content\TapalDocuments\635a8f5c-edb8-4f46-8bea-eddf324eb08a_UAY2017_Review_Template.pdf" />
+    <Content Include="Content\TapalDocuments\b74985c6-478d-4ec5-b09f-bf64122bf841_Progress Report Template.pdf" />
+    <Content Include="Content\IOASContent\css\bootstrap.min.css.map" />
+    <None Include="Properties\PublishProfiles\IOAS.pubxml" />
+    <Content Include="Views\CoreAccounts\ImprestBillsRecoupment.cshtml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\CoreAccounts\InvoiceProcess.js" />
+    <Content Include="Scripts\CoreAccounts\SBIECard.js" />
+    <Content Include="Scripts\Facility\SRBDeactivation.js" />
+    <Content Include="Scripts\FoolProof\mvcfoolproof.unobtrusive.min.js" />
+    <Content Include="Scripts\FoolProof\MvcFoolproofJQueryValidation.min.js" />
+    <Content Include="Scripts\FoolProof\MvcFoolproofValidation.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Master\InternalAgency.js" />
+    <Content Include="Scripts\Master\VendorMaster.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Process\ProcessGuideline.js" />
+    <Content Include="Scripts\Project\Project.js" />
+    <Content Include="Scripts\Project\ProjectClosing.js" />
+    <Content Include="Scripts\Project\ProjectEnhancement.js" />
+    <Content Include="Scripts\Project\ProjectStatus.js" />
+    <Content Include="Scripts\Proposal\Proposal.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\Facility\TapalOutwardList.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LayoutFluid.cshtml" />
+    <Content Include="Views\ProcessGuideline\ProcessGuideline.cshtml" />
+    <Content Include="Views\Shared\_SidebarPartial.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\Createuser.cshtml" />
+    <Content Include="Views\Account\Department.cshtml" />
+    <Content Include="Views\Account\Role.cshtml" />
+    <Content Include="Views\Account\AccessRights.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Proposal\CreateProposal.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Facility\Tapal.cshtml" />
+    <Content Include="Views\Proposal\ProjectOpening.cshtml" />
+    <Content Include="Views\Facility\SRBList.cshtml" />
+    <Content Include="Views\Facility\SearchSRBList.cshtml" />
+    <Content Include="Views\Facility\PopupSRBDetails.cshtml" />
+    <Content Include="Views\Facility\SRB.cshtml" />
+    <Content Include="Views\Account\Institute.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Project\ProjectOpening.cshtml" />
+    <Content Include="Views\Project\ProjectEnhancement.cshtml" />
+    <Content Include="Views\Project\ProjectExtension.cshtml" />
+    <Content Include="Views\Facility\PopupTapalDetails.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Account\CreatePI.cshtml" />
+    <Content Include="Views\Reports\EditReport.cshtml" />
+    <Content Include="Views\Reports\List.cshtml" />
+    <Content Include="Views\Reports\ReportBuilder.cshtml" />
+    <Content Include="Views\Reports\ReportLIst.cshtml" />
+    <Content Include="Views\Reports\ReportViewer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Facility\PopupTapalInward.cshtml" />
+    <Content Include="Views\Facility\PopupTapalOutward.cshtml" />
+    <Content Include="Views\CrystalReport\ProjectProposal.cshtml" />
+    <Content Include="Views\Project\ProjectStatus.cshtml" />
+    <Content Include="Views\Project\PopupUpdateStatus.cshtml" />
+    <Content Include="Views\Facility\SRBDeactivation.cshtml" />
+    <Content Include="Views\Facility\PopupDeactivation.cshtml" />
+    <Content Include="Views\Facility\CustomSelectList.cshtml" />
+    <Content Include="Views\ProjectReport\Sanctionreport.cshtml" />
+    <Content Include="Views\ProposalReport\Newproposalfunding.cshtml" />
+    <Content Include="Views\Account\AccountGroup.cshtml" />
+    <Content Include="Views\Account\AllocationHead.cshtml" />
+    <Content Include="Views\Account\Consultancyfundingcategory.cshtml" />
+    <Content Include="Views\Account\Createagency.cshtml" />
+    <Content Include="Views\Account\Projectstaff.cshtml" />
+    <Content Include="Views\Account\Schemes.cshtml" />
+    <Content Include="Views\Account\SRBItemcategory.cshtml" />
+    <Content Include="Views\Reports\ReportMenu.cshtml" />
+    <Content Include="Views\Master\InternalAgency.cshtml" />
+    <Content Include="Views\TapalReport\Tapalreport.cshtml" />
+    <Content Include="Views\Shared\FileUploader.cshtml" />
+    <Content Include="Views\Shared\_ProcessStatus.cshtml" />
+    <Content Include="Views\CoreAccounts\AdvanceBillPaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\AdvanceBillPayment.cshtml" />
+    <Content Include="Views\Shared\_CheckListDetail.cshtml" />
+    <Content Include="Views\Shared\_DocumentDetail.cshtml" />
+    <Content Include="Views\Shared\_CommitmentDetails.cshtml" />
+    <Content Include="Views\Shared\_TransactionDetails.cshtml" />
+    <Content Include="Views\CoreAccounts\PartBillPayment.cshtml" />
+    <Content Include="Views\CoreAccounts\PartBillPaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\_PreviousBillHistory.cshtml" />
+    <Content Include="Views\CoreAccounts\SettlementBillPayment.cshtml" />
+    <Content Include="Views\CoreAccounts\SettlementBillPaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\ConsReceiptList.cshtml" />
+    <Content Include="Views\CoreAccounts\ConsSearchReceiptList.cshtml" />
+    <Content Include="Views\CoreAccounts\CreateReceipt.cshtml" />
+    <Content Include="Views\CoreAccounts\SearchInvoiceList.cshtml" />
+    <Content Include="Views\CoreAccounts\SponReceiptList.cshtml" />
+    <Content Include="Views\CoreAccounts\SponSearchReceiptList.cshtml" />
+    <Content Include="Views\CoreAccounts\TravelAdvancePayment.cshtml" />
+    <Content Include="Views\CoreAccounts\TravelAdvancePaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\AdvancePartBillPayment.cshtml" />
+    <Content Include="Views\CoreAccounts\InvoiceProcess.cshtml" />
+    <Content Include="Views\CoreAccounts\ProjectInvoice.cshtml" />
+    <Content Include="Views\CoreAccounts\TravelAdvancePaymentView.cshtml" />
+    <Content Include="Views\Shared\_ADVTransactionDetails.cshtml" />
+    <Content Include="Views\CoreAccounts\_TravelADVCommitment.cshtml" />
+    <Content Include="Views\Account\ActiveCommitments.cshtml" />
+    <Content Include="Views\Account\Commitment.cshtml" />
+    <Content Include="Views\Account\PopupCommitment.cshtml" />
+    <Content Include="Views\CoreAccounts\TravelSettlementPayment.cshtml" />
+    <Content Include="Views\CoreAccounts\_TravelDetails.cshtml" />
+    <Content Include="Views\CoreAccounts\TravelSettlementPaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\ExistingSBICard.cshtml" />
+    <Content Include="Views\CoreAccounts\SBICardView.cshtml" />
+    <Content Include="Views\CoreAccounts\SBIECard.cshtml" />
+    <Content Include="Views\CoreAccounts\SBIECardList.cshtml" />
+    <Content Include="Views\CoreAccounts\AdvancePartBillPaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\AdvanceBillPaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\SettlementBillPaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\PartBillPaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\TemporaryAdvancePayment.cshtml" />
+    <Content Include="Views\CoreAccounts\TemporaryAdvancePaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\TemporaryAdvancePaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\_PendingSettlementDetails.cshtml" />
+    <Content Include="Views\Shared\_TEMPADVTransactionDetails.cshtml" />
+    <Content Include="Views\CoreAccounts\SummerInternshipStudent.cshtml" />
+    <Content Include="Views\CoreAccounts\SummerInternshipStudentList.cshtml" />
+    <Content Include="Views\CoreAccounts\SummerInternshipStudentView.cshtml" />
+    <Content Include="Views\Shared\_SUMMRINTERNTransactionDetails.cshtml" />
+    <Content Include="Views\Shared\_ExtensionandEnhancementHistory.cshtml" />
+    <Content Include="Views\CoreAccounts\ClearancePayment.cshtml" />
+    <Content Include="Views\CoreAccounts\ClearancePaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\ClearancePaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\_CLPCommitment.cshtml" />
+    <Content Include="Views\CoreAccounts\_CLPCommitmentDetails.cshtml" />
+    <Content Include="Views\Shared\_CLPTransactionDetails.cshtml" />
+    <Content Include="Views\CoreAccounts\TravelAdvanceBillEntry.cshtml" />
+    <Content Include="Views\Shared\_PaymentBreakUp.cshtml" />
+    <Content Include="Views\CoreAccounts\_BookCommitment.cshtml" />
+    <Content Include="Views\CoreAccounts\TravelSettlementPaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\SBIECardRecoupment.cshtml" />
+    <Content Include="Views\CoreAccounts\SBIECardRecoupmentList.cshtml" />
+    <Content Include="Views\CoreAccounts\TemporaryAdvanceSettlement.cshtml" />
+    <Content Include="Views\CoreAccounts\TemporaryAdvanceSettlementList.cshtml" />
+    <Content Include="Views\CoreAccounts\TravelAdvanceBillEntryView.cshtml" />
+    <Content Include="Views\CoreAccounts\DomesticTravelPayment.cshtml" />
+    <Content Include="Views\CoreAccounts\PaymentProcess.cshtml" />
+    <Content Include="Views\CoreAccounts\_PaymentDetails.cshtml" />
+    <Content Include="Views\CoreAccounts\PaymentProcessInitList.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestPayment.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestPaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestPaymentRecoupment.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestPaymentRecoupmentList.cshtml" />
+    <Content Include="Views\CoreAccounts\Journal.cshtml" />
+    <Content Include="Views\ReportMaster\BOATransactionDetailsReport.cshtml" />
+    <Content Include="Views\ReportMaster\TrailBalanceView.cshtml" />
+    <Content Include="Views\CoreAccounts\JournalList.cshtml" />
+    <Content Include="Views\CoreAccounts\JournalView.cshtml" />
+    <Content Include="Views\CoreAccounts\ClaimBill.cshtml" />
+    <Content Include="Views\CoreAccounts\ClaimBillList.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestPaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestRecoupmentView.cshtml" />
+    <Content Include="Views\CoreAccounts\SBIECardRecoupmentView.cshtml" />
+    <Content Include="Views\CoreAccounts\SearchClaimBillList.cshtml" />
+    <Content Include="Views\ReportMaster\PostingReport.cshtml" />
+    <Content Include="Views\ReportMaster\CommitmentReport.cshtml" />
+    <Content Include="Views\CoreAccounts\DomesticTravelPaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\DomesticTravelPaymentView.cshtml" />
+    <Content Include="Views\CoreAccounts\PartTimeStudent.cshtml" />
+    <Content Include="Views\CoreAccounts\PartTimeStudentList.cshtml" />
+    <Content Include="Views\CoreAccounts\PartTimeStudentView.cshtml" />
+    <Content Include="Views\CoreAccounts\ProjectFundTransfer.cshtml" />
+    <Content Include="Views\CoreAccounts\ProjectFundTransferList.cshtml" />
+    <Content Include="Views\CoreAccounts\ProjectFundTransferView.cshtml" />
+    <Content Include="Views\ITDeclaration\List.cshtml" />
+    <Content Include="Views\ITDeclaration\_EightyCCPartial.cshtml" />
+    <Content Include="Views\ITDeclaration\_EightyDDPartial.cshtml" />
+    <Content Include="Views\ITDeclaration\_ITExemptionPartial.cshtml" />
+    <Content Include="Views\ITDeclaration\_OtherIncomePartial.cshtml" />
+    <Content Include="Views\ITDeclaration\_SOPPartial.cshtml" />
+    <Content Include="Views\OfficeOrder\Add.cshtml" />
+    <Content Include="Views\OfficeOrder\List.cshtml" />
+    <Content Include="Views\OfficeOrder\OrderLIst.cshtml" />
+    <Content Include="Views\OfficeOrder\_SalaryHeadPartial.cshtml" />
+    <Content Include="Views\OfficeOrder\_SalaryRevisionPartial.cshtml" />
+    <Content Include="Views\StaffPayment\Commitment.cshtml" />
+    <Content Include="Views\StaffPayment\List.cshtml" />
+    <Content Include="Views\StaffPayment\SalaryInit.cshtml" />
+    <Content Include="Views\StaffPayment\SalaryPayment.cshtml" />
+    <Content Include="Views\StaffPayment\Transaction.cshtml" />
+    <Content Include="Views\StaffPayment\_SalaryInitPartial.cshtml" />
+    <Content Include="Views\StaffPayment\_SalaryPaymentPartial.cshtml" />
+    <Content Include="Views\ProcessEngine\ApproveList.cshtml" />
+    <Content Include="Views\ProcessEngine\_ApprovalData.cshtml" />
+    <Content Include="Views\CoreAccounts\TransactionAndTaxesList.cshtml" />
+    <Content Include="Views\CoreAccounts\CreditNote.cshtml" />
+    <Content Include="Views\CoreAccounts\CreditNoteList.cshtml" />
+    <Content Include="Views\CoreAccounts\CreditNoteView.cshtml" />
+    <Content Include="Views\CoreAccounts\AdhocPayment.cshtml" />
+    <Content Include="Views\CoreAccounts\AdhocPaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\AdhocPaymentView.cshtml" />
+    <Content Include="Views\Shared\_InvoiceBreakUp.cshtml" />
+    <Content Include="Views\Master\Vendor.cshtml" />
+    <Content Include="Views\CoreAccounts\_PODetails.cshtml" />
+    <Content Include="Views\CoreAccounts\TemporaryAdvanceSettlementView.cshtml" />
+    <Content Include="Views\CoreAccounts\Contra.cshtml" />
+    <Content Include="Views\CoreAccounts\ContraList.cshtml" />
+    <Content Include="Views\CoreAccounts\ContraView.cshtml" />
+    <Content Include="Views\Account\CommitmentList.cshtml" />
+    <Content Include="Views\Master\LedgerOBBalance.cshtml" />
+    <Content Include="Views\CoreAccounts\Distribution.cshtml" />
+    <Content Include="Views\CoreAccounts\DistributionList.cshtml" />
+    <Content Include="Views\CoreAccounts\DistributionView.cshtml" />
+    <Content Include="Views\CoreAccounts\Honororium.cshtml" />
+    <Content Include="Views\CoreAccounts\HonororiumList.cshtml" />
+    <Content Include="Views\CoreAccounts\HonororiumView.cshtml" />
+    <Content Include="Views\CoreAccounts\BRS.cshtml" />
+    <Content Include="Views\StaffPayment\Add.cshtml" />
+    <Content Include="Views\CoreAccounts\GSTOffset.cshtml" />
+    <Content Include="Views\CoreAccounts\GSTOffsetList.cshtml" />
+    <Content Include="Views\CoreAccounts\GSTOffsetView.cshtml" />
+    <Content Include="Views\CoreAccounts\_AdhocTransaction.cshtml" />
+    <Content Include="Views\CoreAccounts\BRSList.cshtml" />
+    <Content Include="Views\CoreAccounts\BRSView.cshtml" />
+    <Content Include="Views\CoreAccounts\NegativeBalance.cshtml" />
+    <Content Include="Views\CoreAccounts\NegativeBalanceList.cshtml" />
+    <Content Include="Views\CoreAccounts\NegativeBalanceView.cshtml" />
+    <Content Include="Views\CoreAccounts\_CloseNegativeBalance.cshtml" />
+    <Content Include="Views\CoreAccounts\GeneralVoucher.cshtml" />
+    <Content Include="Views\CoreAccounts\GeneralVoucherList.cshtml" />
+    <Content Include="Views\CoreAccounts\GeneralVoucherView.cshtml" />
+    <Content Include="Views\CoreAccounts\OtherReceiptList.cshtml" />
+    <Content Include="Views\CoreAccounts\OtherReceipt.cshtml" />
+    <Content Include="Views\CoreAccounts\OtherReceiptView.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestBillsRecoupmentView.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestEnhancement.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestEnhancementList.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestEnhancementView.cshtml" />
+    <Content Include="Views\CoreAccounts\FellowShipList.cshtml" />
+    <Content Include="Views\CoreAccounts\ImprestBillsRecoupList.cshtml" />
+    <Content Include="Views\CoreAccounts\TDSPayment.cshtml" />
+    <Content Include="Views\CoreAccounts\TDSPaymentList.cshtml" />
+    <Content Include="Views\CoreAccounts\TDSPaymentView.cshtml" />
+    <Content Include="Views\Facility\SearchTapal.cshtml" />
+    <Content Include="Views\CoreAccounts\ForeignRemittanceList.cshtml" />
+    <Content Include="Views\CoreAccounts\ForeignRemittance.cshtml" />
+    <Content Include="Views\CoreAccounts\ForeignRemittanceView.cshtml" />
+    <Content Include="Views\CoreAccounts\ManDay.cshtml" />
+    <Content Include="Views\CoreAccounts\ManDayList.cshtml" />
+    <Content Include="Views\CoreAccounts\ManDayView.cshtml" />
+    <Content Include="Views\Project\ViewProject.cshtml" />
+    <Content Include="Views\Proposal\ViewProposal.cshtml" />
+    <Content Include="Views\ReportMaster\DailyBalanceVerification.cshtml" />
+    <Content Include="Views\StaffPayment\AgencySalary.cshtml" />
+    <Content Include="Views\StaffPayment\AgencySalaryList.cshtml" />
+    <Content Include="Views\StaffPayment\PopupEmployeeDetails.cshtml" />
+    <Content Include="Views\StaffPayment\_AgencySalaryStaffDetailsPartial.cshtml" />
+    <Content Include="Views\StaffPayment\_AgencySalaryVerifiedList.cshtml" />
+    <Content Include="Views\StaffPayment\SalaryInitGrid.cshtml" />
+    <Content Include="Views\StaffPayment\SalarySelected.cshtml" />
+    <Content Include="Views\StaffPayment\StaffPartialList.cshtml" />
+    <Content Include="Views\StaffPayment\StaffSelectedPartialList.cshtml" />
+    <Content Include="Views\StaffPayment\AgencySalaryView.cshtml" />
+    <Content Include="Views\CoreAccounts\OverheadsPosting.cshtml" />
+    <Content Include="Views\CoreAccounts\OverheadsPostingList.cshtml" />
+    <Content Include="Views\CoreAccounts\PCFDistributionOHPostingView.cshtml" />
+    <Content Include="Views\CoreAccounts\PCFDistributionOverheadsPosting.cshtml" />
+    <Content Include="Views\CoreAccounts\PCFDistributionOverheadsPostingList.cshtml" />
+    <Content Include="Views\CoreAccounts\_OverheadsPostingPIPCFShare.cshtml" />
+    <Content Include="Views\CoreAccounts\_OverheadsPostingPIRMFShare.cshtml" />
+    <Content Include="Views\CoreAccounts\InstituteClaims.cshtml" />
+    <Content Include="Views\CoreAccounts\InstituteClaimsList.cshtml" />
+    <Content Include="Views\CoreAccounts\InstituteClaimsView.cshtml" />
+    <Content Include="Views\ReportMaster\CashBookReport.cshtml" />
+    <Content Include="Views\ReportMaster\TrailBalanceReport.cshtml" />
+    <Content Include="Views\ReportMaster\ProjectTransactionReport.cshtml" />
+    <Content Include="Views\CoreAccounts\CreateProformaInvoice.cshtml" />
+    <Content Include="Views\CoreAccounts\Invoice.cshtml" />
+    <Content Include="Views\CoreAccounts\ProformaInvoice.cshtml" />
+    <Content Include="Views\Patent\Dispute.cshtml" />
+    <Content Include="Views\Patent\_MDOCRef.cshtml" />
+    <Content Include="Views\Patent\_IDFRef.cshtml" />
+    <Content Include="Views\Patent\DisputeList.cshtml" />
+    <Content Include="Views\Patent\International.cshtml" />
+    <Content Include="Views\Patent\InternationalList.cshtml" />
+    <Content Include="Views\Patent\Duediligence.cshtml" />
+    <Content Include="Views\Patent\IDFRequestList.cshtml" />
+    <Content Include="Views\Patent\IDFRequest.cshtml" />
+    <Content Include="Views\Patent\_CoInventor.cshtml" />
+    <Content Include="Views\Patent\_Applicant.cshtml" />
+    <Content Include="Views\Patent\DuediligenceList.cshtml" />
+    <Content Include="Views\Patent\Receipt.cshtml" />
+    <Content Include="Views\Patent\_ReceiptDetail.cshtml" />
+    <Content Include="Views\Patent\ReceiptList.cshtml" />
+    <Content Include="Views\Patent\ServiceRequest.cshtml" />
+    <Content Include="Views\Patent\ServiceRequestList.cshtml" />
+    <Content Include="Views\Patent\ServiceProvider.cshtml" />
+    <Content Include="Views\Patent\ServiceProviderList.cshtml" />
+    <Content Include="Views\Patent\FCBasicDetails.cshtml" />
+    <Content Include="Views\Patent\FileList.cshtml" />
+    <Content Include="Views\Patent\IndianPatent.cshtml" />
+    <Content Include="Views\Patent\NewInternational.cshtml" />
+    <Content Include="Views\Patent\_International.cshtml" />
+    <Content Include="Views\Patent\_ApplicantForm.cshtml" />
+    <Content Include="Views\Patent\_CRAuthor.cshtml" />
+    <Content Include="Views\Patent\_CRPublish.cshtml" />
+    <Content Include="Views\Shared\_ApproveList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\Script\NewFolder1\" />
+    <Folder Include="Content\CommitmentDocument\" />
+    <Folder Include="Content\ErrorLog\" />
+    <Folder Include="Content\OtherDocuments\" />
+    <Folder Include="Content\SupportDocuments\" />
+    <Folder Include="obj\" />
+    <Folder Include="Views\PatentApproval\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{2c8bc32e-68bb-4f30-9034-e6cc67886649}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IOAS.DataModel\IOAS.DataModel.csproj">
+      <Project>{35cf1197-bf57-4576-9f14-9b3b99130428}</Project>
+      <Name>IOAS.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CrystalReport\Agencywisesanction.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Agencywisesanction.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\BOATransactionDetails.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BOATransactionDetails.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\CashBook.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CashBook.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\CashBookPayment.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CashBookPayment.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\CashBookReceipt.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CashBookReceipt.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\CommitmentReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CommitmentReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\Facultywisesanction.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Facultywisesanction.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\NewPropsalssentfunding.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NewPropsalssentfunding1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\Postings.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Postings.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\ProjectTransactionReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ProjectTransactionReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\Proposalsponsored.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Proposalsponsored.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\SanctionProjectReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SanctionProjectReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="CrystalReport\ServiceRequestrpt.rpt" />
+    <EmbeddedResource Include="CrystalReport\TapalTransReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>TapalTransReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport\TrailBalance2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>TrailBalance2.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49738</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:34213</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

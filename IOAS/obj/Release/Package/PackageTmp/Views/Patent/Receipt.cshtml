@@ -1,0 +1,248 @@
+﻿@model IOAS.Models.Patent.ReceiptVM
+@{
+    ViewBag.Title = "Receipt";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div class="row hd-tt-bg" id="addnewpage">
+    <div class="col-md-4 pull-left">
+        <h3>Receipt</h3>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Receipt", "Patent", FormMethod.Post, new { @class = "", role = "form", @id = "formCP", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12">
+            <div class="page-wrapper" id="createReceipt">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">Receipt</h3>
+                            @Html.HiddenFor(m => m.ReceiptNo)
+                            @Html.HiddenFor(m => m.isUpdate)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> Receipt Number </label>
+                                    @Html.TextBoxFor(m => m.ReceiptNo, new { @class = "form-control", @id = "receiptno", @readonly = "readonly" })
+                                    <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.ReceiptNo)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> Receipt Date </label>
+                                    @Html.TextBoxFor(m => m.ReceiptDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+                                    <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.ReceiptDt)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">Receipt Details</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Source</label>
+                                @Html.DropDownListFor(m => m.Source, new SelectList(ViewBag.src), "Select Source",
+new { @class = "form-control", @required = "required", @id = "source" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Source)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Party</label>
+                                @Html.DropDownListFor(m => m.Party, new SelectList(ViewBag.partylist), "Select Party", new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Party)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Party Ref No</label>
+                                @Html.TextBoxFor(m => m.PartyRefNo, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Receipt Ref</label>
+                                @Html.TextBoxFor(m => m.ReceiptRef, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Receipt Description</label>
+                                @Html.TextBoxFor(m => m.ReceiptDesc, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Amt in INR</label>
+                                @Html.TextBoxFor(m => m.AmountINR, new { @class = "form-control", @onkeypress = "return ValidateNumberOnly(event)" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.AmountINR)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">Background</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Intimation Reference</label>
+                                @Html.TextBoxFor(m => m.IntimationRef, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.IntimationRef)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Intimation Date</label>
+                                @Html.TextBoxFor(m => m.IntimationDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.IntimationDt)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Transaction Comments</label>
+                                @Html.TextBoxFor(m => m.Comment, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Comment)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">Transfer to IP Cell</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>From A/c No</label>
+                                @Html.TextBoxFor(m => m.Accno, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>IP Cell A/c No</label>
+                                @Html.TextBoxFor(m => m.IPAccno, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Amount Transfer in INR</label>
+                                @Html.TextBoxFor(m => m.TransferAmt, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.TransferAmt)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Transfer Date</label>
+                                @Html.TextBoxFor(m => m.TransferDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @Html.Partial("_ReceiptDetail", Model.RDetail)
+                    </div>
+                </div>
+                <div class="row" id="saveReceipt">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Save" name="Button" id="btnSave" />
+                        <input type="button" onclick="window.location.href='@Url.Action("ReceiptList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+                <div class="row" id="updateReceipt">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Update" name="Button" id="btnupdate" />
+                        <input type="button" onclick="window.location.href='@Url.Action("ReceiptList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (ViewBag.succMsg != null)
+{
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("ReceiptList", "Patent")';">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+                    <p>@ViewBag.succMsg</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("ReceiptList", "Patent")';">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+}
+@if (ViewBag.errMsg != null)
+{
+    <div id="myModal1" class="modal fade modal-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-cancel"></i>
+                    <h3 class="modal-title">Error Message</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.errMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal1').modal('show');
+        });
+    </script>
+}
+<script type="text/javascript">
+    $('.datepicker').datepicker({
+        dateFormat: "dd/mm/yy"
+        });
+    $(function () {
+        if ($('#isUpdate').val() == "True") {
+            $('#saveReceipt').hide();
+            $('#updateReceipt').show();
+        }
+        else {
+            $('#updateReceipt').hide();
+            $('#saveReceipt').show();
+        }
+    });
+</script>

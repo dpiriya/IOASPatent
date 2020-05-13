@@ -1,0 +1,3040 @@
+﻿@model IOAS.Models.CreateReceiptModel
+@{
+    ViewBag.Title = "Create Project";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<style>
+    /* Hide all steps by default: */
+    .tab {
+        display: none;
+        background: #fff;
+        float: left;
+    }
+
+    .step {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbbbbb;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5;
+    }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        /* Mark the steps that are finished and valid: */
+        .step.finish {
+            background-color: #fff;
+        }
+
+    .custom-nav-pills.nav-pills > li > a {
+        color: rgba(255,255,255,0.5);
+        cursor: default;
+        background: transparent !important;
+        border-color: transparent;
+        border-top-color: transparent;
+        padding: 10px 15px;
+        margin: 0px 15px;
+    }
+
+        .custom-nav-pills.nav-pills > li > a span {
+            width: 100%;
+            float: left;
+        }
+
+    .custom-nav-pills.nav-pills > li.active > a, .custom-nav-pills.nav-pills > li.active > a:focus, .custom-nav-pills.nav-pills > li.active > a:hover {
+        color: #333333;
+        background-color: #fff !important;
+    }
+
+    .custom-st-fd-box {
+        background: #f5f5f5;
+        padding: 15px 0px;
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .custom-st-fd-btn {
+        color: #fff;
+        font-size: 16px;
+        margin-top: 15px;
+        display: inline-block;
+    }
+
+    .custom-st-tb-th.table {
+        border: 0px;
+    }
+
+        .custom-st-tb-th.table > tbody > tr > th {
+            background: #3080e3;
+            color: #fff;
+            border: 0px solid #ccc;
+        }
+
+        .custom-st-tb-th.table > tbody > tr > td {
+            border: 0px;
+        }
+</style>
+<div class="row hd-tt-bg">
+    <div class="col-md-4">
+        <h3>Create Receipt</h3>
+    </div>
+    @*<div class="col-md-4">
+            <div class="search-btn">
+                <input type="text" value="" placeholder="Search" class="form-control">
+                <a href="#" id="btnsearch" class="btn"> <i class="ion-search"></i></a>
+            </div>
+
+        </div>
+    <div id="addnewpage" class="col-md-8 flt-nav-links">
+
+        <a href="Javascript:void(0)" id="btnFilter" class="pull-right"> <i class="ion-android-funnel"></i>Filters</a>
+        <a href="#" id="btnaddnew" data-toggle="modal" data-target="#AddNewEntryModel"> <i class="ion-plus"></i>Add New</a>
+
+    </div>*@
+</div>
+<div class="row">
+    @using (Html.BeginForm("CreateReceipt", "Project", FormMethod.Post, new { @class = "", role = "form", @id = "formPO", enctype = "multipart/form-data" }))
+
+    {
+        <div class="col-md-12 mt30">
+
+            <div class="page-wrapper" id="createreceipt">
+
+
+                <ul class="nav nav-pills custom-nav-pills">
+                    <li class="active"><a href="javascript:void(0)"><span>01</span>Details</a></li>
+                    <li><a href="javascript:void(0)"><span>02</span>Allocation and Entries</a></li>
+                    <li><a href="javascript:void(0)"><span>03</span>Mode of Receipt</a></li>
+                </ul>
+                <div class="tab" id="tab-01" style="display: block;">
+                    <div class="col-md-12 col-sm-12 m-b-sm">
+                        <div class="row m-b-sm">
+                            <div class="col-md-4">
+                                <div class="reg-no bg-blue">
+                                    <div class="form-group custom-form-group">
+                                        <label>Receipt Date</label>
+                                        <h4>12-10-2018</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" id="Proposalidfield">
+
+
+
+                            </div>
+                            <div class="col-md-4" id="Projectidfield">
+                                <div class="reg-no">
+                                    <div class="form-group custom-form-group">
+                                        <label>Receipt Number</label>
+                                        <h4>
+                                            @Html.TextBoxFor(m => m.ReceiptNumber, new { @class = "form-control", @id = "Receiptnumber" })
+                                            @Html.ValidationMessageFor(m => m.ReceiptNumber)
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="bl-lg-panel-box pb-null">
+                                    <div class="cmn-panel-box">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group custom-form-group">
+
+                                                    <label>Project Type</label>
+                                                    <h4>
+                                                       @Html.TextBoxFor(m => m.ProjectTypeName, new { @class = "form-control", @id = "txtprojecttype", @readonly = true })
+                                                        @Html.Hidden("ProjectType")
+    @*@Html.DropDownListFor(m => m.ProjectType, new SelectList(ViewBag.projecttype, "CodeValAbbr", "CodeValDetail"), "Select Project Type",
+    new { @class = "form-control", @id = "selecttypeofproject", @disabled = "disabled" })*@
+                                                    </h4>
+                                                        
+            </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group custom-form-group">
+
+                                                    <label>Project Number</label>
+                                                    <h4>@Html.TextBoxFor(m => m.ProjectNumber, new { @class = "form-control", @id = "txtprojectnumber", @readonly = true })</h4>
+                                                    @Html.Hidden("ProjectID")
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+
+                                                <div class="form-group custom-form-group">
+                                                    <label>Title</label>
+                                                    <h4 class="sb-dts">@Html.DisplayFor(m => m.Projecttitle, new { @class = "form-control", @id = "prjcttitle", @readonly = true })</h4>
+                                                </div>
+
+
+
+                                                <div class="form-group custom-form-group">
+                                                    <label>Commitments</label>
+                                                    <h4 class="sb-dts">Rs.50,00,000</h4>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <div class="form-group custom-form-group">
+                                                    <label>PI Name</label>
+                                                    <h4 class="sb-dts">@Html.DisplayFor(m => m.NameofPI, new { @class = "form-control", @id = "txtPIname", @readonly = true })</h4>
+                                                    @Html.Hidden("PIId")
+                                                </div>
+
+                                                <div class="form-group custom-form-group">
+                                                    <label>Amount Spent</label>
+                                                    <h4 class="sb-dts">@Html.DisplayFor(m => m.AmountSpent, new { @class = "form-control", @id = "txtspentvalue", @readonly = true })</h4>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <div class="form-group custom-form-group">
+                                                    <label>Sanctioned Value</label>
+                                                    <h4 class="sb-dts">@Html.DisplayFor(m => m.SanctionedValue, new { @class = "form-control", @id = "txtsanctionvalue", @readonly = true })</h4>
+                                                </div>
+                                                <div class="form-group custom-form-group">
+                                                    <label class="hgt-txt">Net Balance</label>
+                                                    <h4 class="sb-dts hgt-txt">@Html.DisplayFor(m => m.NetBalanceValue, new { @class = "form-control", @id = "txtnetbalance", @readonly = true })</h4>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group custom-form-group">
+                                                    <label>Total Receipt</label>
+                                                    <h4 class="sb-dts">@Html.DisplayFor(m => m.TotalReceiptValue, new { @class = "form-control", @id = "txttotalreceipt", @readonly = true })</h4>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required">Invoice No</label>
+                                    @Html.DropDownListFor(m => m.InvoiceNumber, new SelectList(ViewBag.invoice, "id", "name"), "Select Invoice",
+                                            new { @class = "form-control", @id = "selectinvoicenumber" })
+                                    @Html.Hidden("InvoiceId")
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group custom-form-group ">
+                                            <label>Invoice Date</label>
+                                            <h4 class="sb-dts">@Html.DisplayFor(m => m.Invoicedatestrng, new { @class = "form-control", @id = "txtinvoicedate", @readonly = true })</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group custom-form-group ">
+                                            <label>Invoice value</label>
+                                            <h4 class="sb-dts">@Html.DisplayFor(m => m.InvoiceValue, new { @class = "form-control", @id = "txtinvoicevalue", @readonly = true })</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group custom-form-group ">
+                                            <label>Description</label>
+                                            <textarea rows="4" cols="50" class="form-control" readonly>@Html.DisplayFor(m => m.InvoiceDetails, new { @class = "form-control", @id = "txtinvoicedetails", @readonly = true })</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="tx-dts">
+                                    <h3>Tax Details</h3>
+                                    <div class="row">
+                                        <label class="col-md-4">CGST :</label>
+                                        <h4 class="sb-dts col-md-4">@Html.DisplayFor(m => m.CGSTAmount, new { @class = "form-control", @id = "txtcgstamount", @readonly = true })</h4>
+
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-4">SGST :</label>
+                                        <h4 class="sb-dts col-md-4">@Html.DisplayFor(m => m.SGSTAmount, new { @class = "form-control", @id = "txtsgstamount", @readonly = true }) </h4>
+
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-4">IGST :</label>
+                                        <h4 class="sb-dts col-md-4">@Html.DisplayFor(m => m.IGSTAmount, new { @class = "form-control", @id = "txtigstamount", @readonly = true }) </h4>
+
+                                    </div>
+                                    <div class="row dts-bm">
+                                        <label class="col-md-4">Total Tax :</label>
+                                        <h4 class="sb-dts col-md-4">@Html.DisplayFor(m => m.TotalTaxAmount, new { @class = "form-control", @id = "txttotaltaxamount", @readonly = true }) </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>Receipt History</h3>
+
+                                <div class="m-b-sm">
+                                    <table class="table alter-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 270px;">Receipt No</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                if (Model.PreviousReceiptId != null)
+                                                {
+                                                    for (int i = 0; i < Model.PreviousReceiptNumber.Count(); i++)
+                                                    {
+                                            <tr>
+                                                <td>@Html.DisplayFor(m => m.PreviousReceiptNumber[i], new { @class = "form-control", @id = "txtPreviousReceiptnumber", @readonly = true })</td>
+                                                <td>@Html.DisplayFor(m => m.PreviousReceiptDate[i], new { @class = "form-control", @id = "txtPreviousReceiptdate", @readonly = true })</td>
+                                                <td>@Html.DisplayFor(m => m.PreviousReceiptvalue[i], new { @class = "form-control", @align = "right", @id = "txtPreviousReceiptvalue", @readonly = true })</td>
+                                            </tr>
+                                                    }
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab" style="display: none;" id="tab-02">
+                    <div class="col-md-12 col-sm-12 m-b-sm">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="reg-no bg-blue">
+                                    <div class="form-group custom-form-group">
+                                        <label>Receipt Amount </label>
+                                        @Html.TextBoxFor(m => m.ReceiptAmount, new { @class = "form-control", @id = "txtreceiptamount", @readonly = true })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="gray-bg br-rd">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3 class="mt-null">Allocation</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group custom-form-group">
+                                                <label>Budget Head</label>
+                                                @Html.DropDownListFor(m => m.BudgetHead, new SelectList(ViewBag.budgethead, "id", "name"), "Select Budget Head",
+                                       new { @class = "form-control", @id = "selectbudgethead" })
+                                                @Html.Hidden("AllocationId")
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group custom-form-group">
+                                                <label>Amount</label>
+                                                @Html.DropDownListFor(m => m.AllocationAmount, new SelectList(ViewBag.budgethead, "id", "value"), "Select Budget Head",
+                                        new { @class = "form-control", @id = "selectallocationamount" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label></label>
+                                            <a href="#" class="btn-circle mt-xs"><i class="ion-plus"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="gray-bg br-rd">
+                            <div class="row">
+                                <div class="col-md-5 mb-lg">
+                                    <div class="tx-dts">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3 class="mt-null">Entries</h3>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-6">Received From <span class="cr">(Cr)</span></label>
+                                            <div class="col-md-6">
+                                                <select class="form-control">
+                                                    <option value="0"></option>
+                                                    <option value="1"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-6">Bank <span class="dr">(Dr)</span></label>
+                                            <div class="col-md-6">
+                                                <select class="form-control">
+                                                    <option value="0"></option>
+                                                    <option value="1"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <h3>Receivables (Debit)</h3>
+
+                                    <div class="m-b-sm">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 270px;">Head</th>
+                                                    <th>Amount</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <select class="form-control">
+                                                            <option value="0"></option>
+                                                            <option value="1"></option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input class="form-control" value="" type="text"></td>
+                                                    <td>
+                                                        <a href="#" class="btn-circle"><i class="ion-plus"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group custom-form-group ">
+                                                <label>Receivables Total :</label>
+                                                <input class="form-control" value="" type="text">
+                                            </div>
+                                        </div>
+                                        <div class=" col-md-6">
+                                            <div class="form-group custom-form-group">
+                                                <label>Net Total :</label>
+                                                <input class="form-control mb-null" value="" type="text">
+                                                <p class="m-b-sm hint">Total Allocation + Tax - Deduction<p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tab" style="display: none;" id="tab-03">
+                    <div class="col-md-12 col-sm-12 m-b-sm">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="reg-no bg-blue">
+                                    <div class="form-group custom-form-group">
+                                        <label>Mode of Receipt</label>
+                                        <select class="form-control" name="modRec" id="modRec" onclick="modRec()">
+                                            <option value="0" selected>Cheque</option>
+                                            <option value="1">Bank Transfer</option>
+                                            <option value="2">DD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="cheQue" style="display:block;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Cheque</h3>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group custom-form-group">
+                                        <table class="table alter-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Cheque Number
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" value="" type="text">
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="btn-circle"><i class="ion-plus"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cheque Date Value
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" value="" type="text">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Bank Name
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control">
+                                                            <option value="0" selected></option>
+                                                            <option value="1"> </option>
+                                                            <option value="2"></option>
+                                                        </select>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="tx-dts">
+
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h3 class="mt-null">Total Cheque Value</h3>
+                                                <input type="text" class="form-control" value="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="banTra" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Transaction Details</h3>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group custom-form-group">
+                                        <table class="table alter-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Transaction Type:
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control">
+                                                            <option value="0">NEFT</option>
+                                                            <option value="1">RTGS</option>
+                                                            <option value="2">Remittence</option>
+                                                            <option value="2">Foriegn Currency</option>
+                                                        </select>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Transaction Ref No:
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" value="" type="text">
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Transaction Date:
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" value="" type="text">
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Transaction Amount:
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" value="" type="text">
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="tx-dts">
+
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h3 class="mt-null">Currency</h3>
+                                                <select class="form-control">
+                                                    <option value="0"></option>
+                                                    <option value="1"></option>
+                                                    <option value="1"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="dd" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>DD</h3>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group custom-form-group">
+                                        <table class="table alter-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        DD Number
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" value="" type="text">
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="btn-circle"><i class="ion-plus"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        DD Date
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" value="" type="text">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        DD Value
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" value="" type="text">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="tx-dts">
+
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h3 class="mt-null">DD Value</h3>
+                                                <input type="text" class="form-control" value="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="custom-nav-btn text-right">
+                    <button type="button" class="btn btn-default pull-left" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+
+                    <button type="button" class="btn btn-primary pull-right" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                    <button type="button" class="btn btn-default pull-right" onclick="window.location.href='@Url.Action("ProjectOpening", "Project")';">Close</button>
+                </div>
+            </div>
+
+
+
+            <div class="row mt30" id="gridlist">
+
+                <div class="col-md-12">
+                    <div class="page-wrapper">
+                        <div class="custom-jsgrid-normal">
+                            <div id="gridProjectList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt30" id="gridproposal">
+                <div id="AddNewEntryModel" class="modal fade" role="dialog">
+                    <div class="modal-dialog wdth80">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("ProjectOpening", "Project")';">&times;</button>
+                                <h3 class="modal-title">Select Proposal</h3>
+                            </div>
+                            <div class="modal-body">
+
+                                <!-- Modal content-->
+                                <div class="col-md-12">
+                                    <div class="page-wrapper">
+                                        <div class="custom-jsgrid-normal">
+                                            <div id="gridProposalList"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                @*<input type="submit" name="Button" value="ADD" class="btn btn-primary" id="btnSave" />&nbsp;&nbsp;*@
+                                <button type="button" class="btn btn-primary mt10" data-dismiss="modal" onclick="window.location.href='@Url.Action("ProjectOpening", "Project")';">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>                                         
+                                                }
+</div>
+
+@if (ViewBag.succMsg != null)
+{
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("ProjectOpening", "Project")';">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.succMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("ProjectOpening", "Project")';">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+
+}
+
+<div id="myModal2" class="modal fade modal-success" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <i class="ion-android-checkmark-circle"></i>
+                <h3 class="modal-title">Deleted successfully</h3>
+            </div>
+            <div class="modal-body">
+
+                <p>The Proposal has been Deleted successfully.</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="ValidationModal" class="modal fade modal-warning" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <i class="ion-android-warning"></i>
+                <h3 class="modal-title">Warning</h3>
+            </div>
+            <div class="modal-body">
+
+                <p id="MsgValidation"></p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@*<div id="popupFilter" class="filter-popup">
+    <div class="">
+        <div class="filter-content">
+            <div class="white-bg">
+                <div class="form-group custom-form-group">
+                    <h3>Filter by</h3>
+                </div>
+                <div class="form-group custom-form-group">
+                    @Html.DropDownListFor(m => m.SearchField.ProjectType, new SelectList(ViewBag.projecttype, "codevalAbbr", "CodeValDetail"), "Project type", new { @id = "srchPrjcttype", @class = "form-control" })
+                </div>
+                <div class="form-group custom-form-group">
+                    @Html.TextBoxFor(m => m.SearchField.ProposalNumber, new { @id = "proposalnumber", @placeholder = "Proposal Number", @class = "form-control" })
+                </div>
+                @*<div class="form-group custom-form-group">
+                        @Html.TextBoxFor(m => m.ProjectNumber, new { @id = "projectnumber", @placeholder = "Project Number", @class = "form-control" })
+                    </div>
+                <div class="form-group custom-form-group">
+                    @Html.DropDownListFor(m => m.SearchField.PIName, new SelectList(ViewBag.PI, "id", "name"), "PI Name", new { @id = "srchPIName", @class = "form-control" })
+                </div>
+                <div class="form-group custom-form-group">
+                    <label>Search by</label><br>
+                    <label class="radio chkbox-adj">
+                        @Html.RadioButtonFor(m => m.SearchField.SearchBy, "SODate", new { @id = "SearchBy_SODate", @checked = "checked" })
+                        <span></span>
+                        SO Date
+                    </label>
+                    <label class="radio chkbox-adj">
+                        @Html.RadioButtonFor(m => m.SearchField.SearchBy, "CreatedDate", new { @id = "SearchBy_CreatedDate" })
+                        <span></span>
+                        Created Date
+                    </label>
+                </div>
+
+                <div id="DivSODate" class="form-group custom-form-group">
+                    <label class="full-width">Sanction Order Date</label>
+                    @Html.TextBoxFor(m => m.SearchField.FromSODate, new { @id = "FromSODate", @class = "form-control half-form" })
+                    @Html.TextBoxFor(m => m.SearchField.ToSODate, new { @id = "ToSODate", @class = "form-control half-form" })
+                </div>
+
+                <div id="DivCrtdDate" class="form-group custom-form-group">
+                    <label class="full-width">Created Date</label>
+                    @Html.TextBoxFor(m => m.SearchField.FromDate, new { @id = "FromDate", @class = "form-control half-form" })
+                    @Html.TextBoxFor(m => m.SearchField.ToDate, new { @id = "ToDate", @class = "form-control half-form" })
+                </div>
+                <div class="form-group custom-form-group mt30 text-center">
+                    <button id="btnSearch" type="button" class="btn btn-primary mr10">Search</button>
+                    <button name="btnClose" type="button" class="btn btn-default">Close</button>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <a href="javascript:void(0)" name="btnClose" class="close-btn"><i class="ion-android-cancel"></i></a>
+
+</div>*@
+
+
+<script>
+    var errMsg = '@ViewBag.errMsg';
+    var piList = '@Html.Raw(Json.Encode(ViewBag.PI))';
+    var allocationHeads = '@Html.Raw(Json.Encode(ViewBag.allocatehead))'
+    var modelData = '@Html.Raw(Json.Encode(Model))'
+    $(document).ready(function () {
+        //get the relevant form
+        //  var form = $('#frmSRB');
+        $('.selectpicker').selectpicker({
+            liveSearch: true
+        });
+        $('.selectpicker').selectpicker('refresh');
+        if (errMsg) {
+            $('#FailedAlert').html(errMsg);
+            $('#Failed').modal('toggle');
+            var jsonData = JSON.parse(modelData);
+            $('#addnewpage').hide();
+            $('#projectopening').show();
+            $('#gridlist').hide();
+            $('#viewdoc').hide();
+            fillData(jsonData);
+
+        } else {
+            $('#projectopening').hide();
+            $('#viewdoc').hide();
+        }
+    });
+
+    //$("#ProposalApprovedDate").datepicker({ minDate: -1, maxDate: -2 }).attr('readonly', 'readonly');
+    $(document).ready(function () {
+        var SearchBy = $('input[name^="SearchField.SearchBy"]:checked').val();
+        if (SearchBy == 'SODate') {
+            $('#DivSODate').show();
+            $('#DivCrtdDate').hide();
+        }
+        else {
+            $('#DivCrtdDate').show();
+            $('#DivSODate').hide();
+        }
+        $("#FromSODate, #ToSODate, #FromDate, #ToDate").datepicker
+           ({
+               dateFormat: 'dd-MM-yy',
+               showStatus: true,
+               showWeeks: true,
+               changeYear: true,
+               yearRange: '-100:+0',
+               highlightWeek: true,
+               numberOfMonths: 1,
+               showAnim: "scale",
+               showOptions: {
+                   origin: ["top", "left"]
+               }
+           });
+
+    });
+    $('#IsYearWiseAllocation').click(function () {
+        if ($(this).is(":checked")) {
+            $('div#YWtabs ul li').not(':first').remove();
+            $('#YWtabs .tab-content .tab-pane').not(':first').remove();
+            $('#YWHead').removeClass('dis-none');
+            $('#OAHead').addClass('dis-none');
+            createYWHeadTab();
+        } else {
+            $('#YWHead').addClass('dis-none');
+            $('#OAHead').removeClass('dis-none');
+        }
+    });
+    function createYWHeadTab() {
+        var ttlYear = 0, ttlMoth = 0, ohPercentYW = 0, ohPercentLP = 0, ohYWValue = 0, ohLPValue = 0, monthWiseEMI = 0, yearlyEMI = 0, lastPeriodEMI = 0;
+        //var pYear = parseInt($('input[name="Projectdurationyears"]').val());
+        //var pMonth = parseInt($('input[name="Projectdurationmonths"]').val());
+        var strDate = $("#TentativeStartdate").val();
+        var clsDate = $("#TentativeClosedate").val();
+        var startDate = moment(parseDate(strDate));
+        var closeDate = moment(parseDate(clsDate));
+        var pYear = closeDate.diff(startDate, 'year');
+        startDate.add(pYear, 'years');
+        var pMonth = closeDate.diff(startDate, 'months');
+        startDate.add(pMonth, 'months');
+
+        var days = closeDate.diff(startDate, 'days');
+        //if (pYear > 1) {
+        //    result = years + ' years ';
+        //} else if (pYear == 1) {
+        //    result = years + ' year ';
+        //}
+        //if (pMonth > 1) {
+        //    result = result + pMonth + ' months ';
+        //} else if (pMonth == 1) {
+        //    result = result + pMonth + ' month ';
+        //}
+        //if (days > 1) {
+        //    result = result + days + ' days';
+        //} else if (days == 1) {
+        //    result = result + days + ' day';
+        //}
+        if (days >= 1)
+           pMonth = pMonth + 1;
+        var projType = $('#Prjcttype').val();
+        var _ohPercent = parseFloat($('#OverheadPercentage').val());
+        var budgetVal = parseFloat($('#BaseValueHidden').val());
+        if (!isNaN(pYear) && !isNaN(isNaN(pYear))) {
+            var monthWisePercent = 0;
+            if (projType == 2 && !isNaN(_ohPercent) && _ohPercent != 0) {
+                ttlMoth = pYear * 12 + pMonth
+                monthWisePercent = _ohPercent / ttlMoth;
+                monthWiseEMI = budgetVal / ttlMoth;
+                yearlyEMI = Math.round(monthWiseEMI * 12);
+                lastPeriodEMI = Math.round(monthWiseEMI * pMonth);
+                ohPercentYW = monthWisePercent * 12;
+                ohPercentLP = monthWisePercent * pMonth;
+                ohYWValue = Math.round(budgetVal * ohPercentYW / 100);
+                if (ohPercentLP > 0)
+                    ohLPValue = Math.round(budgetVal * ohPercentLP / 100);
+                if (pYear > 0) {
+                    $("input[name='YearWiseHead[0].AllocationValueYW']:first").val(ohYWValue);
+                    $("input[name='YearWiseHead[0].EMIValueForYear']:first").val(yearlyEMI);
+                } else {
+                    $("input[name='YearWiseHead[0].AllocationValueYW']:first").val(ohLPValue);
+                    $("input[name='YearWiseHead[0].EMIValueForYear']:first").val(lastPeriodEMI);
+                }
+                $("label[name ='lblRecurring']:first").html('Recurring');
+                $("select[name='YearWiseHead[0].AllocationHeadYW']:first").val(6);
+
+            }
+            if (pMonth > 0)
+                ttlYear = pYear + 1;
+            else
+                ttlYear = pYear;
+            for (var i = 2; i <= ttlYear; i++) {
+                var tabCount = i - 1;
+                if (!$("#Year1").hasClass("active"))
+                    $("#Year1").addClass("active in");
+                // add new tab and related content
+                $("div#YWtabs ul").append(
+                   "<li><a data-toggle='pill' href='#Year" + i + "'>Year " + i + "</a></li> "
+               );
+                var innerCnt = $('#Year1 > Div').clone().find("input[name='YearWiseHead[0].Year']").val(i).end();
+                $(innerCnt).find("input:not(input[name='YearWiseHead[0].Year']), select").val("");
+                $(innerCnt).find('label[name ="lblRecurring"]').html('');
+                $(innerCnt).find('label[name ="lblTtlYearVal"]').html('');
+                $(innerCnt).find('label[name ="lblEMIYearVal"]').html('');
+                $(innerCnt).find('div[name="divDynEMI"]').html('');
+                if (ttlYear == i && ohLPValue > 0) {
+                    $(innerCnt).find("input[name='YearWiseHead[0].AllocationValueYW']:first").val(ohLPValue);
+                    $(innerCnt).find("label[name ='lblRecurring']:first").html('Recurring');
+                    $(innerCnt).find("select[name='YearWiseHead[0].AllocationHeadYW']:first").val(6);
+                    $(innerCnt).find("input[name='YearWiseHead[0].EMIValueForYear']:first").val(lastPeriodEMI);
+                } else if (ohYWValue > 0) {
+                    $(innerCnt).find("input[name='YearWiseHead[0].AllocationValueYW']:first").val(Math.round(ohYWValue));
+                    $(innerCnt).find("label[name ='lblRecurring']:first").html('Recurring');
+                    $(innerCnt).find("select[name='YearWiseHead[0].AllocationHeadYW']:first").val(6);
+                    $(innerCnt).find("input[name='YearWiseHead[0].EMIValueForYear']:first").val(yearlyEMI);
+                }
+                $(innerCnt).find("input, select").each(function () {
+                    $(this).attr("name", $(this).attr("name").replace(/\d+/, tabCount));
+                    $(this).attr("id", $(this).attr("id").replace(/\d+/, tabCount));
+                });
+                var cntDiv = $('<div/>', {
+                    id: 'Year' + i,
+                    'class': 'tab-pane fade'
+                }).append(innerCnt).appendTo('#YWtabs .tab-content');
+            }
+            /*Overall*/
+            $("div#YWtabs ul").append(
+                   "<li><a id='linkOverall' data-toggle='pill' href='#divOverall'>Overall </a></li> "
+               );
+            var cntDiv = $('<div/>', {
+                id: 'divOverall',
+                'class': 'tab-pane fade'
+            }).appendTo('#YWtabs .tab-content');
+            calcTtlValueYW()
+        }
+    }
+    $("#TentativeStartdate, #TentativeClosedate").change(function () {
+        createYWHeadTab();
+    });
+    function calcTtlValueYW() {
+        $('#YWtabs .tab-content .tab-pane').not(':last').each(function () {
+            var ttlYWVal = 0;
+            var ttlEMIVal = 0;
+            $(this).find('input[name $=".AllocationValueYW"]').each(function () {
+                var parseVal = parseFloat($(this).val());
+                if (!isNaN(parseVal))
+                    ttlYWVal = ttlYWVal + parseVal;
+            });
+            $(this).find('input[name $=".EMIValue"]').each(function () {
+                var parseEMIVal = parseFloat($(this).val());
+                if (!isNaN(parseEMIVal))
+                    ttlEMIVal = ttlEMIVal + parseEMIVal;
+            });
+            $(this).find('label[name ="lblTtlYearVal"]').html(ttlYWVal);
+            $(this).find('label[name ="lblEMIYearVal"]').html(ttlEMIVal);
+        });
+    }
+    function sumAllocationYW(evt) {
+        var ttlYWVal = 0;
+        var tabEle = $(evt).closest('.tab-pane');
+        tabEle.find('input[name $=".AllocationValueYW"]').each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlYWVal = ttlYWVal + parseVal;
+        });
+        tabEle.find('label[name ="lblTtlYearVal"]').html(ttlYWVal);
+    }
+    function sumEMIYW(evt) {
+        var ttlYWVal = 0;
+        var tabEle = $(evt).closest('.tab-pane');
+        tabEle.find('input[name $=".EMIValue"]').each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlYWVal = ttlYWVal + parseVal;
+        });
+        tabEle.find('label[name ="lblEMIYearVal"]').html(ttlYWVal);
+    }
+    function sumEMI(evt) {
+        var ttlEMIVal = 0;
+        $('input[name ="ArrayEMIValue"]').each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlEMIVal = ttlEMIVal + parseVal;
+        });
+        $('#lblEMIVal').html(ttlEMIVal);
+    }
+    function createNoOfEMI(evt) {
+        var noOfEMI = parseInt($(evt).val());
+        var eleName = $(evt).attr("name");
+        var newEleName = eleName.substr(0, (eleName.lastIndexOf('.') + 1));
+        var tabEle = $(evt).closest('.tab-pane');
+        tabEle.find('label[name ="lblEMIYearVal"]').html('0');
+        tabEle.find('div[name="divDynEMI"]').html('');
+        if (!isNaN(noOfEMI)) {
+            for (var i = 1; i <= noOfEMI; i++) {
+                var staticDiv = $('#divStaticEMI:first').clone();
+                staticDiv.find('input[name="EMIValue"]').attr("name", newEleName + "EMIValue");
+                staticDiv.removeClass('dis-none');
+                staticDiv.find('label[name="lblEMI"]').html('Installment ' + i);
+                tabEle.find('div[name="divDynEMI"]').append(staticDiv);
+            }
+        }
+    }
+    function createOANoOfEMI(evt) {
+        var noOfEMI = parseInt($(evt).val());
+        $('#lblEMIVal').html('0');
+        $('#divOADynEMI').html('');
+        if (!isNaN(noOfEMI)) {
+            for (var i = 1; i <= noOfEMI; i++) {
+                var staticDiv = $('#divStaticOAEMI').clone();
+                staticDiv.find('input[name="EMIValue"]').attr("name", "ArrayEMIValue");
+                staticDiv.removeClass('dis-none');
+                staticDiv.find('label[name="lblEMI"]').html('Installment ' + i);
+                $('#divOADynEMI').append(staticDiv);
+            }
+        }
+    }
+    function sumAllocation() {
+        var ttlAllowVal = 0;
+        $('input[name ="Allocationvalue"]').each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlAllowVal = ttlAllowVal + parseVal;
+        });
+        $('#lblTtlVal').html(ttlAllowVal);
+    }
+    $(document).on('click', 'a[id="linkOverall"]', function () {
+        var ttlYWVal = 0;
+        var ttlEMIVal = 0;
+        $('#divOverall').html('');
+        $('#YWtabs .tab-content .tab-pane').not(':last').each(function (i, item) {
+
+            $(this).find('input[name $=".AllocationValueYW"]').each(function () {
+                var parseVal = parseFloat($(this).val());
+                if (!isNaN(parseVal))
+                    ttlYWVal = ttlYWVal + parseVal;
+            });
+            $(this).find('input[name $=".EMIValue"]').each(function () {
+                var parseEMIVal = parseFloat($(this).val());
+                if (!isNaN(parseEMIVal))
+                    ttlEMIVal = ttlEMIVal + parseEMIVal;
+            });
+
+            var tabDiv = $(item).children('Div').first().clone(true);
+            var currentyear = i + 1;
+            tabDiv.find('button').remove();
+            tabDiv.find('select').each(function (j, ele) {
+                $(this).val(document.getElementsByName($(this).attr("name"))[j].value).attr("selected", "selected")
+            });
+            tabDiv.find('input,select').attr("disabled", true);
+            tabDiv.find('input,select').attr("name", "overallreadonlyinput");
+            var newDiv = $('<div class="mb30"/>');
+            newDiv.append($('<h3 class="panel-tt">').text('Year ' + currentyear));
+            newDiv.append(tabDiv).appendTo('#divOverall');
+        });
+        var newPMlblDiv = $('<div class="gray-bg-md"/>');
+        var newlblDiv = $('<div class="row "/>');
+        newlblDiv.append($('<div class="col-md-3"/>').text('Net Allocation'));
+        newlblDiv.append($('<div class="col-md-3"/>').text(ttlYWVal));
+        newlblDiv.append($('<div class="col-md-3"/>').text('Net Installment'));
+        newlblDiv.append($('<div class="col-md-3"/>').text(ttlEMIVal));
+        newPMlblDiv.append(newlblDiv).appendTo('#divOverall');
+        //$('#divOverall').append(newlblDiv);
+    });
+    $(document).on('change', 'select[name$=".AllocationHeadYW"]', function () {
+        var headVal = $(this).val();
+        var typeOfAllocation = '';
+        if (headVal != "") {
+            $.each(JSON.parse(allocationHeads), function (i, item) {
+                if (item.id == headVal) {
+                    typeOfAllocation = item.code;
+                    return false;
+                }
+
+            });
+        }
+        $(this).closest('div[name="primaryAllocateDiv"]').find('label[name ="lblRecurring"]').html(typeOfAllocation);
+    });
+    $(document).on('click', 'button[name="btnAddYWAllocation"]', function () {
+        var cln = $(this).closest('div[name="divAllocateContent"]').find('div[name="primaryAllocateDiv"]:first').clone().find("input, select").val("").end();
+        $(cln).find('label[name ="lblRecurring"]').html('');
+        $(cln).find('.dis-none').removeClass('dis-none');
+        $(cln).insertBefore($(this).closest('div[name="divAllocateContent"]').find('.p-b-sm'));
+
+    });
+    $(document).on('click', 'div[name="primaryAllocateDiv"] button[name="removeButton"]', function () {
+        $(this).closest('div[name="primaryAllocateDiv"]').remove();
+        calcTtlValueYW();
+    });
+    $(document).on('change', 'select[name="Allocationhead"]', function () {
+        var headVal = $(this).val();
+        var typeOfAllocation = '';
+        if (headVal != "") {
+            $.each(JSON.parse(allocationHeads), function (i, item) {
+                if (item.id == headVal) {
+                    typeOfAllocation = item.code;
+                    return false;
+                }
+
+            });
+        }
+        $(this).closest('#primaryAllocateDiv').find('#lblRecurring').html(typeOfAllocation);
+    });
+    $('#btnAddAllocationhead').click(function () {
+        var cln = $("#primaryAllocateDiv").clone().find("input").val("").end();
+        $(cln).find('label[id ="lblRecurring"]').html('');
+        $(cln).find('.dis-none').removeClass('dis-none');
+        $(cln).insertBefore($(this).closest('#divAllocateContent').find('.p-b-sm'));
+    });
+    $(document).on('click', '#primaryAllocateDiv button[name="removeButton"]', function () {
+        $(this).closest('#primaryAllocateDiv').remove();
+        sumAllocation();
+    });
+    $('input[id^="SearchBy_"]').change(function () {
+        var value = $(this).val();
+        if (value == 'SODate') {
+            $('#DivSODate').show();
+            $('#DivCrtdDate').hide();
+        }
+        else {
+            $('#DivCrtdDate').show();
+            $('#DivSODate').hide();
+        }
+        $('#FromSODate').val('');
+        $('#ToSODate').val('');
+        $('#FromDate').val('');
+        $('#ToDate').val('');
+    });
+
+    $('a[name="btnClose"],button[name="btnClose"]').click(function () {
+        $('#popupFilter').css("display", "none");
+    });
+    $("#btnFilter").click(function () {
+        $('#popupFilter').css("display", "Block");
+    });
+
+
+    $('#Prjcttype').prop("selectedIndex", 0);
+    $('#datepickerid').val("");
+    $('#txtprpslsrc').val("");
+    $('#txtprjcttitle').val("");
+    $('#Agncy').prop("selectedIndex", 0);
+    $('#txtprpslval').val("");
+    $('#txtprjctduratn').val("");
+    $('#txtpersonapplied').val("");
+    $('#schemename').prop("selectedIndex", 0);
+    $('#txtremarks').val("");
+    $('#tentstartdatepickerid').val("");
+    //$('#startdatepickerid').val("");
+    $('#tentclosedatepickerid').val("");
+    $('#closedatepickerid').val("");
+    $('#ProposalApprovedDate').val("");
+    $('#SOdatepickerid').val("");
+    //$('#inputdatepickerid').val("");
+
+    $('#SanctionOrderDate').datepicker({ maxDate: 0, dateFormat: 'dd-MM-yy', changeYear: true, yearRange: '-30:+0' });
+    //$('#ProposalApprovedDate').datepicker({ maxDate: 0, dateFormat: 'dd-MM-yy', changeYear: true, yearRange: '-30:+0' });
+
+    $('#TentativeStartdate').datepicker({ dateFormat: 'dd-MM-yy', changeYear: true, yearRange: '-30:+30' });
+    //$('#Startdate').datepicker({ dateFormat: 'dd-MM-yy', changeYear: true, yearRange: '-30:+30' });
+    $('#TentativeClosedate').datepicker({ dateFormat: 'dd-MM-yy', changeYear: true, yearRange: '-30:+30' });
+    $('#Closedate').datepicker({ dateFormat: 'dd-MM-yy', changeYear: true, yearRange: '-30:+30' });
+    //$('#Inputdate').datepicker({ maxDate: 0, minDate: 0, dateFormat: 'dd-MM-yy', changeYear: true, yearRange: '-30:+0' });
+
+    $('#department').prop("selectedIndex", 0);
+    $('#PI').prop("selectedIndex", 0);
+    $('#txtPIemail').val("");
+
+    $('#copidepartment').prop("selectedIndex", 0);
+    $('#CoPI').prop("selectedIndex", 0);
+    $('#txtcopiemail').val("");
+
+    $('#doctype').prop("selectedIndex", 0);
+    $('#docname').val("");
+
+
+    $('#btnAddCoPI').click(function () {
+        var cln = $("#primaryDiv").clone().find("input").val("").end();
+        var cloneElement = $("#primaryDiv").find('#CoPI').parent().clone();
+        cln.find('#CoPI').parent().replaceWith(selectPickerApiElement($(cloneElement), "empty", [], ''));
+        $(cln).find('.dis-none').removeClass('dis-none');
+        $(cln).insertBefore($(this).closest('#divContent').find('.p-b-sm'));
+    });
+
+
+
+
+
+    //function sumAllocation() {
+    //    var allocatedvalue = [];
+
+    //    $('input[name="Allocationvalue"]').each(function (idx, val) { allocatedvalue.push($(val).val()); });
+
+    //    var result = 0;
+
+    //    $.each(allocatedvalue, function (i, val) {
+
+    //        if (i == 0) {
+
+    //            //add only if the value is number
+    //            var txtallocValue = document.getElementsByName('Allocationvalue')[0].value;
+
+    //            result += parseFloat(txtallocValue);
+
+    //            if (!isNaN(result)) {
+    //                $('input[name="Allocationtotal"]').val(result.toFixed(0));
+    //                // document.getElementsByName('TotalEnhancedAllocationvalue')[0].value = result;
+    //            }
+
+
+    //        } else {
+
+    //            var txtallocValue = document.getElementsByName('Allocationvalue')[i].value;
+
+    //            result += parseFloat(txtallocValue);
+
+    //            if (!isNaN(result)) {
+    //                $("#ttlallocatedvalue").val(result.toFixed(0));
+    //                // document.getElementsByName('TotalEnhancedAllocationvalue')[0].value = result;
+    //            }
+    //        }
+    //    });
+    //}
+    $('#btnAddStaffCategory').click(function () {
+        var cln = $("#primaryStaffDiv").clone().find("input").val("").end();
+        $(cln).find('.dis-none').removeClass('dis-none');
+        $('#divStaffContent').append(cln)
+
+    });
+
+    $(document).on('click', '#divStaffContent button[name="removeButton"]', function () {
+        $(this).parent().parent("Div").remove();
+    });
+
+    $('#btnSearch').on('click', function () {
+        // var token = $("input[name=__RequestVerificationToken]").val();
+        getData();
+
+    });
+    var searchProjectURL = 'SearchProjectList';
+    function getData() {
+        var Projecttype = $('#srchPrjcttype').val();
+        var Proposalnumber = $('#proposalnumber').val();
+        var Projectnumber = $('#projectnumber').val();
+        var PIName = $('#srchPIName').val();
+        //  var SearchBy = $('input[name^="SearchField.SearchBy"]:checked').val();
+        var FromSODate = $('#FromSODate').val();
+        var ToSODate = $('#ToSODate').val();
+        var FromDate = $('#FromDate').val();
+        var ToDate = $('#ToDate').val();
+
+        if (Projecttype == "") {
+            Projecttype = 0;
+        }
+        if (FromSODate == "") {
+            FromSODate = null;
+        }
+        if (ToSODate == "") {
+            ToSODate = null;
+        }
+        //  var searchdata = { "__RequestVerificationToken": token, "ProjectType": Projecttype,"ProposalNumber": Proposalnumber, "PIname": PIName, "Searchby": SearchBy, "FromSOdate": FromSODate, "ToSOdate": ToSODate, "Fromdate": FromDate, "Todate": ToDate };
+        var searchdata = {
+            ProjectType: Projecttype,
+            ProposalNumber: Proposalnumber,
+            FromSODate: FromSODate,
+            ToSODate: ToSODate
+        };
+        //var input
+        //{
+        //    ProjectType: $('#srchPrjcttype').val()
+        //    ProposalNumber: $('#proposalnumber').val();
+        //    FromSODate: $('#FromSODate').val()
+        //    ToSODate: $('#ToSODate').val()
+
+        //}
+        $.ajax({
+            type: "GET",
+            url: searchProjectURL,
+            data: searchdata,
+            //data: { "ProjectType": Projecttype, "ProposalNumber": Proposalnumber, "FromSOdate": FromSODate, "ToSOdate": ToSODate, },
+            //contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (result) {
+                // dataProposal = result;
+                $("#gridProjectList").jsGrid({ data: result });
+                $('#projectopening').hide();
+                $('#gridlist').show();
+                $('#popupFilter').hide();
+
+            },
+            error: function (err) {
+                console.log("error : " + err);
+            }
+        });
+
+    }
+
+
+    $('#btnaddnew').on('click', function () {
+        //$('#propslnum').val();
+        //$('#prpslid').hide();
+        //$('#docid').hide();
+        //$('#copiid').hide();
+        $('#addnewpage').hide();
+        $('#projectopening').show();
+        $('#gridlist').hide();
+        //  $('#gridsearchlist').hide();
+        //$('#saveproject').show();
+        //$('#updateproject').hide();
+        $('#viewdoc').hide();
+        // $('#createuserid').show();
+        // $('#editproposal').hide();
+    });
+    $("#Agncy").change(function () {
+        var agency = $(this).val();
+        var Getagencycode = 'LoadAgencycodebyagency';
+        $.ajax({
+            type: "POST",
+            url: Getagencycode,
+            data: { agencyid: agency },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+
+            success: function (result) {
+                $("#txtagencycode").val(result.name);
+                $('input[name="AgencyCodeid"]').val(result.id);
+
+            },
+            error: function (err) {
+                console.log("error1 : " + err);
+            }
+        });
+
+    });
+
+    $('#btnsaveclose').on('click', function () {
+
+        $('#addnewpage').show();
+        $('#projectopening').hide();
+        $('#gridlist').show();
+        //   $('#gridsearchlist').hide();
+        //$('#createuserid').hide();
+
+    });
+
+    function formSave() {
+        //d.preventDefault();
+        var validator = $("#formPO").validate();
+        //for (var i = 0; i < validator.errorList.length; i++) {
+        //    console.log(validator.errorList[i]);
+        //}
+        var isValid = $('#formPO').valid();
+        if (!isValid)
+            return false;
+        // var isValid = $(this).closest("form").valid();
+        var pidept = $("#department").val(); //Year, Month, Date
+        var piname = $("#PI").val();
+        var totalstaffs = $("#totlprjctstaffs").val();
+        var sumofstaffs = $("#sumstaffs").val();
+        var allocationtotal = $("#ttlallocatedvalue").val();
+        var sanctionedvalue = $("#BaseValueHidden").val();
+
+        if (allocationtotal != null && allocationtotal != 0 && allocationtotal != "") {
+            if (sanctionedvalue != allocationtotal) {
+                $('#MsgValidation').html("The allocated value is not equal to sanctioned value.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+
+        if ((pidept > 0) && (piname == null || piname == 0)) {
+            $('#MsgValidation').html("Please select Principal Investigator name.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+
+        if ((pidept == null || pidept == 0) && (piname > 0)) {
+            $('#MsgValidation').html("Please select Department of selected Principal Investigator.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+        if ((pidept == 0 || pidept == null) && (piname == null || piname == 0)) {
+            $('#MsgValidation').html("Please select Department and Principal Investigator name.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+
+        // to validate if copi department or copiname is left unselected when either one of them is selected
+        var copideptvalues = [];
+        var copinamvalues = [];
+
+        $('select[name="CoPIDepartment"]').each(function (idx, val) { copideptvalues.push($(val).val()); });
+        $('select[name="CoPIname"]').each(function (idx, val) { copinamvalues.push($(val).val()); });
+        //// Sort it
+        copideptvalues.sort();
+        copinamvalues.sort();
+
+        for (var k = 0; k < copideptvalues.length; ++k) {
+            if ((copideptvalues[k] > 0) && (copinamvalues[k] == null || copinamvalues[k] == 0)) {
+                $('#MsgValidation').html("Please fill Co PI name.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+            if ((copideptvalues[k] == null || copideptvalues[k] == 0) && (copinamvalues[k] > 0)) {
+                $('#MsgValidation').html("Please fill Department of selected Co PI.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+        // duplicate check
+        for (var k = 1; k < copinamvalues.length; ++k) {
+            if (copinamvalues[k] == copinamvalues[k - 1]) {
+                $('#MsgValidation').html("Co PI already selected. Please select a different Co PI.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+
+        // to validate if attachment type or attachment name is not left blank when either one of them is filled
+        var doctypevalues = [];
+        var docnamevalues = [];
+        $('select[name="DocType"]').each(function (idx, val) { doctypevalues.push($(val).val()); });
+        $('input[name="AttachName"]').each(function (idx, val) { docnamevalues.push($(val).val()); });
+        //// Sort it
+        doctypevalues.sort();
+        docnamevalues.sort();
+
+        for (var k = 0; k < doctypevalues.length; ++k) {
+            //if ((doctypevalues[k] > 0) && ((docnamevalues[k] == null) || docnamevalues[k] == "")) {
+            //    $('#MsgValidation').html("Please fill Attachment name.");
+            //    $('#ValidationModal').modal('toggle');
+            //    return false;
+            //}
+            if ((docnamevalues[k] != null && docnamevalues[k] != "") && (doctypevalues[k] == null || doctypevalues[k] == 0)) {
+                $('#MsgValidation').html("Please select Attachment type.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+        // duplicate check
+        for (var k = 1; k < doctypevalues.length; ++k) {
+            if (doctypevalues[k] == doctypevalues[k - 1]) {
+                $('#MsgValidation').html("Selected Attachment type already exist. Please select a different Attachment type.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+            isValid = true;
+        }
+
+        // duplicate check allocation head
+
+        var allocateheads = [];
+        $('select[name="Allocationhead"]').each(function (idx, val) { allocateheads.push($(val).val()); });
+        allocateheads.sort();
+        for (var k = 1; k < allocateheads.length; ++k) {
+            if (allocateheads[k] == 1) {
+                if (allocateheads[k] == allocateheads[k - 1]) {
+                    $('#MsgValidation').html("Allocation head already exist. Please select a different allocation.");
+                    $('#ValidationModal').modal('toggle');
+                    return false;
+                }
+            }
+            isValid = true;
+        }
+
+        if (totalstaffs != sumofstaffs) {
+            $('#MsgValidation').html("The project staffs total is not equal to the categorywise total.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+        //if (allocationtotal != sanctionedvalue) {
+        //    alert('The sanctioned value is not equal to the allocated value');
+        //    return false;
+        //}
+        var projecttype = $('input[name="Prjcttype"]').val();
+        var projectsubtype = $('input[name="ProjectSubType"]').val();
+        var taxtype = $("#constaxtype").val();
+        var taxdocname = $("#proofdocfile").val();
+        var existsDocPath = $('#Docpathfornotax').val();
+        var consfundingtype = $("#consprjctfundingtype").val();
+        var fundingtype = $("#prjctfundingtype").val();
+
+        if (projecttype == 2 && taxtype == 2) {
+            if (taxdocname == "" && existsDocPath == '') {
+                isValid = false;
+                $('#MsgValidation').html("Please attach document proof for no tax");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+        if (projecttype == 2 && taxtype == 3) {
+            if (taxdocname == "" && existsDocPath == '') {
+                isValid = false;
+                $('#MsgValidation').html("Please attach document proof for tax exemption");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+        if ((projecttype == 2) && (consfundingtype == 0 || consfundingtype == null)) {
+
+            isValid = false;
+            $('#MsgValidation').html("Please select Project Funding Type");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+        if ((projecttype == 1) && (projectsubtype == 2) && (fundingtype == 0 || fundingtype == null)) {
+
+            isValid = false;
+            $('#MsgValidation').html("Please select Project Funding Type");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+
+
+        var taxservicemode = $("#taxservice").val();
+        var projcttype = $('input[name="Prjcttype"]').val();
+        var projectsubtype = $('input[name="ProjectSubType"]').val();
+
+
+        if ((projcttype == 0) && (taxservicemode == 1 || taxservicemode == 2)) {
+            $('#MsgValidation').html("Please select project type.");
+            $('#ValidationModal').modal('toggle');
+
+        }
+        if ((projcttype == 0) && (taxservicemode == 1 || taxservicemode == 2)) {
+            $('#MsgValidation').html("Please select project type.");
+            $('#ValidationModal').modal('toggle');
+
+        }
+
+
+        if (isValid)
+            $('#formPO').submit();
+
+    }
+    function projectDurationValidation() {
+        var tentativestartdate = parseDate($("#TentativeStartdate").val());
+        var tentativeclosedate = parseDate($("#TentativeClosedate").val());
+        //var startdate = $("#Startdate").val();
+        //var closedate = $("#Closedate").val();
+        //var projectdurationyear = $('input[name="Projectdurationyears"]').val();
+        //var projectdurationmonth = $('input[name="Projectdurationmonths"]').val();
+
+
+        //if (startdate == null || startdate == "" || closedate == null || closedate == "") {
+           // var diff_date = tentativeclosedate - tentativestartdate;
+
+           // var years = Math.floor(diff_date / 31536000000);
+           // var months = Math.floor((diff_date % 31536000000) / 2628000000);
+           // var days = Math.floor(((diff_date % 31536000000) % 2628000000) / 86400000);
+
+           // if (projectdurationyear != years || projectdurationmonth != months) {
+           //     $('#MsgValidation').html("The project duration is not equal to selected start and close date.");
+           //     $('#ValidationModal').modal('toggle');
+           //     return false;
+           //}
+        //}
+        //if (startdate != null && startdate != "" && closedate != null && closedate != "") {
+        //    var newstartdate = parseDate(startdate);
+        //    var newenddate = parseDate(closedate);
+
+        //    var diff_date = newenddate - newstartdate;
+
+        //    var years = Math.floor(diff_date / 31536000000);
+        //    var months = Math.floor((diff_date % 31536000000) / 2628000000);
+        //    var days = Math.floor(((diff_date % 31536000000) % 2628000000) / 86400000);
+
+        //    if (projectdurationyear != years || projectdurationmonth != months) {
+        //        $('#MsgValidation').html("The project duration is not equal to selected start and close date.");
+        //        $('#ValidationModal').modal('toggle');
+        //        return false;
+        //    }
+        //}
+
+        return true;
+    }
+    function parseDate(s) {
+        var months = {
+            january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+            july: 6, august: 7, september: 8, october: 9, november: 10, december: 11
+        };
+        var p = s.split('-');
+        return new Date(p[2], months[p[1].toLowerCase()], p[0]);
+    }
+    $('#btnupdate').on('click', function (e) {
+        // to validate if PI department or PI name is left unselected when either one of them is selected
+        e.preventDefault();
+
+        var isValid = $('#formPO').valid();
+
+        // var isValid = $(this).closest("form").valid();
+        var pidept = $("#department").val(); //Year, Month, Date
+        var piname = $("#PI").val();
+        var totalstaffs = $("#totlprjctstaffs").val();
+        var sumofstaffs = $("#sumstaffs").val();
+        var allocationtotal = $("#ttlallocatedvalue").val();
+        var sanctionedvalue = $("#BaseValueHidden").val();
+        if (sanctionedvalue != allocationtotal) {
+            $('#MsgValidation').html("The allocated value is not equal to sanctioned value.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+        if ((pidept > 0) && (piname == null || piname == 0)) {
+            $('#MsgValidation').html("Please select Principal Investigator name.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+
+        if ((pidept == null || pidept == 0) && (piname > 0)) {
+            $('#MsgValidation').html("Please select Department of selected Principal Investigator.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+        if ((pidept == 0 || pidept == null) && (piname == null || piname == 0)) {
+            $('#MsgValidation').html("Please select Department and Principal Investigator name.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+
+        // to validate if copi department or copiname is left unselected when either one of them is selected
+        var copideptvalues = [];
+        var copinamvalues = [];
+
+        $('select[name="CoPIDepartment"]').each(function (idx, val) { copideptvalues.push($(val).val()); });
+        $('select[name="CoPIname"]').each(function (idx, val) { copinamvalues.push($(val).val()); });
+        //// Sort it
+        copideptvalues.sort();
+        copinamvalues.sort();
+
+        for (var k = 0; k < copideptvalues.length; ++k) {
+            if ((copideptvalues[k] > 0) && (copinamvalues[k] == null || copinamvalues[k] == 0)) {
+                $('#MsgValidation').html("Please fill Co PI name.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+            if ((copideptvalues[k] == null || copideptvalues[k] == 0) && (copinamvalues[k] > 0)) {
+                $('#MsgValidation').html("Please fill Department of selected Co PI.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+        // duplicate check
+        for (var k = 1; k < copinamvalues.length; ++k) {
+            if (copinamvalues[k] == copinamvalues[k - 1]) {
+                $('#MsgValidation').html("Co PI already selected. Please select a different Co PI.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+
+        // to validate if attachment type or attachment name is not left blank when either one of them is filled
+        var doctypevalues = [];
+        var docnamevalues = [];
+        $('select[name="DocType"]').each(function (idx, val) { doctypevalues.push($(val).val()); });
+        $('input[name="AttachName"]').each(function (idx, val) { docnamevalues.push($(val).val()); });
+        //// Sort it
+        doctypevalues.sort();
+        docnamevalues.sort();
+        for (var k = 0; k < doctypevalues.length; ++k) {
+            if ((doctypevalues[k] > 0) && ((docnamevalues[k] == null) || docnamevalues[k] == "")) {
+                $('#MsgValidation').html("Please fill Attachment name.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+            if ((docnamevalues[k] != null && docnamevalues[k] != "") && (doctypevalues[k] == null || doctypevalues[k] == 0)) {
+                $('#MsgValidation').html("Please select Attachment type.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+        // duplicate check
+        for (var k = 1; k < doctypevalues.length; ++k) {
+            if (doctypevalues[k] == doctypevalues[k - 1]) {
+                $('#MsgValidation').html("Selected Attachment type already exist. Please select a different Attachment type.");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+            isValid = true;
+        }
+
+        // duplicate check allocation head
+
+        var allocateheads = [];
+        $('select[name="Allocationhead"]').each(function (idx, val) { allocateheads.push($(val).val()); });
+        allocateheads.sort();
+        for (var k = 1; k < allocateheads.length; ++k) {
+            if (allocateheads[k] == 1) {
+                if (allocateheads[k] == allocateheads[k - 1]) {
+                    $('#MsgValidation').html("Allocation head already exist. Please select a different allocation.");
+                    $('#ValidationModal').modal('toggle');
+                    return false;
+                }
+            }
+            isValid = true;
+        }
+
+        if (totalstaffs != sumofstaffs) {
+            $('#MsgValidation').html("The project staffs total is not equal to the categorywise total.");
+            $('#ValidationModal').modal('toggle');
+            return false;
+        }
+
+        //var tentativestartdate = new parseDate($("#TentativeStartdate").val());
+        //var tentativeclosedate = new parseDate($("#TentativeClosedate").val());
+        //var startdate = $("#Startdate").val();
+        //var closedate = $("#Closedate").val();
+        //var projectdurationyear = $('input[name="Projectdurationyears"]').val();
+        //var projectdurationmonth = $('input[name="Projectdurationmonths"]').val();
+
+
+        //if (startdate == null || startdate == "" || closedate == null || closedate == "") {
+            //var diff_date = tentativeclosedate - tentativestartdate;
+
+            //var years = Math.floor(diff_date / 31536000000);
+            //var months = Math.floor((diff_date % 31536000000) / 2628000000);
+            //var days = Math.floor(((diff_date % 31536000000) % 2628000000) / 86400000);
+
+            //if (projectdurationyear != years || projectdurationmonth != months) {
+            //    $('#MsgValidation').html("The project duration is not equal to selected start and close date.");
+            //    $('#ValidationModal').modal('toggle');
+            //    return false;
+            //}
+        //}
+        //if (startdate != null && startdate != "" && closedate != null && closedate != "") {
+        //    var newstartdate = new parseDate(startdate);
+        //    var newenddate = new parseDate(closedate);
+
+        //    var diff_date = newenddate - newstartdate;
+
+        //    var years = Math.floor(diff_date / 31536000000);
+        //    var months = Math.floor((diff_date % 31536000000) / 2628000000);
+        //    var days = Math.floor(((diff_date % 31536000000) % 2628000000) / 86400000);
+
+        //    if (projectdurationyear != years || projectdurationmonth != months) {
+        //        $('#MsgValidation').html("The project duration is not equal to selected start and close date.");
+        //        $('#ValidationModal').modal('toggle');
+        //        return false;
+        //    }
+        //}
+
+
+        var taxservicemode = $("#taxservice").val();
+        var projcttype = $('input[name="Prjcttype"]').val();
+        var projectsubtype = $('input[name="ProjectSubType"]').val();
+
+        if (projcttype == 2 && taxservicemode == 1) {
+            $("#indprojectstate").show();
+            $("#indprojectlocation").show();
+
+            $("#forignprojectcntry").hide();
+            $("#forignprojectstate").hide();
+            $("#forignprojectlocation").hide();
+            $("#taxregistatus").hide();
+            $("#constaxservicegst").show();
+            var gst = $("#gstnumbr").val();
+            if (gst == null || gst == "") {
+                isValid = false;
+                $('#MsgValidation').html("Please fill GSTIN");
+                $('#ValidationModal').modal('toggle');
+                return false;
+            }
+        }
+        //        $("#sponextrnlscheme").addClass('dis-none')
+        if ((projcttype == 2) && taxservicemode == 2) {
+            $("#indprojectstate").show();
+            $("#indprojectlocation").show();
+
+            $("#forignprojectcntry").hide();
+            $("#forignprojectstate").hide();
+            $("#forignprojectlocation").hide();
+            $("#taxregistatus").show();
+            $("#constaxservicegst").show();
+        }
+        if ((projcttype == 2) && taxservicemode == 3) {
+            $("#indprojectstate").hide();
+            $("#indprojectlocation").hide();
+
+            $("#forignprojectcntry").show();
+            $("#forignprojectstate").show();
+            $("#forignprojectlocation").show();
+            $("#taxregistatus").hide();
+            $("#constaxservicegst").hide();
+        }
+        if (projcttype == 2 && taxservicemode == 0) {
+            $("#taxregistatus").hide();
+            $("#constaxservicegst").hide();
+            $("#forignprojectcntry").hide();
+            $("#forignprojectstate").hide();
+            $("#forignprojectlocation").hide();
+            $("#indprojectstate").hide();
+            $("#indprojectlocation").hide();
+        }
+        if ((projcttype == 0) && (taxservicemode == 1 || taxservicemode == 2)) {
+            $('#MsgValidation').html("Please select project type.");
+            $('#ValidationModal').modal('toggle');
+
+        }
+        if ((projcttype == 0) && (taxservicemode == 1 || taxservicemode == 2)) {
+            $('#MsgValidation').html("Please select project type.");
+            $('#ValidationModal').modal('toggle');
+
+        }
+
+        if (isValid)
+            $('#formPO').submit();
+
+    });
+
+
+
+
+
+    $(document).on('click', '#divContent button[name="removeButton"]', function () {
+        $(this).parent().parent("Div").remove();
+    });
+
+    $('#btnAddDoc').click(function () {
+        var cln = $("#DocprimaryDiv").clone().find("input").val("").end();
+        $(cln).find('.dis-none').removeClass('dis-none');
+        $(cln).find('.doclink').addClass('dis-none');
+        $(cln).insertBefore($('#DocdivContent').find('.p-b-sm'));
+
+    });
+
+
+    $(document).on('click', '#DocdivContent button[name="removeButton"]', function () {
+        $(this).parent().parent("Div").remove();
+    });
+
+
+
+    $("#department").change(function () {
+        var Departmentid = $(this).val();
+        $.getJSON("../Account/LoadPIByDepartment", { Departmentid: Departmentid },
+                    function (locationdata) {
+                        var select = $("#PI");
+                        select.empty();
+
+                        $.each(locationdata, function (index, itemData) {
+
+                            select.append($('<option/>', {
+                                value: itemData.id,
+                                text: itemData.name
+                            }));
+                        });
+                        select.selectpicker('refresh');
+                    });
+    });
+    $("#PI").change(function () {
+        var PIId = $(this).val();
+        $.getJSON("../Account/LoadPIDesignation", { PIid: PIId },
+                    function (locationdata) {
+                        var select = $("#PIdesig");
+                        select.empty();
+
+                        $.each(locationdata, function (index, itemData) {
+
+                            select.append($('<option/>', {
+                                value: itemData.id,
+                                text: itemData.name
+                            }));
+                        });
+                    });
+    });
+
+    $(document).on('change', 'select[name="CoPIDepartment"]', function () {
+        var Departmentid = $(this).val();
+        //var index = $(this).closest('#primaryDiv').index();
+        //var select = $(this).closest('#primaryDiv').find('select[name="CoPIname"]');
+        var select = $(this).closest('#primaryDiv').find('select[name="CoPIname"]');
+        $(select).empty().selectpicker('refresh');
+        $.getJSON("@Url.Action("LoadPIByDepartment", "Account")", { Departmentid: Departmentid },
+                    function (locationdata) {
+                        // $(select).selectpicker("destroy");
+                        $.each(locationdata, function (index, itemData) {
+                            $(select).append($('<option/>', {
+                                value: itemData.id,
+                                text: itemData.name
+                            })).selectpicker('refresh');
+                        });
+                    });
+
+    });
+    $(document).on('change', 'select[name="CoPIname"]', function () {
+        var CoPIid = $(this).val();
+        var CoPIEmail = $(this).closest('#primaryDiv').find('input[name="CoPIEmail"]');
+        if (CoPIid > 0)
+        {
+            $.getJSON("@Url.Action("LoadPIEmailById", "Account")", { Profid: CoPIid },
+                    function (locationdata) {
+                        CoPIEmail.val(locationdata.name);
+                    });
+        }
+        else
+        {
+            var Copiid = 0;
+            $.getJSON("../Account/LoadPIEmailById", { Profid: Copiid },
+                    function (locationdata) {
+                        CoPIEmail.val(locationdata.name);
+                    });
+        }
+    });
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function noedit() {
+        return false;
+    }
+    $('#propslnum, #CoPIRMF, #CoPIPCF,#PIRMF,#PIPCF,input[name $=".EMIValue"], input[name $=".AllocationValueYW"]').on("copy cut paste drop", function () {
+        return false;
+    });
+
+    $('#indprjctfundedby_1').css("display", "none");
+    $('#forgnprjctfundedby_1').css("display", "none");
+    $('#indprjctcategory_1').css("display", "none");
+    $('#indprjctfundbodygovt_1').css("display", "none");
+    $('#indprjctfundbodynongovt_1').css("display", "none");
+    $('#forgnprjctfundbodygovt_1').css("display", "none");
+    $('#forgnprjctfundbodynongovt_1').css("display", "none");
+    $('#forgncurrencytype').css("display", "none");
+    $("#indprjctfundbodygovtagncydeptnam_1").css("display", "none");
+    $("#indprjctfundbodygovtdeptamt_1").css("display", "none");
+
+    $("#indprjctfundbodygovtagncymnstrynam_1").css("display", "none");
+    $("#indprjctfundbodygovtmnstryamt_1").css("display", "none");
+
+    $("#indprjctfundbodygovtunivnam_1").css("display", "none");
+    $("#indprjctfundbodygovtunivamt_1").css("display", "none");
+
+    $("#indprjctfundbodynongovtagncyindstrynam_1").css("display", "none");
+    $("#indprjctfundbodynongovtindstryamt_1").css("display", "none");
+
+    $("#indprjctfundbodynongovtunivnam_1").css("display", "none");
+    $("#indprjctfundbodynongovtunivamt_1").css("display", "none");
+
+    $("#indprjctfundbodynongovtagncyothersnam_1").css("display", "none");
+    $("#indprjctfundbodynongovtothersamt_1").css("display", "none");
+
+    $("#forgnprjctfundbodygovtcntry_1").css("display", "none");
+    $("#forgnprjctfundbodygovtagncydeptnam_1").css("display", "none");
+    $("#forgnprjctfundbodygovtdeptamt_1").css("display", "none");
+
+    $("#forgnprjctfundbodygovtunivcntry_1").css("display", "none");
+    $("#forgnprjctfundbodygovtagncyunivnam_1").css("display", "none");
+    $("#forgnprjctfundbodygovtunivamt_1").css("display", "none");
+
+    $("#forgnprjctfundbodygovtothrscntry_1").css("display", "none");
+    $("#forgnprjctfundbodygovtagncyothrsnam_1").css("display", "none");
+    $("#forgnprjctfundbodygovtothrsamt_1").css("display", "none");
+
+    $("#forgnprjctfundbodynongovtcntry_1 ").css("display", "none");
+    $("#forgnprjctfundbodynongovtagncydeptnam_1 ").css("display", "none");
+    $("#forgnprjctfundbodynongovtdeptamt_1").css("display", "none");
+
+    $("#forgnprjctfundbodynongovtunivcntry_1").css("display", "none");
+    $("#forgnprjctfundbodynongovtagncyunivnam_1 ").css("display", "none");
+    $("#forgnprjctfundbodynongovtunivamt_1").css("display", "none");
+
+    $("#forgnprjctfundbodynongovtothrscntry_1").css("display", "none");
+    $("#forgnprjctfundbodynongovtagncyothrsnam_1").css("display", "none");
+    $("#forgnprjctfundbodynongovtothrsamt_1").css("display", "none");
+
+    $("#prjctfundingtype").change(function () {
+        var fundingtype = $(this).val();
+        if (fundingtype == 3) {
+            $('#IndAndBoth, #ForgnAndBoth').val('True');
+            $('#indprjctfundedby_1, #forgnprjctfundedby_1, #indprjctcategory_1').css("display", "block");
+        } else if (fundingtype == 2) {
+            $('#forgnprjctfundedby_1').css("display", "block");
+            $('#ForgnAndBoth').val('True');
+            $('#IndAndBoth, #NonGovAndBoth, #GovAndBoth').val('False');
+            $('#indprjctfundedby_1, #indprjctcategory_1').css("display", "none");
+            $('#prjctfundedby, #projectcategory').val('');
+            $('#indprjctfundbodynongovt_1, #indprjctfundbodygovt_1').css("display", "none");
+            $('#Indfundgovtbody, #Indfundnongovtbody').selectpicker('deselectAll');
+            $('input[id^="indprjctfundbodygovt_"], select[id^="indprjctfundbodygovt_"], input[id^="indprjctfundbodynongovt_"]').val('');
+        } else if (fundingtype == 1) {
+            $('#forgnprjctfundedby_1').css("display", "none");
+            $('#IndAndBoth').val('True');
+            $('#ForgnAndBoth, #ForgnGovAndBoth, #ForgnNonGovAndBoth').val('False');
+            $('#prjctforeignfundedby').val('');
+            $('#indprjctfundedby_1, #indprjctcategory_1').css("display", "block");
+            $('#forgnprjctfundbodynongovt_1, #forgnprjctfundbodygovt_1').css("display", "none");
+            $('#Forgnfundgovtbody, #Forgnfundnongovtbody').selectpicker('deselectAll');
+            $('input[id^="forgnprjctfundbodygovt_"], select[id^="forgnprjctfundbodygovt_"], input[id^="forgnprjctfundbodynongovt_"], select[id^="forgnprjctfundbodynongovt_"]').val('');
+        } else {
+            $('#IndAndBoth, #ForgnAndBoth, #NonGovAndBoth, #GovAndBoth, #ForgnGovAndBoth, #ForgnNonGovAndBoth').val('False');
+            $('#indprjctfundedby_1, #indprjctcategory_1, #forgnprjctfundedby_1').css("display", "none");
+            $('#prjctfundedby, #projectcategory, #prjctforeignfundedby').val('');
+
+            $('#indprjctfundbodynongovt_1, #indprjctfundbodygovt_1').css("display", "none");
+            $('#Indfundgovtbody, #Indfundnongovtbody').selectpicker('deselectAll');
+            $('input[id^="indprjctfundbodygovt_"], select[id^="indprjctfundbodygovt_"], input[id^="indprjctfundbodynongovt_"]').val('');
+
+            $('#forgnprjctfundbodynongovt_1, #forgnprjctfundbodygovt_1').css("display", "none");
+            $('#Forgnfundgovtbody, #Forgnfundnongovtbody').selectpicker('deselectAll');
+            $('input[id^="forgnprjctfundbodygovt_"], select[id^="forgnprjctfundbodygovt_"], input[id^="forgnprjctfundbodynongovt_"], select[id^="forgnprjctfundbodynongovt_"]').val('');
+        }
+        fundbodyUpdate();
+    });
+    $("#prjctforeignfundedby").change(function () {
+        var foreignfundedby = $(this).val();
+        if (foreignfundedby == 3) {
+            $('#forgnprjctfundbodygovt_1, #forgnprjctfundbodynongovt_1').css("display", "block");
+            $('#ForgnGovAndBoth, #ForgnNonGovAndBoth').val('True');
+        } else if (foreignfundedby == 2) {
+            $('#ForgnNonGovAndBoth').val('True');
+            $('#ForgnGovAndBoth').val('False');
+            $('#forgnprjctfundbodynongovt_1').css("display", "block");
+            $('#forgnprjctfundbodygovt_1').css("display", "none");
+            $('#Forgnfundgovtbody').selectpicker('deselectAll');
+            //$('#forgnprjctfundbodygovt_Agencydeptname, #forgnprjctfundbodygovt_country, #forgnprjctfundbodygovt_Agencydeptamt, #forgnprjctfundbodygovt_Agencyunivname, #forgnprjctfundbodygovt_univcountry, #forgnprjctfundbodygovt_univAmount, #forgnprjctfundbodygovt_othersagncyname, #forgnprjctfundbodygovt_otherscountry, #forgnprjctfundbodygovt_othersAmount').val('');
+            $('input[id^="forgnprjctfundbodygovt_"], select[id^="forgnprjctfundbodygovt_"]').val('');
+        } else if (foreignfundedby == 1) {
+            $('#ForgnNonGovAndBoth').val('False');
+            $('#ForgnGovAndBoth').val('True');
+            $('#forgnprjctfundbodynongovt_1').css("display", "none");
+            $('#forgnprjctfundbodygovt_1').css("display", "block");
+            $('#Forgnfundnongovtbody').selectpicker('deselectAll');
+            //$('#forgnprjctfundbodynongovt_Agencydeptname, #forgnprjctfundbodynongovt_country, #forgnprjctfundbodynongovt_deptAmount, #forgnprjctfundbodynongovt_Agencyunivname, #forgnprjctfundbodynongovt_univcountry, #forgnprjctfundbodynongovt_univAmount, #forgnprjctfundbodynongovt_othersagncyname, #forgnprjctfundbodynongovt_otherscountry, #forgnprjctfundbodynongovt_othersAmount').val('');
+            $('input[id^="forgnprjctfundbodynongovt_"], select[id^="forgnprjctfundbodynongovt_"]').val('');
+        } else {
+            $('#ForgnGovAndBoth, #ForgnNonGovAndBoth').val('False');
+            $('#forgnprjctfundbodynongovt_1, #forgnprjctfundbodygovt_1').css("display", "none");
+            $('#Forgnfundgovtbody, #Forgnfundnongovtbody').selectpicker('deselectAll');
+            $('input[id^="forgnprjctfundbodygovt_"], select[id^="forgnprjctfundbodygovt_"], input[id^="forgnprjctfundbodynongovt_"], select[id^="forgnprjctfundbodynongovt_"]').val('');
+        }
+        fundbodyUpdate();
+    });
+    $("#prjctfundedby").change(function () {
+        var indFundBody = $(this).val();
+        if (indFundBody == 3) {
+            $('#indprjctfundbodygovt_1, #indprjctfundbodynongovt_1').css("display", "block");
+            $('#NonGovAndBoth, #GovAndBoth').val('True');
+        } else if (indFundBody == 2) {
+            $('#indprjctfundbodynongovt_1').css("display", "block");
+            $('#indprjctfundbodygovt_1').css("display", "none");
+            $('#NonGovAndBoth').val('True');
+            $('#GovAndBoth').val('False');
+            $('#Indfundgovtbody').selectpicker('deselectAll');
+            //$('#indprjctfundbodygovt_Agencydeptname, #indprjctfundbodygovt_deptAmount, #indprjctfundbodygovt_Agencymnstryname, #indprjctfundbodygovt_mnstryAmount, #indprjctfundbodygovt_Agencyunivname, #indprjctfundbodygovt_univAmount').val();
+            $('input[id^="indprjctfundbodygovt_"], select[id^="indprjctfundbodygovt_"]').val('');
+        } else if (indFundBody == 1) {
+            $('#indprjctfundbodynongovt_1').css("display", "none");
+            $('#indprjctfundbodygovt_1').css("display", "block");
+            $('#NonGovAndBoth').val('False');
+            $('#GovAndBoth').val('True');
+            $('#Indfundnongovtbody').selectpicker('deselectAll');
+            //$('#indprjctfundbodynongovt_AgencyIndstryname, #indprjctfundbodynongovt_IndstryAmount, #indprjctfundbodynongovt_Agencyunivname, #indprjctfundbodynongovt_univAmount, #indprjctfundbodynongovt_Agencyothersname, #indprjctfundbodynongovt_othersAmount').val('');
+            $('input[id^="indprjctfundbodynongovt_"]').val('');
+        } else {
+            $('#indprjctfundbodynongovt_1, #indprjctfundbodygovt_1').css("display", "none");
+            $('#NonGovAndBoth, #GovAndBoth').val('False');
+            $('#Indfundgovtbody, #Indfundnongovtbody').selectpicker('deselectAll');
+            $('input[id^="indprjctfundbodygovt_"], select[id^="indprjctfundbodygovt_"], input[id^="indprjctfundbodynongovt_"]').val('');
+        }
+        fundbodyUpdate();
+    });
+    function fundbodyUpdate() {
+        $('#IndGovFund_MHRD, #IndGovFund_Mnstry, #IndGovFund_Univ, #IndNonGovFund_Indus, #IndNonGovFund_Univ, #IndNonGovFund_Other, #ForgnGovFund_Dep,  #ForgnGovFund_Univ, #ForgnGovFund_Other, #ForgnNonGovFund_Dep, #ForgnNonGovFund_Univ, #ForgnNonGovFund_Other').val('False');
+        $('#indprjctfundbodygovtagncydeptnam_1, #indprjctfundbodygovtdeptamt_1, #indprjctfundbodygovtagncymnstrynam_1, #indprjctfundbodygovtmnstryamt_1, #indprjctfundbodygovtunivnam_1, #indprjctfundbodygovtunivamt_1').css("display", "none");
+        $('#indprjctfundbodynongovtagncyindstrynam_1, #indprjctfundbodynongovtindstryamt_1, #indprjctfundbodynongovtunivnam_1, #indprjctfundbodynongovtunivamt_1, #indprjctfundbodynongovtagncyothersnam_1, #indprjctfundbodynongovtothersamt_1').css("display", "none");
+        $("#forgnprjctfundbodygovtcntry_1, #forgnprjctfundbodygovtagncydeptnam_1, #forgnprjctfundbodygovtdeptamt_1, #forgnprjctfundbodygovtunivcntry_1, #forgnprjctfundbodygovtagncyunivnam_1 , #forgnprjctfundbodygovtunivamt_1, #forgnprjctfundbodygovtothrscntry_1, #forgnprjctfundbodygovtagncyothrsnam_1, #forgnprjctfundbodygovtothrsamt_1").css("display", "none");
+        $("#forgnprjctfundbodynongovtcntry_1, #forgnprjctfundbodynongovtagncydeptnam_1, #forgnprjctfundbodynongovtdeptamt_1, #forgnprjctfundbodynongovtunivcntry_1, #forgnprjctfundbodynongovtagncyunivnam_1, #forgnprjctfundbodynongovtunivamt_1, #forgnprjctfundbodynongovtothrscntry_1, #forgnprjctfundbodynongovtagncyothrsnam_1, #forgnprjctfundbodynongovtothrsamt_1").css("display", "none");
+        $('select[id$="govtbody"].selectpicker').each(function (ind, ele) {
+            var selBodys = $(this).val();
+            if ($(this).attr('id') == 'Indfundgovtbody' && selBodys != null) {
+                $.each(selBodys, function (index, value) {
+                    if (value == 1) {
+                        $("#indprjctfundbodygovtagncydeptnam_1").css("display", "block");
+                        $("#indprjctfundbodygovtdeptamt_1").css("display", "block");
+                        $('#IndGovFund_MHRD').val('True');
+                    } else if (value == 2) {
+                        $("#indprjctfundbodygovtagncymnstrynam_1").css("display", "block");
+                        $("#indprjctfundbodygovtmnstryamt_1").css("display", "block");
+                        $('#IndGovFund_Mnstry').val('True');
+                    } else if (value == 3) {
+                        $("#indprjctfundbodygovtunivnam_1").css("display", "block");
+                        $("#indprjctfundbodygovtunivamt_1").css("display", "block");
+                        $('#IndGovFund_Univ').val('True');
+                    }
+                });
+            } else if ($(this).attr('id') == 'Indfundnongovtbody' && selBodys != null) {
+                $.each(selBodys, function (index, value) {
+                    if (value == 1) {
+                        $("#indprjctfundbodynongovtagncyindstrynam_1").css("display", "block");
+                        $("#indprjctfundbodynongovtindstryamt_1").css("display", "block");
+                        $('#IndNonGovFund_Indus').val('True');
+                    } else if (value == 2) {
+                        $("#indprjctfundbodynongovtunivnam_1").css("display", "block");
+                        $("#indprjctfundbodynongovtunivamt_1").css("display", "block");
+                        $('#IndNonGovFund_Univ').val('True');
+                    } else if (value == 3) {
+                        $("#indprjctfundbodynongovtagncyothersnam_1").css("display", "block");
+                        $("#indprjctfundbodynongovtothersamt_1").css("display", "block");
+                        $('#IndNonGovFund_Other').val('True');
+                    }
+                });
+            } else if ($(this).attr('id') == 'Forgnfundgovtbody' && selBodys != null) {
+                $.each(selBodys, function (index, value) {
+                    if (value == 1) {
+                        $("#forgnprjctfundbodygovtcntry_1").css("display", "block");
+                        $("#forgnprjctfundbodygovtagncydeptnam_1").css("display", "block");
+                        $("#forgnprjctfundbodygovtdeptamt_1").css("display", "block");
+                        $('#ForgnGovFund_Dep').val('True');
+                    } else if (value == 2) {
+                        $("#forgnprjctfundbodygovtunivcntry_1").css("display", "block");
+                        $("#forgnprjctfundbodygovtagncyunivnam_1").css("display", "block");
+                        $("#forgnprjctfundbodygovtunivamt_1").css("display", "block");
+                        $('#ForgnGovFund_Univ').val('True');
+                    } else if (value == 3) {
+                        $("#forgnprjctfundbodygovtothrscntry_1").css("display", "block");
+                        $("#forgnprjctfundbodygovtagncyothrsnam_1").css("display", "block");
+                        $("#forgnprjctfundbodygovtothrsamt_1").css("display", "block");
+                        $('#ForgnGovFund_Other').val('True');
+                    }
+                });
+            } else if ($(this).attr('id') == 'Forgnfundnongovtbody' && selBodys != null) {
+                $.each(selBodys, function (index, value) {
+                    if (value == 1) {
+                        $("#forgnprjctfundbodynongovtcntry_1 ").css("display", "block");
+                        $("#forgnprjctfundbodynongovtagncydeptnam_1 ").css("display", "block");
+                        $("#forgnprjctfundbodynongovtdeptamt_1").css("display", "block");
+                        $('#ForgnNonGovFund_Dep').val('True');
+                    } else if (value == 2) {
+                        $("#forgnprjctfundbodynongovtunivcntry_1").css("display", "block");
+                        $("#forgnprjctfundbodynongovtagncyunivnam_1 ").css("display", "block");
+                        $("#forgnprjctfundbodynongovtunivamt_1").css("display", "block");
+                        $('#ForgnNonGovFund_Univ').val('True');
+                    } else if (value == 3) {
+                        $("#forgnprjctfundbodynongovtagncyothrsnam_1").css("display", "block");
+                        $("#forgnprjctfundbodynongovtothrscntry_1 ").css("display", "block");
+                        $("#forgnprjctfundbodynongovtothrsamt_1").css("display", "block");
+                        $('#ForgnNonGovFund_Other').val('True');
+                    }
+                });
+            }
+        });
+    }
+    $("#Indfundgovtbody").change(function () {
+        fundbodyUpdate();
+    });
+
+    $("#Indfundnongovtbody").change(function () {
+        fundbodyUpdate();
+    });
+
+    $("#Forgnfundgovtbody").change(function () {
+        fundbodyUpdate();
+    });
+
+    $("#Forgnfundnongovtbody").change(function () {
+        fundbodyUpdate();
+    });
+
+    $("#Prjcttype").change(function () {
+
+        var typeid = $(this).val();
+        var fundedby = $("#ProjectconsFundingType_").val();
+        if (typeid == 1) {
+            $.getJSON("../Account/LoadSponPrjctsubtypebytype", { typeid: typeid },
+                        function (locationdata) {
+                            var select = $("#pjctsubtyp");
+                            select.empty();
+
+                            $.each(locationdata, function (index, itemData) {
+
+                                select.append($('<option/>', {
+                                    value: itemData.codevalAbbr,
+                                    text: itemData.CodeValDetail,
+                                }));
+                            });
+                        });
+            $.getJSON("../Account/LoadPrjctcategorybytype", { typeid: typeid },
+                   function (locationdata) {
+                       var select = $("#schemename");
+                       select.empty();
+
+                       $.each(locationdata, function (index, itemData) {
+
+                           select.append($('<option/>', {
+                               value: itemData.id,
+                               text: itemData.name,
+                           }));
+                       });
+                   });
+        }
+        if (typeid == 2) {
+            $.getJSON("../Account/LoadConsPrjctsubtypebytype", { typeid: typeid },
+                        function (locationdata) {
+                            var select = $("#pjctsubtyp");
+                            select.empty();
+
+                            $.each(locationdata, function (index, itemData) {
+
+                                select.append($('<option/>', {
+                                    value: itemData.codevalAbbr,
+                                    text: itemData.CodeValDetail,
+                                }));
+                            });
+                        });
+            $.getJSON("../Account/LoadPrjctcategorybytype", { typeid: typeid },
+                   function (locationdata) {
+                       var select = $("#schemename");
+                       select.empty();
+
+                       $.each(locationdata, function (index, itemData) {
+
+                           select.append($('<option/>', {
+                               value: itemData.id,
+                               text: itemData.name,
+                           }));
+                       });
+                   });
+        }
+        var subtypeid = $("#pjctsubtyp").val();
+
+        if (typeid == 1 && subtypeid == 1) {
+            $("#sponextrnlscheme").addClass('dis-none');
+            $("#sponextrnlschemecode").addClass('dis-none');
+            $("#externalagency").addClass('dis-none');
+            $("#internalagency").removeClass('dis-none');
+            //        $("#sponextrnlscheme").addClass('dis-none')
+        }
+        if (typeid == 1 && subtypeid == 2) {
+            $("#sponextrnlscheme").removeClass('dis-none');
+            $("#sponextrnlschemecode").removeClass('dis-none');
+            $("#externalagency").removeClass('dis-none');
+            $("#internalagency").addClass('dis-none');
+
+        }
+
+        if (typeid == 1 && subtypeid == 0) {
+            $("#sponextrnlscheme").addClass('dis-none');
+            $("#sponextrnlschemecode").addClass('dis-none');
+            $("#externalagency").addClass('dis-none');
+            $("#internalagency").addClass('dis-none');
+        }
+
+
+        //if(typeid == 2 || typeid == 0){
+        //    $('#indprjctcategory_1').css("display", "none");
+        //}
+
+        if (typeid == 0) {
+            $('#prjcttypespon').hide();
+            $('#prjcttypeconsul').hide();
+            $("#sponextrnlscheme").addClass('dis-none');
+            $("#sponextrnlschemecode").addClass('dis-none');
+            $("#externalagency").addClass('dis-none');
+            $("#internalagency").addClass('dis-none');
+            $('#indprjctcategory_1').css("display", "none");
+            $('#prjctdetails1').css("display", "none");
+            $('#prjctdetails2').css("display", "none");
+        }
+
+        if (typeid == 1) {
+            $('#prjcttypespon').show();
+            $('#prjcttypeconsul').hide();
+            $('#indprjctcategory_1').css("display", "none");
+            $('#prjctdetails1').css("display", "block");
+            $('#prjctdetails2').css("display", "none");
+            $('#taxnumberdtls').hide();
+            $('#constaxdetails').hide();
+            $('#constaxservicemode').hide();
+        }
+
+        if (typeid == 2) {
+            $('#prjcttypeconsul').show();
+            $('#prjcttypespon').hide();
+            $('#indprjctcategory_1').css("display", "none");
+            $('#prjctdetails1').css("display", "none");
+            $('#prjctdetails2').css("display", "block");
+            $('#taxnumberdtls').show();
+            $('#constaxdetails').show();
+            $('#constaxservicemode').show();
+        }
+
+
+    });
+
+    $("#pjctsubtyp").change(function () {
+        var subtype = $(this).val();
+        var type = $("#Prjcttype").val();
+        if (type == 1 && subtype == 1) {
+            $("#sponextrnlscheme").addClass('dis-none')
+            $("#sponextrnlschemecode").addClass('dis-none');
+            $("#externalagency").addClass('dis-none');
+            $("#internalagency").removeClass('dis-none');
+            $("#prjctdetails1").addClass('dis-none');
+        }
+
+        if (type == 1 && subtype == 2) {
+            $("#sponextrnlscheme").removeClass('dis-none')
+            $("#sponextrnlschemecode").removeClass('dis-none');
+            $("#externalagency").removeClass('dis-none');
+            $("#internalagency").addClass('dis-none');
+            $("#prjctdetails1").removeClass('dis-none');
+        }
+
+        if (type == 1 && subtype == 0) {
+            $("#sponextrnlscheme").addClass('dis-none')
+            $("#sponextrnlschemecode").addClass('dis-none');
+            $("#externalagency").addClass('dis-none');
+            $("#internalagency").addClass('dis-none');
+            $("#prjctdetails1").addClass('dis-none');
+        }
+
+        if (type == 2 || type == 0) {
+            $("#sponextrnlscheme").addClass('dis-none')
+            $("#sponextrnlschemecode").addClass('dis-none');
+            $("#externalagency").addClass('dis-none');
+            $("#internalagency").addClass('dis-none');
+
+        }
+
+    });
+    $("#taxregistatus").hide();
+    $("#taxservice").change(function () {
+        var taxservicemode = $(this).val();
+        var type = $("#Prjcttype").val();
+        var subtype = $("#pjctsubtyp").val();
+        $('#IndTaxService').val('False');
+        if (type == 2 && taxservicemode == 1) {
+            $("#indprojectstate").show();
+            $("#indprojectlocation").show();
+
+            $("#forignprojectcntry").hide();
+            $("#forignprojectstate").hide();
+            $("#forignprojectlocation").hide();
+            $("#taxregistatus").hide();
+            $("#constaxservicegst").show();
+            $('#IndTaxService').val('True');
+            //var gst = $("#constaxservicegst").val();
+            //if (gst == null || gst == "") {
+            //    isValid = false;
+            //    $('#MsgValidation').html("Please fill GSTIN");
+            //    $('#ValidationModal').modal('toggle');
+            //    return false;
+            //}
+        }
+        //        $("#sponextrnlscheme").addClass('dis-none')
+        if (type == 2 && taxservicemode == 2) {
+            $("#indprojectstate").show();
+            $("#indprojectlocation").show();
+            $('#IndTaxService').val('True');
+            $("#forignprojectcntry").hide();
+            $("#forignprojectstate").hide();
+            $("#forignprojectlocation").hide();
+            $("#taxregistatus").show();
+            $("#constaxservicegst").show();
+        }
+        if (type == 2 && taxservicemode == 3) {
+            $("#indprojectstate").hide();
+            $("#indprojectlocation").hide();
+
+            $("#forignprojectcntry").show();
+            $("#forignprojectstate").show();
+            $("#forignprojectlocation").show();
+            $("#taxregistatus").hide();
+            $("#constaxservicegst").hide();
+        }
+        if (type == 2 && taxservicemode == 0) {
+            $("#taxregistatus").hide();
+            $("#constaxservicegst").hide();
+            $("#forignprojectcntry").hide();
+            $("#forignprojectstate").hide();
+            $("#forignprojectlocation").hide();
+            $("#indprojectstate").hide();
+            $("#indprojectlocation").hide();
+        }
+        if ((type == 0) && (taxservicemode == 1 || taxservicemode == 2)) {
+            $('#MsgValidation').html("Please select project type.");
+            $('#ValidationModal').modal('toggle');
+
+        }
+        if ((type == 0) && (taxservicemode == 1 || taxservicemode == 2)) {
+            $('#MsgValidation').html("Please select project type.");
+            $('#ValidationModal').modal('toggle');
+
+        }
+
+    });
+
+    $('#btnAddotherinstCoPI').click(function () {
+        var cln = $("#primaryotherinstcopiDiv").clone().find("input").val("").end();
+        var cloneElement = $("#primaryotherinstcopiDiv").find('#OtherinstituteCoPI').parent().clone();
+        $(cln).find('.dis-none').removeClass('dis-none');
+        $(cln).insertBefore($(this).closest('#divotherinstcopiContent').find('.p-b-sm'));
+
+    });
+
+    $(document).on('click', '#divotherinstcopiContent button[name="removeButton"]', function () {
+        $(this).parent().parent("Div").remove();
+    });
+    function calculatestaffSum() {
+
+        var enhanceallocatevalue = [];
+        var headwisetotalvalue = [];
+        var staffcount = [];
+        var staffsalary = [];
+
+        $('input[name="NoofStaffs"]').each(function (idx, val) { staffcount.push($(val).val()); });
+        $('input[name="SalaryofStaffs"]').each(function (idx, val) { staffsalary.push($(val).val()); });
+
+        staffcount.sort();
+        staffsalary.sort();
+        var totalstaff = 0;
+        var totalsalary = 0;
+        $.each(staffcount, function (i, val) {
+
+            if (i == 0) {
+
+                var txtstaffValue = document.getElementsByName('NoofStaffs')[0].value;
+                var txtsalaryValue = document.getElementsByName('SalaryofStaffs')[0].value;
+                totalstaff += parseFloat(txtstaffValue);
+                totalsalary += parseFloat(txtsalaryValue);
+
+                if (!isNaN(totalstaff)) {
+                    $("#sumstaffs").val(totalstaff.toFixed(0));
+                    // document.getElementsByName('TotalEnhancedAllocationvalue')[0].value = result;
+                }
+                if (!isNaN(totalsalary)) {
+                    $("#sumstaffssalry").val(totalsalary.toFixed(0));
+                    // document.getElementsByName('TotalEnhancedAllocationvalue')[0].value = result;
+                }
+
+            } else {
+
+                var txtstaffValue = document.getElementsByName('NoofStaffs')[i].value;
+                var txtsalaryValue = document.getElementsByName('SalaryofStaffs')[i].value;
+                totalstaff += parseFloat(txtstaffValue);
+                totalsalary += parseFloat(txtsalaryValue);
+
+                if (!isNaN(totalstaff)) {
+                    $("#sumstaffs").val(totalstaff.toFixed(0));
+                    // document.getElementsByName('TotalEnhancedAllocationvalue')[0].value = result;
+                }
+                if (!isNaN(totalsalary)) {
+                    $("#sumstaffssalry").val(totalsalary.toFixed(0));
+                    // document.getElementsByName('TotalEnhancedAllocationvalue')[0].value = result;
+                }
+            }
+        });
+    }
+    function ValidateNumberOnly(e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            return false;
+        }
+    }
+    function ValidateDecimalOnly(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+
+    $('#CollabCoordinator').hide();
+    $('#CollabAgency').hide();
+    $('#CollabCoordinatorEmail').hide();
+    $('#TotalCost').hide();
+    $('#IITMCost').hide();
+    $("#typeofproject").change(function () {
+        var TypeofProject = $(this).val();
+        if (TypeofProject == 1 || TypeofProject == 0 || TypeofProject == null) {
+            $('#CollabCoordinator').hide();
+            $('#CollabAgency').hide();
+            $('#CollabCoordinatorEmail').hide();
+            $('#TotalCost').hide();
+            $('#IITMCost').hide();
+        }
+        if (TypeofProject == 2) {
+            $('#CollabCoordinator').show();
+            $('#CollabAgency').show();
+            $('#CollabCoordinatorEmail').show();
+            $('#TotalCost').show();
+            $('#IITMCost').show();
+        }
+
+        $('#collabcoordname').val('')
+        $('#collabagency').val('')
+        $('#collabcoordemail').val('')
+        $('#collabtotalcost').val('')
+        $('#collabIITMCost').val('')
+    });
+
+    $('[id^="Jointdevelop_"]').each(function () {
+        var ID = $(this).attr("id");
+        var qustType = ID.substr(ID.lastIndexOf("_") + 1);
+        var qustNo = ID.substring(ID.indexOf("_") + 1, ID.lastIndexOf("_"));
+
+        if (qustType === "yes") {
+            $('#jointdevelopmentdetail').css("display", "block");
+        }
+        if (qustType === "no") {
+            $('#jointdevelopmentdetail').css("display", "none");
+        }
+        $('#jointdevelopmentcompany').val('');
+        $('#jointdevelopmentremarks').val('');
+
+    });
+    $('[id^="Jointdevelop_"]').change(function () {
+        var ID = $(this).attr("id");
+        var qustType = ID.substr(ID.lastIndexOf("_") + 1);
+        var qustNo = ID.substring(ID.indexOf("_") + 1, ID.lastIndexOf("_"));
+
+        if (qustType === "yes") {
+            $('#jointdevelopmentdetail').css("display", "block");
+        }
+        if (qustType === "no") {
+            $('#jointdevelopmentdetail').css("display", "none");
+        }
+        $('#jointdevelopmentcompany').val('');
+        $('#jointdevelopmentremarks').val('');
+
+    });
+
+    $(document).on('click', '#divjointdevelopContent button[name="removeButton"]', function () {
+        $(this).parent().parent("Div").remove();
+    });
+
+    $('#btnAddcompany').click(function () {
+        var cln = $("#primaryjoindevelopDiv").clone().find("input").val("").end();
+        $(cln).find('.dis-none').removeClass('dis-none');
+        $('#divjointdevelopContent').append(cln)
+
+    });
+    $("#constaxtype").change(function () {
+        var taxtype = $(this).val();
+        var taxdocname = $("#proofdocfile").val();
+
+        if (taxtype == 1) {
+            $('#reasonfornotax').hide();
+            $('#proofofnotax').hide();
+            $('#proofofnotaxlink').hide();
+            $('#taxnumberdtls').show();
+            $('#TaxException').val('False');
+        }
+        if (taxtype == 2 || taxtype == 3) {
+            $('#reasonfornotax').show();
+            $('#proofofnotax').show();
+            $('#proofofnotaxlink').show();
+            $('#taxnumberdtls').show();
+            $('#TaxException').val('True');
+            //if(taxdocname == null || taxdocname == "")
+            //{
+            //    isValid = false;
+            //    $('#MsgValidation').html("It is mandatory to attach document proof for no tax");
+            //    $('#ValidationModal').modal('toggle');
+            //    return false;
+            //}
+        }
+
+    });
+    $('#forgncurrencytype').css("display", "none");
+    $("#consprjctfundingtype").change(function () {
+        var type = $(this).val();
+        $('#ConsFundTypeForgnAndBoth').val('False')
+        if (type == 1) {
+            $('#forgncurrencytype').css("display", "none");
+        }
+        if (type == 2) {
+            $('#forgncurrencytype').css("display", "block");
+            $('#ConsFundTypeForgnAndBoth').val('True')
+        }
+        if (type == 3) {
+            $('#forgncurrencytype').css("display", "block");
+            $('#ConsFundTypeForgnAndBoth').val('True')
+        }
+        if (type == 0) {
+            $('#forgncurrencytype').css("display", "none");
+
+        }
+        $('#forgncurrencytype').val('');
+    });
+
+    $('[id^="JointDevelopment_"]').each(function () {
+        var ID = $(this).attr("id");
+        var qustType = ID.substr(ID.lastIndexOf("_") + 1);
+        var qustNo = ID.substring(ID.indexOf("_") + 1, ID.lastIndexOf("_"));
+
+        if (qustType === "yes") {
+            $('#jointdevelopmentdetail').css("display", "block");
+        }
+        if (qustType === "no") {
+            $('#jointdevelopmentdetail').css("display", "none");
+        }
+    });
+
+    /* Tab Sections Start*/
+    var currentTab = 0; // Current tab is set to be the first tab (0)
+    showTab(currentTab); // Display the crurrent tab
+    function showTab(n) {
+        // This function will display the specified tab of the form...
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        $(".custom-nav-pills li:eq(" + n + ")").addClass("active");
+        //... and fix the Previous/Next buttons:
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Submit";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        //... and run a function that will display the correct step indicator:
+        //fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        // This function will figure out which tab to display
+        var x = document.getElementsByClassName("tab");
+        // Exit the function if any field in the current tab is invalid:
+        if (n > 0 && !validateForm(n)) return false;
+        if (currentTab + n < x.length) {
+            // Hide the current tab:
+            x[currentTab].style.display = "none";
+            $(".custom-nav-pills li:eq(" + currentTab + ")").removeClass("active");
+        } else {
+            // ... the form gets submitted:
+            formSave();
+            return false;
+        }
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+
+        // Otherwise, display the correct tab:
+        showTab(currentTab);
+    }
+    function validateYWAllocation() {
+        var msg = 'valid';
+        var ttlAllowVal = 0;
+        var ttlEMIVal = 0;
+        var budgetVal = parseFloat($('#BaseValueHidden').val());
+        $("div#YWtabs .tab-content .tab-pane:not(:last-child)").each(function (i, item) {
+            var year = $(item).attr('id');
+            var ttlEMIValOfYear = 0;
+            var EMIOfYear = parseFloat($(item).find('input[name $=".EMIValueForYear"]').val());
+            var allocatedheads = [];
+            $(item).find('select[name$=".AllocationHeadYW"]').each(function (idx, val) { allocatedheads.push($(val).val()); });
+            $(item).find('input[name $=".AllocationValueYW"]').each(function () {
+                var parseVal = parseFloat($(this).val());
+                if (!isNaN(parseVal))
+                    ttlAllowVal = ttlAllowVal + parseVal;
+            });
+            $(item).find('input[name $=".EMIValue"]').each(function () {
+                var parseVal = parseFloat($(this).val());
+                if (!isNaN(parseVal)) {
+                    ttlEMIVal = ttlEMIVal + parseVal;
+                    ttlEMIValOfYear = ttlEMIValOfYear + parseVal;
+                }
+            });
+            var preCount = allocatedheads.length;
+            jQuery.unique(allocatedheads);
+            if (preCount != allocatedheads.length) {
+                msg = 'Duplicate allocation head exist in ' + year + '. Please select a different allocation.';
+                return false;
+            }
+            if (ttlEMIValOfYear > 0 && ttlEMIValOfYear != EMIOfYear) {
+                msg = 'Sum of No of Installment values is different from total installment value for ' + year + '.';
+                return false;
+            }
+        });
+        if (msg == 'valid') {
+            if (ttlEMIVal > 0 && ttlEMIVal != budgetVal) {
+                msg = 'Overall installment values is different from project value.';
+            } else if (ttlAllowVal != budgetVal) {
+                msg = 'Overall allocation values is different from project value.';
+            }
+        }
+        return msg;
+    }
+    function validateAllocation() {
+        var msg = 'valid';
+        var ttlAllowVal = 0;
+        var ttlEMIVal = 0;
+        var budgetVal = parseFloat($('#BaseValueHidden').val());
+        $("div#OAHead input[name ='Allocationvalue']").each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlAllowVal = ttlAllowVal + parseVal;
+        });
+        $("div#OAHead input[name ='ArrayEMIValue']").each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlEMIVal = ttlEMIVal + parseVal;
+        });
+        if (ttlEMIVal > 0 && ttlEMIVal != budgetVal) {
+            msg = 'Overall installment values is different from project value.';
+        } else if (ttlAllowVal > 0 && ttlAllowVal != budgetVal) {
+            msg = 'Overall allocation values is different from project value.';
+        }
+        return msg;
+    }
+    function validateStaffSalary() {
+        var msg = 'valid';
+        var ttlAllowVal = 0;
+        if ($('#IsYearWiseAllocation').is(":checked")) {
+            $('#YWtabs .tab-content .tab-pane').not(':last').each(function (index,elePane) {
+                $(elePane).find('div[name="primaryAllocateDiv"]').each(function (idx, ele) {
+                    var headType = $(ele).find("select[name$='.AllocationHeadYW']").val();
+                    if (headType == 1) {
+                        var parseVal = parseFloat($(ele).find("input[name $= '.AllocationValueYW']").val())
+                        if (!isNaN(parseVal)) {
+                            ttlAllowVal = ttlAllowVal + parseVal;
+                        }
+                    }
+                });
+            });
+        } else {
+            $("div#OAHead #primaryAllocateDiv").each(function (idx, ele) {
+                var headType = $(ele).find("select[name = 'Allocationhead']").val();
+                if (headType == 1) {
+                    var parseVal = parseFloat($(ele).find("input[name = 'Allocationvalue']").val())
+                    if (!isNaN(parseVal)) {
+                        ttlAllowVal = ttlAllowVal + parseVal;
+                    }
+                }
+            });
+        }
+        var ttlSalary = 0;
+        $("input[name ='SalaryofStaffs']").each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlSalary = ttlSalary + parseVal;
+        });
+        if (ttlSalary > ttlAllowVal) {
+            msg = 'Sum of staff salary should not be greater than allocated value.';
+        }
+        return msg;
+    }
+    function validateFundingBodyAllocation() {
+        var msg = 'valid';
+        var ttlFundingBodyVal = 0;
+        var budgetVal = parseFloat($('#BaseValueHidden').val());
+        $("div#prjcttypespon input[name $='Amount']").each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlFundingBodyVal = ttlFundingBodyVal + parseVal;
+        });
+        if (ttlFundingBodyVal != budgetVal) {
+            msg = 'Overall funding body allocation values is different from project value.';
+        }
+        return msg;
+    }
+    function CollaborativeShareValidation() {
+        var msg = 'valid';
+        var budgetVal = parseFloat($('#BaseValueHidden').val());
+        var ttlShare = 0;
+        var collShare = parseFloat($("#collabtotalcost").val());
+        if (!isNaN(collShare))
+            ttlShare = ttlShare + collShare;
+        var iitmShare = parseFloat($("#collabIITMCost").val());
+        if (!isNaN(iitmShare))
+            ttlShare = ttlShare + iitmShare;
+        if (ttlShare != budgetVal) {
+            msg = 'Sum of other insitute / industry share and iitm share values is different from project value.';
+        }
+        return msg;
+    }
+    function validatePCFRMF() {
+        var msg = 'valid';
+        var ttlAllocPct = 0;
+        $("input[name $='PCF'],input[name $='RMF']").each(function () {
+            var parseVal = parseFloat($(this).val());
+            if (!isNaN(parseVal))
+                ttlAllocPct = ttlAllocPct + parseVal;
+        });
+        if (ttlAllocPct > 100) {
+            msg = 'Overall PCF & RMF allocation percentage should not be greater than 100.';
+        }
+        return msg;
+    }
+    function validateForm(n) {
+
+        // This function deals with validation of the form fields
+        var isValid = false;
+        var hadError = false;
+        var tabs = $(".tab");
+        var currentTabEle = tabs[currentTab];
+        var inputs = $(":input, textarea, select"); // get all the form inputs and selects
+        var stepElements = $(currentTabEle).find(inputs); // get inputs for current step
+        var count = stepElements.length; // check that there are inputs
+        if (count <= 0) {                // if there are not no reason to loop them
+            return true;                 // this can be used to perform other action if there are no steps
+        } else if (currentTab == 1) {
+            if ($("#typeofproject").val() == 2) {
+                var validationMsg = CollaborativeShareValidation();
+                if ( validationMsg != 'valid') {
+                    hadError = true;
+                    $('#MsgValidation').html(validationMsg);
+                    $('#ValidationModal').modal('toggle');
+                }
+            }
+            if ($("#pjctsubtyp").val() == 2) {
+                var validationMsg = validateFundingBodyAllocation();
+                if (validationMsg != 'valid') {
+                    hadError = true;
+                    $('#MsgValidation').html(validationMsg);
+                    $('#ValidationModal').modal('toggle');
+                }
+            }
+        } else if (currentTab == 2) {
+            var validationMsg = validatePCFRMF()
+            if (validationMsg != 'valid') {
+                hadError = true;
+                $('#MsgValidation').html(validationMsg);
+                $('#ValidationModal').modal('toggle');
+            }
+        } else if (currentTab == 3) {
+            if ($('#IsYearWiseAllocation').is(":checked")) {
+                var validationMsg = validateYWAllocation()
+                if (validationMsg != 'valid') {
+                    hadError = true;
+                    $('#MsgValidation').html(validationMsg);
+                    $('#ValidationModal').modal('toggle');
+                }
+            } else {
+                var validationMsg = validateAllocation();
+                if (validationMsg != 'valid') {
+                    hadError = true;
+                    $('#MsgValidation').html(validationMsg);
+                    $('#ValidationModal').modal('toggle');
+                }
+            }
+        } else if (currentTab == 4) {
+            var validationMsg = validateStaffSalary();
+            if (validationMsg != 'valid') {
+                hadError = true;
+                $('#MsgValidation').html(validationMsg);
+                $('#ValidationModal').modal('toggle');
+            }
+        }//else if (currentTab == 5) {
+        //    var tentativestartdate = $("#TentativeStartdate").val();
+        //    var tentativeclosedate = $("#TentativeClosedate").val();
+        //    if (tentativestartdate != '' && tentativeclosedate != '') {
+        //        hadError = !projectDurationValidation();
+        //    }
+        //}
+        $(stepElements).each(function (idx) {
+            if (!$(this).is(':radio') && !$(this).is(':checkbox')) {
+                isValid = $(this).valid();//$(document.forms[0]).validate().element($(this)); // check that the input is valid. This can also be used on a per input basis to perform another action if the field is not valid.
+                if (!isValid) { hadError = true; } // set our flag if there was an error
+            }
+
+        });
+        return !hadError; // return the valid status
+    }
+
+    function fixStepIndicator(n) {
+        // This function removes the "active" class of all steps...
+        var i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+        }
+        //... and adds the "active" class on the current step:
+        x[n].className += " active";
+    }
+    /* Tab Sections End */
+
+    /* Invoice number change */
+    $("#selectinvoicenumber").change(function () {
+        debugger;
+        var invoiceno = $(this).val();
+        var getinvoicedetails = 'Loadinvoicedetails';
+        $.ajax({
+            type: "POST",
+            url: getinvoicedetails,
+            data: { invoiceid: invoiceno },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (result) {
+                debugger;                
+                $("#txtinvoicedate").val(result.Invoicedatestrng);
+                $("#txtinvoicevalue").val(result.InvoiceValue);
+                $("#txtinvoicedetails").val(result.InvoiceDetails);
+                $("#txtcgstamount").val(result.CGSTAmount);
+                $("#txtsgstamount").val(result.SGSTAmount);
+                $("#txtigstamount").val(result.IGSTAmount);
+                $("#txttotaltaxamount").val(result.TotalTaxAmount);
+              
+            },
+            error: function (err) {
+                console.log("error1 : " + err);
+            }
+        });
+    });
+    /* Invoice number change */
+</script>
+<link href="@Url.Content("~/Content/IOASContent/assets/bootstrap-select/css/bootstrap-select.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Content/IOASContent/assets/bootstrap-select/js/bootstrap-select.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/FoolProof/mvcfoolproof.unobtrusive.min.js")" type="text/javascript"></script>

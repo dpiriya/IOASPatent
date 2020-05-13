@@ -1,0 +1,147 @@
+﻿@model  IEnumerable<IOAS.Models.Patent.Applicant_trxVM>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="spl-title">
+            List Of Co Applicant Details
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 mb-sm">
+        <table class="table alter-table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Organisation</th>
+                    <th>Contact Name</th>
+                    <th>Position</th>
+                    <th>Address</th>
+                    <th>ContactNo</th>
+                    <th>Email Id</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyAppl">
+                @if (Model.Count() > 0)
+                {
+                    var count = 0;
+                    string cl = "clr";
+                    foreach (var item in Model)
+                    {
+                        var org = "Appl[" + count + "].Organisation";
+                        var name = "Appl[" + count + "].ContactName";
+                        var posti = "Appl[" + count + "].Position";
+                        var addr = "Appl[" + count + "].Address";
+                        var ph = "Appl[" + count + "].ContactNo";
+                        var email = "Appl[" + count + "].EmailId";
+                        var sno = count + 1;
+                        <tr>
+                            <td>
+                                @Html.TextBox("sno", sno, new { @style = "width:30px", @class = "form-control" })
+                                @Html.Hidden("Appl.Index", @count)
+                            </td>
+                            <td>
+                                @Html.TextBox(org, item.Organisation, new { @id = "org", @class = "required form-control", @width = "100px" })
+                            </td>
+                            <td>
+                                @Html.TextBox(name, item.ContactName, new { @id = "name", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(posti, item.Position, new { @id = "posti", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(addr, item.Address, new { @id = "addr", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(ph, item.ContactNo, new { @id = "phno", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(email, item.EmailId, new { @id = "email", @class = "form-control" })
+                            </td>
+
+                            <td>
+                                <a href="javascript:void(0)" class="btn-sm btn btn-danger @cl"><i class="ion-android-close"></i></a>
+                            </td>
+                        </tr>
+                        count++;
+                        cl = "removeCoDetail";
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBox("sno", "1", new { @id = "sno", @style = "width:30px" })
+                            @Html.Hidden("Appl.Index", 0)
+                        </td>
+                        <td>
+                            @Html.TextBox("Appl[0].Organisation", "", new { @id = "org", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Appl[0].ContactName", "", new { @id = "name", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Appl[0].Position", "", new { @id = "posti", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Appl[0].Address", "", new { @id = "codept", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Appl[0].ContactNo", "", new { @id = "phno", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Appl[0].EmailId", "", new { @id = "email", @class = "form-control" })
+                        </td>
+
+                        <td>
+                            <a href="javascript:void(0)" class="btn-sm btn btn-danger clr"><i class="ion-android-close"></i></a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="7"></td>
+                    <td><a href="javascript:void(0)" id="btnAddAp" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    var counter1 = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddAp').click(function () {
+        var sno = counter1();
+        var cln = $('#tbodyAppl tr:first').clone().find("input[name!='sno'],select,input ").val("").end();
+        //$(cln).find('#TravellerId').parent().replaceWith(bootstrapSelect($(cln).find('#TravellerId').parent().clone(), "empty", '', '', false));
+        $(cln).find('a.clr').removeClass('clr').addClass('removeCoDetail');
+
+        var index = $('#tbodyAppl tr:last').prev().find("input[name='Appl.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='Appl.Index']").val(index);
+        $(cln).find("input, select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+            $(cln).find("input[name='sno']").val(index+1);
+        });
+        $('#tbodyAppl tr:last').before(cln);
+    });
+    $('.clr').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='coname']").val("");
+        thy.closest('tr').find("input[id='cotype']").html("");
+        thy.closest('tr').find("input[id='codept']").val("");
+        thy.closest('tr').find("input[id='txtconame']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeCoDetail', function () {
+        $(this).closest('tr').remove();
+    });
+</script>
+
+

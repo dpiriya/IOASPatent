@@ -1,0 +1,163 @@
+﻿@model IOAS.Models.Patent.FileCreationVM
+
+@{
+    ViewBag.Title = "BasicDetails";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div class="row">
+    @using (Html.BeginForm("FCBasicDetails", "Patent", FormMethod.Post, new { @class = "", role = "form", @id = "formCP", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12">
+            <div class="page-wrapper" id="createInternational">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">File Creation</h3>
+                            @Html.HiddenFor(m => m.FileNo)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> File Number </label>
+                                    @Html.DropDownListFor(m => m.FileNo, new SelectList(ViewBag.fno), "Select FileNo", new { @class = "form-control", @id = "fileno" })
+                                    <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.FileNo)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> Title </label>
+                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @id = "title" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Primary Inventor Type</label>
+                                @Html.DropDownListFor(m => m.PrimaryInventorType, new SelectList(ViewBag.pitype), "",
+new { @class = "form-control", @required = "required", @id = "pitype" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Primary Inventor Name</label>
+                                @Html.TextBoxFor(m => m.PrimaryInventorName, new { @class = "form-control", @id = "piname" })
+                                @*@Html.DropDownListFor(m => m.PrimaryInventorName, new SelectList(""), "Select Name", new { @class = "form-control ", @id = "piname" })
+
+                    @Html.TextBoxFor(m => m.PrimaryInventorName, new { @class = "form-control", @id = "txtpiname" })*@
+
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PrimaryInventorName)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label class="required">Dept Code/Organisation</label>
+                                @Html.DropDownListFor(m => m.PIDepartment, new SelectList(ViewBag.dept), "Select Department", new { @class = "form-control", @id = "dept" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PIDepartment)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Contact No</label>
+                                @Html.TextBoxFor(m => m.PIContactNo, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>E Mail</label>
+                                @Html.TextBoxFor(m => m.PIEmailId, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>InstId</label>
+                                @Html.TextBoxFor(m => m.PIInstId, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @Html.Partial("_CoInventor", Model.CoIn)
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">2. Applicant(s) Information: IITM should be one of the applicants   <i class="ion-help-circled" title="Incase of joint applicants MOU.IIA detailing the rights and obligations of the parties relating to sharing of costs,revenues etc needs to be finalized prior to complete filing"></i></h3>
+                            @*<h6>Incase of joint applicants MOU.IIA detailing the rights and obligations of the parties relating to sharing of costs,revenues etc needs to be finalized prior to complete filing</h6>*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Organisation</label>
+                                @Html.TextBoxFor(m => m.FirstApplicantOrganisation, new { @Value = "Indian Institute of Technology,Madras(IITM)", @class = "form-control", @required = "required", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Contact Name</label>
+                                @Html.TextBoxFor(m => m.FirstApplicantName, new { @Value = "Dr.Ravindra Gettu", @class = "form-control", @required = "required", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Position</label>
+                                @Html.TextBoxFor(m => m.FirstApplicantPosition, new { @Value = "Dean,ICSR", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Address</label>
+                                @Html.TextAreaFor(m => m.FirstApplicantAddress, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>ContactNo</label>
+                                @Html.TextBoxFor(m => m.FirstApplicantContactNo, new { @Value = "04422579756", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Email</label>
+                                @Html.TextBoxFor(m => m.FirstApplicantEmailId, new { @Value = "ipoffice@iitm.ac.in", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @Html.Partial("_Applicant", Model.Appl)
+                    </div>  
+                </div>               
+                <div class="row" id="updateBasic">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Update" name="Button" id="btnupdate" />
+                        <input type="button" onclick="window.location.href='@Url.Action("FileList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $('#fileno').change(function () {
+        $.ajax({
+            url: "GetFileDetails",
+            data: { fno: $('#fileno').val() },
+            success: function (msg) {
+                $('#title').val(msg.Title);
+                $('#pitype').val(msg.PrimaryInventorType);
+            }
+
+        });
+    });
+</script>
+
+

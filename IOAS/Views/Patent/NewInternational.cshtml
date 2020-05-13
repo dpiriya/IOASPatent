@@ -1,0 +1,183 @@
+﻿@model IOAS.Models.Patent.NewInternationalVM
+@{
+    ViewBag.Title = "NewInternational";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div class="row hd-tt-bg" id="addnewpage">
+    <div class="col-md-4 pull-left">
+        <h3>International Patent</h3>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("NewInternational", "Patent", FormMethod.Post, new { @class = "", role = "form", @id = "formCP", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12">
+            <div class="page-wrapper" id="createInternational">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div id="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required">FileNo</label>
+                                    @Html.TextBoxFor(m => m.FileNo, new { @class = "form-control", @id = "fileno", @readonly = "readonly" })
+                                    @Html.HiddenFor(m=>m.isUpdate)
+                                    @Html.HiddenFor(m=>m.isPCT)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                @Html.RadioButtonFor(m=>m.isPCT, true, new { @name = "PCT" })@Html.Label("PCT")
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                @Html.RadioButtonFor(m=>m.isPCT, false, new { @name = "PCT" })@Html.Label("NonPCT")
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divPCT">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> PCT Filing Number </label>
+                                    @Html.TextBoxFor(m => m.PCTFilingNo, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> PCT Publication Number </label>
+                                    @Html.TextBoxFor(m => m.PCTPublicationNo, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> PCT Publication Date </label>
+                                    @Html.TextBoxFor(m => m.PublicationDate, new { @class = "form-control datepicker" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> Attorney </label>
+                                    @Html.DropDownListFor(m => m.Attorney, new SelectList(ViewBag.att), "Select Attorney", new { @class = "form-control datepicker" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+                        @Html.Partial("_International", Model.NationalPhase)
+                    </div>
+                </div>
+                <div class="row" id="savenewIntl">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Save" name="Button" id="btnSave" />
+                        <input type="button" onclick="window.location.href='@Url.Action("FileList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+                <div class="row" id="updatenewIntl">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Update" name="Button" id="btnupdate" />
+                        <input type="button" onclick="window.location.href='@Url.Action("FileList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (ViewBag.succMsg != null)
+{
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("FileList", "Patent")';">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.succMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("FileList", "Patent")';">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+
+}
+@if (ViewBag.errMsg != null)
+{
+    <div id="myModal1" class="modal fade modal-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-cancel"></i>
+                    <h3 class="modal-title">Error Message</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.errMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal1').modal('show');
+        });
+
+    </script>
+}
+<script type="text/javascript">
+    $("input[name$='PCT']").click(function () {
+        if ($(this).val() == "True") {
+            $('#divPCT').show();          
+        }
+        else {
+            $('#divPCT').hide();           
+        }
+    });
+    $('.datepicker').datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+    $(function () {
+        if ($('#isUpdate').val() == "True") {
+            $('#savenewIntl').hide();
+            $('#updatenewIntl').show();
+        }
+        else {
+            $('#updatenewIntl').hide();
+            $('#savenewIntl').show();
+        } 
+        if ($('#isPCT').val() == true) {
+            $('#divPCT').show();
+        }
+        else
+            $('#divPCT').hide();
+    });
+</script>

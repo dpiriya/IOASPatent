@@ -1,0 +1,123 @@
+﻿@model IOAS.Models.ProjectTransactionModel
+
+@{
+    ViewBag.Title = "Report";
+    ViewBag.Subtitle = "Reports";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+
+<div class="row hd-tt-bg ">
+    <div class="col-md-12">
+        <h4><b>Project Transaction</b></h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="page-wrapper">
+        <div class="col-md-12 mt30">
+
+
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="vh-tt-bg vh-tt-bg-adj mt-null">
+                        <div class="vh-frm-bg bl-lg-panel-box pb-null br-adj-null">
+                            <div class="row">
+
+                                <div class="">
+                                    <div class="col-md-12">
+                                        <div class="grey-bg-adj mb-lg">
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+
+                                                    <div class="row mt-md">
+
+                                                        <div class="col-md-3 ">
+                                                            <div class="form-group custom-form-group ">
+                                                                <label>Project Number </label><br />
+                                                                @Html.TextBoxFor(m => m.ProjNo, new { @class = "form-control", @id = "ProjectNo" })
+                                                                @Html.TextBoxFor(m => m.ProjId, new { @class = "form-control dis-none", @id = "ProjectId" })
+                                                            </div>
+                                                        </div>                                                  
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mt-md mb-lg text-center">
+                <input type="submit" value="Generate Report to Pdf" class="btn btn-primary" id="btnSubmit" />
+               
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="delsuccess" class="modal fade modal-success" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <i class="ion-android-checkmark-circle"></i>
+                <h3 class="modal-title">No Record found!...</h3>
+            </div>
+            <div class="modal-body">
+
+                <p> No Record found!...</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $(document).on('click', '#ProjectNo', function () {
+
+        applyAutoComplete($('#ProjectNo'), $('#ProjectId'), "../CoreAccounts/LoadProjectNumber", undefined, undefined, undefined);
+    });
+    $('#btnSubmit').click(function () {
+
+        var ProjId = $('#ProjectId').val();
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify({ 'ProjId': ProjId }),
+            url: '@Url.Action("GetDataForProjectTransaction", "ReportMaster")',
+            contentType: "application/json",
+            success: function (result) {
+                if (result.em==1)
+                {                   
+                  var win = window.open('', '_blank');
+                  var url = "@Url.RouteUrl(new {Controller = "ReportMaster", Action = "ProjectTransaction" })?ProjId=" + ProjId;
+                  win.location.href = url;
+                }
+                else {                  
+                    $("#delsuccess").modal('toggle');
+                }
+            }
+        })
+    });
+
+
+
+</script>

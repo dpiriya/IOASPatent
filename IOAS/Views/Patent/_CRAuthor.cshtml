@@ -1,0 +1,149 @@
+﻿@model  IEnumerable<IOAS.Models.Patent.CRAuthor_trxVM>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="spl-title">
+            List Of Co Inventor Details
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mb-lg">
+        <table class="table alter-table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Nationality</th>
+                    <th>Deceased</th>
+                    <th>Date of Decease</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyCoIn">
+                @if (Model.Count() > 0)
+                {
+                    var count = 0;
+                    string cl = "clr2";
+                    foreach (var item in Model)
+                    {
+                        var name = "CR.Author[" + count + "].AUName";
+                        var addr = "CR.Author[" + count + "].AUAddress";
+                        var nat = "CR.Author[" + count + "].AUNationality";
+                        var isdeceased = "CR.Author[" + count + "].isDeceased";
+                        var decdt = "CR.Author[" + count + "].deceasedDt";
+                        var sno = count + 1;
+                        <tr>
+                            <td>
+                                @Html.TextBox("sno", sno, new { @class = "form-control", @style = "width:30px" })
+                                @Html.Hidden("Author.Index", @count)
+                            </td>
+                            <td>
+                                @*@Html.DropDownList(name, new SelectList(""), item.Name, new { @class = "form-control", @id = "coname" })*@
+                                @Html.TextBox(name, item.AUName, new { @class = "form-control", @id = "coname" })
+                            </td>
+                            <td>
+                                @Html.TextBox(addr, item.AUAddress, new { @class = "form-control", @id = "coaddr" })
+                            </td>
+                            <td>
+                                @Html.TextBox(nat, item.AUNationality, new { @class = "form-control", @id = "nat" })
+                            </td>
+                            <td>
+                                @Html.CheckBox(isdeceased, new { @class = "form-control", @id = "dec" })
+                            </td>
+                            <td>
+                                @Html.TextBox(decdt, item.deceasedDt, new { @class = "form-control", @id = "decdt" })
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" class="btn-sm btn btn-danger @cl"><i class="ion-android-close"></i></a>
+                            </td>
+                        </tr>
+                        count++;
+                        cl = "removeCoInDetail";
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBox("sno", "1", new { @class = "form-control", @id = "sno", @style = "width:30px" })
+                            @Html.Hidden("Author.Index", 0)
+                        </td>
+                        <td>
+                            @*@Html.DropDownList("CR.Author[0].Name", new SelectList(""), "Select Name", new { @class = "form-control", @required = "required", @id = "coname" })*@
+                            @Html.TextBox("CR.Author[0].AUName", "", new { @class = "form-control", @id = "coname" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CR.Author[0].AUAddress", "", new { @class = "form-control", @id = "coaddr" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CR.Author[0].AUNationality", "", new { @class = "form-control", @id = "nat", @style = "width:100px" })
+                        </td>
+                        <td>
+                            @Html.CheckBox("CR.Author[0].isDeceased", new { @class = "form-control", @id = "dec" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CR.Author[0].deceasedDt", "", new { @class = "form-control", @id = "decdt", @style = "width:180px" })
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="btn-sm btn btn-danger clr2"><i class="ion-android-close"></i></a>
+                        </td>
+                    </tr>
+
+                }
+                <tr>
+                    <td colspan="6"></td>
+                    <td><a href="javascript:void(0)" id="btnAddCoIn" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+
+    var counter = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddCoIn').click(function () {
+        var sno = counter();
+        //var sno =parseInt($('#sno').val(),10);
+        //++sno;
+        var cln = $('#tbodyCoIn tr:first').clone().find("input[name!='sno'],input").val("").end();
+        //$(cln).find('#TravellerId').parent().replaceWith(bootstrapSelect($(cln).find('#TravellerId').parent().clone(), "empty", '', '', false));
+        $(cln).find('a.clr2').removeClass('clr2').addClass('removeCoInDetail');
+
+        var index = $('#tbodyCoIn tr:last').prev().find("input[name='Author.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='Author.Index']").val(index);
+        $(cln).find("input[type=checkbox],input[type=text]").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+            $(cln).find("input[name='sno']").val(index + 1);
+        });
+        $('#tbodyCoIn tr:last').before(cln);
+        $(cln).find("input[name='CR.Author[" + index + "].AUName']").val($('#tbodyCoInventor').find("input[name='CoIn["+index+"].Name']").val())
+    });
+    $('.clr2').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='coname']").val("");
+        thy.closest('tr').find("input[id='coaddr']").val("");
+        thy.closest('tr').find("input[id='nat']").val("");
+        thy.closest('tr').find("input[id='dec']").prop("checked", false);
+        thy.closest('tr').find("input[id='decdt']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeCoInDetail', function () {
+        $(this).closest('tr').remove();
+    });
+    $('#tbodyCoIn').find("input[id='coname']").focus(function () {
+        var thy = $(this);
+        thy.val($('#tbodyCoInventor').find("input[id='coname']").val());
+    });
+</script>
+
+

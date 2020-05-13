@@ -1,0 +1,222 @@
+﻿@model IOAS.Models.CommitmentStatusModel
+
+@{
+    ViewBag.Title = "Active Commitments";
+    ViewBag.Subtitle = "Active Commitments";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<script src="~/Scripts/Account/ActiveCommitment.js"></script>
+<div class="row hd-tt-bg" id="addnewpage">
+    <div class="col-md-4">
+        <h3>Active Commitments</h3>
+    </div>
+    <div class="col-md-8 flt-nav-links">
+        <a href="Javascript:void(0)" id="btnShowFilter" class="pull-right"> <i class="ion-android-funnel"></i>Filters</a>
+    </div>
+</div>
+<div class="row mt30">
+    <div class="page-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="custom-jsgrid-normal">
+                    <div id="ActiveCommitList">
+                 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup"></div>
+<div id="popupCommitmentFilter" class="filter-popup">
+    <div class="">
+        <div class="filter-content">
+            <div class="white-bg">
+                <div class="form-group custom-form-group">
+                    <h3>Filter by</h3>
+                </div>
+                <div class="form-group custom-form-group">
+                    @Html.DropDownListFor(m => m.searchField.ProjectType, new SelectList(ViewBag.projecttype, "codevalAbbr", "CodeValDetail"), "Select project type", new { @id = "intPrjType", @class = "form-control" })
+                </div>
+                <div class="form-group custom-form-group">
+                    @Html.DropDownListFor(m => m.searchField.ProjectNumber, new SelectList(ViewBag.ProjectNo, "id", "name"), "Select project no", new { @id = "intPrjNo", @class = "form-control" })
+                </div>
+                <div class="form-group custom-form-group">
+                    @Html.TextBoxFor(m => m.searchField.Keyword, new { @id = "Keyword", @placeholder = "Commitment No/Status", @class = "form-control" })
+                </div>
+
+                <div class="form-group custom-form-group">
+                    <label class="full-width">Created Date</label>
+                </div>
+                <div id="DivSRBDate" class="form-group custom-form-group">
+                    <label class="half-form">From</label>
+                    <label class="half-form">To</label>
+                    @Html.TextBoxFor(m => m.searchField.FromCreatedDate, new { @id = "FromCreatedDate", @class = "form-control half-form" })
+                    @Html.TextBoxFor(m => m.searchField.ToCreatedDate, new { @id = "ToCreatedDate", @class = "form-control half-form" })
+                </div>
+                <div class="form-group custom-form-group mt30 text-center">
+                    <button id="btnSearch" type="button" class="btn btn-primary mr10">Search</button>
+                    <button name="btnClose" type="button" class="btn btn-default">Close</button>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <a href="javascript:void(0)" name="btnClose" class="close-btn"><i class="ion-android-cancel"></i></a>
+
+</div>
+@if (ViewBag.SuccMsg != null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+    </script>
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p id="alertSuccess">@ViewBag.SuccMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@if (ViewBag.ErrMsg != null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myModal2').modal('show');
+        });
+    </script>
+    <div id="myModal2" class="modal fade modal-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-cancel"></i>
+                    <h3 class="modal-title">Error Message</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.ErrMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#FromCreatedDate").datepicker
+        ({
+            dateFormat: 'dd-MM-yy',
+            showStatus: true,
+            showWeeks: true,
+            changeYear: true,
+            yearRange: '-100:+0',
+            highlightWeek: true,
+            numberOfMonths: 1,
+            showAnim: "scale",
+            showOptions: {
+                origin: ["top", "left"]
+            }
+        });
+        $("#ToCreatedDate").datepicker
+       ({
+           dateFormat: 'dd-MM-yy',
+           showStatus: true,
+           showWeeks: true,
+           changeYear: true,
+           yearRange: '-100:+0',
+           highlightWeek: true,
+           numberOfMonths: 1,
+           showAnim: "scale",
+           showOptions: {
+               origin: ["top", "left"]
+           }
+       });
+    });
+    $("#intPrjType").change(function () {
+        var projectType = $(this).val();
+            $.getJSON("@Url.Action("LoadProjectNumber", "Account")", { projecttype: projectType },
+        function (locationdata) {
+            var select = $("#intPrjNo");
+            select.empty();
+            select.append($('<option/>', {
+                value: 0,
+                text: "Select Project Number"
+            }));
+            $.each(locationdata.Item1, function (index, itemData) {
+
+                select.append($('<option/>', {
+                    value: itemData.id,
+                    text: itemData.name
+                }));
+            });
+        });
+
+    });
+
+
+    $("#btnShowFilter").click(function () {
+        $('#popupCommitmentFilter').css("display", "Block");
+    });
+    $('a[name="btnClose"],button[name="btnClose"]').click(function () {
+        $('#popupCommitmentFilter').css("display", "none");
+    });
+    var searchCommitment = 'SearchActiveCommitments';
+    $("#btnSearch").click(function () {
+
+        var PrjType = 0, PrjNo = 0;
+         PrjType = $("#intPrjType").val();
+         PrjNo = $("#intPrjNo").val();
+         if (PrjType==null||PrjType==""){
+             PrjType = 0;
+         }
+         if (PrjNo == null || PrjNo == "") {
+             PrjNo = 0;
+         }
+        var KW = $("#Keyword").val();
+        var FCreateD = $("#FromCreatedDate").val();
+        var TCreateD = $("#ToCreatedDate").val();
+        var searchdata = {"Keyword": KW, "ProjectType": PrjType, "ProjectNo": PrjNo, "FromDate": FCreateD, "ToDate": TCreateD};
+        $.ajax({
+            type: "GET",
+            url: searchCommitment,
+            data: searchdata,
+            //data: { "ProjectType": Projecttype, "ProposalNumber": Proposalnumber, "FromSOdate": FromSODate, "ToSOdate": ToSODate, },
+            //contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (result) {
+                $("#ActiveCommitList").jsGrid({ data: result });
+                $('#popupCommitmentFilter').hide();
+            }
+        });
+    });
+
+
+</script>

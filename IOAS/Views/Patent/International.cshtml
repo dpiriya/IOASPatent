@@ -1,0 +1,333 @@
+﻿@model IOAS.Models.Patent.InternationalVM
+@{
+    ViewBag.Title = "International";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div class="row hd-tt-bg" id="addnewpage">
+    <div class="col-md-4 pull-left">
+        <h3>International Patent</h3>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("International", "Patent", FormMethod.Post, new { @class = "", role = "form", @id = "formCP", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12">
+            <div class="page-wrapper" id="createInternational">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">International Patent </h3>
+                            @Html.HiddenFor(m => m.FileNo)
+                            @Html.HiddenFor(m => m.isUpdate)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> File Number </label>
+                                    @Html.DropDownListFor(m => m.FileNo, new SelectList(ViewBag.fno), "Select FileNo", new { @class = "form-control", @id = "fileno" })
+                                    <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.FileNo)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> Sub File Number </label>
+                                    @Html.TextBoxFor(m => m.subFileNo, new { @class = "form-control", @id = "subfileno", @readonly = "readonly" })
+                                    <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.subFileNo)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Request Date</label>
+                                @Html.TextBoxFor(m => m.RequestDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @required = "required", @id = "reqDt" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.RequestDt)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Country</label>
+                                @Html.DropDownListFor(m => m.Country, new SelectList(ViewBag.cntry), "Select Country",
+new { @class = "form-control", @required = "required", @id = "country" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Country)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Partner Name</label>
+                                @Html.TextBoxFor(m => m.Partner, new { @class = "form-control", @required = "required", @id = "party" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Partner)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Partner Ref No</label>
+                                @Html.TextBoxFor(m => m.PartnerNo, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PartnerNo)</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Type</label>
+                                @Html.DropDownListFor(m => m.Type, new SelectList(ViewBag.ftype), "Select Type", new { @class = "form-control", @required = "required", @id = "coor" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Type)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Patent Attorney</label>
+                                @Html.TextBoxFor(m => m.Attorney, new { @class = "form-control", @required = "required", @id = "att" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Attorney)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Application No</label>
+                                @Html.TextBoxFor(m => m.ApplicationNo, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.ApplicationNo)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Date of Filing</label>
+                                @Html.TextBoxFor(m => m.FilingDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.FilingDt)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Publication No</label>
+                                @Html.TextBoxFor(m => m.PublicationNo, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PublicationNo)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Date of Publishing</label>
+                                @Html.TextBoxFor(m => m.PublicationDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PublicationDt)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Status</label>
+                                @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.stat), new { @class = "form-control", @id = "status" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Status)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Sub Status</label>
+                                @if (ViewBag.subst != null)
+                                {
+                                    @Html.DropDownListFor(m => m.SubStatus, new SelectList(ViewBag.subst), new { @class = "form-control", @id = "substat" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(m => m.SubStatus, new SelectList(""), new { @class = "form-control", @id = "substat" })}
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.SubStatus)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Patent No</label>
+                                @Html.TextBoxFor(m => m.PatentNo, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PatentNo)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Patent Issue Date</label>
+                                @Html.TextBoxFor(m => m.PatentDt, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PatentDt)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Remarks</label>
+                                @Html.TextBoxFor(m => m.Remark, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Remark)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="saveInternational">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Save" name="Button" id="btnSave" />
+                        <input type="button" onclick="window.location.href='@Url.Action("InternationalList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+                <div class="row" id="updateInternational">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Update" name="Button" id="btnupdate" />
+                        <input type="button" onclick="window.location.href='@Url.Action("InternationalList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (ViewBag.succMsg != null)
+{
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("InternationalList", "Patent")';">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+                    <p>@ViewBag.succMsg</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("InternationalList", "Patent")';">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+}
+@if (ViewBag.errMsg != null)
+{
+    <div id="myModal1" class="modal fade modal-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-cancel"></i>
+                    <h3 class="modal-title">Error Message</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.errMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal1').modal('show');
+        });
+
+    </script>
+}
+<script type="text/javascript">
+    $('#party').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '../Patent/GetParty',
+                type: 'post',
+                dataType: 'json',
+                delay: 500,
+                data: { Prefix: request.term, source: 'Customer' },
+                success: function (data) {
+                    console.log(data);
+                    response($.map(data, function (item) {
+                        console.log(item);
+                        return { label: item, value: item };
+                    }));
+                }
+            })
+        },
+        messages: {
+            noResults: "",
+            results: function (count) {
+                return count + (count > 1 ? 'results' : 'result') + 'found';
+            }
+        }
+    });
+    $('#att').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '../Patent/GetParty',
+                type: 'post',
+                dataType: 'json',
+                delay: 500,
+                data: { Prefix: request.term, source: 'Service Provider' },
+                success: function (data) {
+                    console.log(data);
+                    response($.map(data, function (item) {
+                        console.log(item);
+                        return { label: item, value: item };
+                    }));
+                }
+            })
+        },
+        messages: {
+            noResults: "",
+            results: function (count) {
+                return count + (count > 1 ? 'results' : 'result') + 'found';
+            }
+        }
+    });
+    $('.datepicker').datepicker({
+        dateFormat: "dd/mm/yy",
+        changeMonth: true,
+        changeYear:true
+    });
+    $('#fileno').change(function () {
+        $.ajax({
+            url: "GetSubFileNo",
+            data: { fno: $('#fileno').val() },
+            success: function (msg) {
+                $('#subfileno').val(msg);
+            }
+
+        });
+    });
+    $('#status').change(function () {
+        $.ajax({
+            url: "GetSubStatus",
+            data: { st: $('#status').val() },
+            success: function (msg) {
+                $('#substat').html("")
+                $.each(msg, function (data, value) {
+                    $('#substat').append($("<option></option>").val(value).html(value));
+                })
+            }
+
+        });
+    });
+    $(function () {
+        if ($('#isUpdate').val() == "True") {
+            $('#saveInternational').hide();
+            $('#updateInternational').show();
+        }
+        else {
+            $('#updateInternational').hide();
+            $('#saveInternational').show();
+        }
+    });
+</script>
+
+

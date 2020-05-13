@@ -1,0 +1,1166 @@
+﻿@model IOAS.Models.Patent.IDFRequest_trxVM
+@{
+    ViewBag.Title = "IDFRequest";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<style>
+    /* Hide all steps by default: */
+    .tab {
+        display: none;
+        background: #fff;
+        float: left;
+    }
+
+    .step {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbbbbb;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5;
+    }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        /* Mark the steps that are finished and valid: */
+        .step.finish {
+            background-color: #fff;
+        }
+
+    .custom-nav-pills.nav-pills > li > a {
+        color: rgba(255,255,255,0.5);
+        cursor: default;
+        background: transparent !important;
+        border-color: transparent;
+        border-top-color: transparent;
+        padding: 10px 15px;
+        margin: 0px 15px;
+    }
+
+        .custom-nav-pills.nav-pills > li > a span {
+            width: 100%;
+            float: left;
+        }
+
+    .custom-nav-pills.nav-pills > li.active > a, .custom-nav-pills.nav-pills > li.active > a:focus, .custom-nav-pills.nav-pills > li.active > a:hover {
+        color: #333333;
+        background-color: #fff !important;
+    }
+
+    .custom-st-fd-box {
+        background: #f5f5f5;
+        padding: 15px 0px;
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .custom-st-fd-btn {
+        color: #fff;
+        font-size: 16px;
+        margin-top: 15px;
+        display: inline-block;
+    }
+
+    .custom-st-tb-th.table {
+        border: 0px;
+    }
+
+        .custom-st-tb-th.table > tbody > tr > th {
+            background: #3080e3;
+            color: #fff;
+            border: 0px solid #ccc;
+        }
+
+        .custom-st-tb-th.table > tbody > tr > td {
+            border: 0px;
+        }
+</style>
+<div class="row hd-tt-bg">
+    <div class="col-md-4">
+        <h3>Invention Disclosure Format (Confidential)</h3>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("IDFRequest", "Patent", FormMethod.Post, new { @class = "", role = "form", @id = "formIDF", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12 mt10">
+            <div class="page-wrapper" id="createIDFRequest">
+                <div class="row" id="main-menu">
+                    <div class="col-md-3">
+                        <div class="form-group  ">
+                            @Html.RadioButtonFor(m => m.IDFType, "Patent")@Html.Label("Patent")
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group  ">
+                            @Html.RadioButtonFor(m => m.IDFType, "Trademark")@Html.Label("Trademark")
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.RadioButtonFor(m => m.IDFType, "Copyright")@Html.Label("Copyright")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <ul class="nav nav-pills custom-nav-pills">
+                        <li class="Common active"><a href="javascript:void(0)">Inventor Details</a></li>
+                        <li class="Common"><a href="javascript:void(0)">Applicant Details</a></li>
+                        <li class="Common"><a href="javascript:void(0)">Project Details</a></li>
+                        <li class="Common"><a href="javascript:void(0)">Support Information</a></li>
+                        <li class="Common"><a href="javascript:void(0)">Annexure B-1</a></li>
+                        <li class="Common"><a href="javascript:void(0)">Annexure Conti..</a></li>
+                        <li class="Trademark"><a href="javascript:void(0)">Form TM-A</a></li>
+                        <li class="Trademark"><a href="javascript:void(0)">Form TM-A Conti..</a></li>
+                        <li class="CopyRight"><a href="javascript:void(0)">Details</a></li>
+                        <li class="Common"><a href="javascript:void(0)">Documents</a></li>
+                    </ul>
+                    <div class="tab Common">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        <label class="required"> File Number </label>
+                                        @Html.TextBoxFor(m => m.FileNo, new { @class = "form-control required", @id = "fileno", @readonly = true })
+                                        <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.FileNo)</div>
+                                        @Html.HiddenFor(m => m.FileNo)                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        <label class="required">Primary Inventor Type</label>
+                                        @Html.TextBoxFor(m => m.PrimaryInventorType, new { @class = "form-control", @required = "required", @id = "pitype" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        <label class="required">Primary Inventor Name</label>
+                                        @Html.TextBoxFor(m => m.PrimaryInventorName, new { @class = "form-control", @id = "piname" })
+                                        @*@Html.DropDownListFor(m => m.PrimaryInventorName, new SelectList(""), "Select Name", new { @class = "form-control ", @id = "piname" })
+
+                            @Html.TextBoxFor(m => m.PrimaryInventorName, new { @class = "form-control", @id = "txtpiname" })*@
+
+                                        <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PrimaryInventorName)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        <label class="required">Dept Code/Organisation</label>
+                                        @Html.TextBoxFor(m => m.PIDepartment, new { @class = "form-control", @id = "dept" })
+                                        <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PIDepartment)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        <label>Contact No</label>
+                                        @Html.TextBoxFor(m => m.PIContactNo, new { @class = "form-control", @id = "pino" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        <label>E Mail</label>
+                                        @Html.TextBoxFor(m => m.PIEmailId, new { @class = "form-control", @id = "pimail" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        <label>Institute ID</label>
+                                        @Html.TextBoxFor(m => m.PIInstId, new { @class = "form-control", @id = "instId" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                @Html.Partial("_CoInventor", Model.CoIn)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab Common">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="spl-title">2. Applicant(s) Information: IITM should be one of the applicants   <i class="ion-help-circled" title="Incase of joint applicants MOU.IIA detailing the rights and obligations of the parties relating to sharing of costs,revenues etc needs to be finalized prior to complete filing"></i></h3>
+                                    @*<h6>Incase of joint applicants MOU.IIA detailing the rights and obligations of the parties relating to sharing of costs,revenues etc needs to be finalized prior to complete filing</h6>*@
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        <label class="required">Organisation</label>
+                                        @Html.TextBoxFor(m => m.FirstApplicantOrganisation, new { @Value = "Indian Institute of Technology,Madras(IITM)", @class = "form-control", @required = "required", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        <label>Contact Name</label>
+                                        @Html.TextBoxFor(m => m.FirstApplicantName, new { @Value = "Dr.Ravindra Gettu", @class = "form-control", @required = "required", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        <label>Position</label>
+                                        @Html.TextBoxFor(m => m.FirstApplicantPosition, new { @Value = "Dean,ICSR", @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        <label>Address</label>
+                                        @Html.TextAreaFor(m => m.FirstApplicantAddress, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        <label>ContactNo</label>
+                                        @Html.TextBoxFor(m => m.FirstApplicantContactNo, new { @Value = "04422579756", @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        <label>Email</label>
+                                        @Html.TextBoxFor(m => m.FirstApplicantEmailId, new { @Value = "ipoffice@iitm.ac.in", @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                @Html.Partial("_Applicant", Model.Appl)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab Common">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group">
+                                        <div class="divPatcopy">
+                                            <label class="required"> Title of the Invention <i class="ion-help-circled" title="A slightly descriptive title to identify the nature of the invention"></i></label>
+                                        </div>
+                                        <div class="divTrademark">
+                                            <label class="required"> Name to be applied for Trademark registration <i class="ion-help-circled" title="Please specify the name for application of trademark registration."></i></label>
+                                        </div>
+                                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "Check on the Help icon for detailed information" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        <div class="divPatcopy">
+                                            <label class="required">
+                                                Field /Area of the invention  <i class="ion-help-circled" title="1. One or two sentences mentioning the specific technology area of the invention.
+2. Please provide a list of key words, which would define the novel & inventive aspects of your invention"></i>
+                                            </label>
+                                        </div>
+                                        <div class="divTrademark">
+                                            <label class="required">
+                                                Field /Area of use of the trademark  <i class="ion-help-circled" title="1.Specify the relevant application areas in which the trademark being applied shall be used
+2. Please specify the date of first use of the proposed trademark or image mark.
+"></i>
+                                            </label>
+                                        </div>
+                                        @Html.TextBoxFor(m => m.FieldOfInvention, new { @class = "form-control", @placeholder = "Check on the Help icon for detailed information" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        <label>
+                                            Summary and background of the invention  <i class="ion-help-circled" title="1. A brief narration of the background of the invention followed by a summarized description of the invention (in a paragraph).
+IT could be written with a problem-solution approach.
+2. Advantages of the invention over what is already known, may also be provided here."></i>
+                                        </label>
+                                        @Html.TextBoxFor(m => m.Summary, new { @class = "form-control", @placeholder = "A brief narration of the background of the invention followed by a summarized description of the invention" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group">
+                                        <div class="divPatent">
+                                            <label class="required">
+                                                Description of the invention in detail  <i class="ion-help-circled" title="Key references to be cited here. Detailed document may be attached seperately and shared with the attorney as required or made available for direct filing at the Patent Office
+Any Modification or alternative forms of the invention may be described.
+In case of the inventions conceived to be workable.but not yet worked out, may also be described. They should be described in the manner they should be actually performed.
+Any supporting data related to the invention such as drawings,illustrations, test data,graphs,charts etc."></i>
+                                            </label>
+                                        </div>
+                                        <div class="divCopyRight">
+                                            <label class="required">
+                                                Description about the copyright invention should be provided here including the application/usage of this copyright, and in
+                                                case of Software algorithms, the codes/algorithms may be attached separately and submit along with this form.
+                                                <i class="ion-help-circled" title=" 1. Description shall be provided in paragraph format.
+2. Any code / algorithms should be provided in executable format. Also 2 soft copies and 2 hard copies of the source code
+should be submitted at the IPM cell.
+3. Any supporting data related to the invention such as drawings, illustrations, test data, graphs, charts, etc."></i>
+                                            </label>
+                                        </div>
+                                        <div class="divTrademark">
+                                            <label class="required">
+                                                Description of the invention <i class="ion-help-circled" title="1. A short description explaining the trademark and its use.
+2.Any image to be registered along with name, if any"></i>
+                                            </label>
+                                        </div>
+                                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @placeholder = "Check on the Help icon for detailed information" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group">
+                                        <div class="divPatent">
+                                            <label class="required">
+                                                Prior publications /Patents by /available with the inventors  <i class="ion-help-circled" title="1. Outcomes of all searches(patent & non-patent) already done including a list of other references relevant to the invention to be shared.
+2. Has the same or a part of the invention been published or presented in a public forum by the inventors? If yes, please provide the details. If no, please share any other publications/presentation by the inventors relevant to the area of the current invention.
+3. Please also share the details of any patent application of inventor in the related area. If the patent application is published or granted, please give the number. If it is not published yet, an abstract may be shared."></i>
+                                            </label>
+                                        </div>
+                                        <div class="divCopyRight">
+                                            <label class="required">
+                                                Prior publications / Patents / Trademarks / Copyrights by /available with the inventors
+                                                <i class="ion-help-circled" title="1. Outcomes of all searches already done including a list of other references relevant to the invention to be shared.
+2. Has the same or a part of the invention been published or presented in a public forum by the inventors? If yes, please
+provide the details. If no, please share any other publications/presentation by the inventors relevant to the area of the current
+invention.
+3. Please also share the details of any patent application of inventor in the related area. If the patent application is published or
+granted, please give the number. If it is not published yet, an abstract may be shared.
+4. Please mention if you have any previous copyright/trademark applied/ registered in related area."></i>
+                                            </label>
+                                        </div>
+                                        <div class="divTrademark">
+                                            <label class="required">
+                                                Prior Trademarks by /available with the inventors  <i class="ion-help-circled" title="Please list out the prior trademarks that were registered by the inventors, if any."></i>
+                                            </label>
+                                        </div>
+                                        @Html.TextBoxFor(m => m.PriorPublication, new { @class = "form-control", @placeholder = "Check on the Help icon for detailed information" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divPatent">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group custom-form-group">
+                                            <div class="col-md-3">
+                                                <label>
+                                                    Source of Invention from Research Projects
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group custom-form-group ">
+                                                    @Html.RadioButtonFor(m => m.SourceOfInvention, true)@Html.Label("Yes")
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group custom-form-group ">
+                                                    @Html.RadioButtonFor(m => m.SourceOfInvention, false)@Html.Label("No")
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab Common">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group custom-form-group">
+                                    <div class="divPatcopy">
+                                        <label class="required">
+                                            Support Information   <i class="ion-help-circled" title="1. Are any Government /external funding sources being used for the research? Please provide details. (Project Number & Title)
+2. Please attach copy of agreements with funding agencies and sponsoring agencies. Clarify if rights to any intellectual property arising out of the project have to be shared / assigned."></i>
+                                        </label>
+                                    </div>
+                                    <div class="divTrademark">
+                                        <label class="required">
+                                            Support Information   <i class="ion-help-circled" title="If any additional information about the trademark application, for example, intended jurisdictions for which the inventor
+wish to apply for trademark registration."></i>
+                                        </label>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.SupportInformation, new { @class = "form-control", @placeholder = "Are any Government /external funding sources being used for the research? Please provide details. (Project Number & Title)" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required">
+                                        Disclosure Information   <i class="ion-help-circled" title="Has any disclosure been made to any person, whether public or confidential eg. Publication in journals, discussion with suppliers or potential partners."></i>
+                                    </label>
+                                    @Html.TextBoxFor(m => m.Disclosure, new { @class = "form-control", @placeholder = "Has any disclosure been made to any person, whether public or confidential eg. Publication in journals, discussion with suppliers or potential partners." })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divPatent">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group custom-form-group">
+                                        <label class="required">
+                                            Any Biological materials /resources used in the invention?
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.RadioButtonFor(m => m.BiologicalMaterial, true)@Html.Label("Yes")
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.RadioButtonFor(m => m.BiologicalMaterial, false)@Html.Label("No")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.TextBoxFor(m => m.DetailsOfBiologicalMaterial, new { @class = "form-control", @placeholder = "Details regarding the material/resource name, source, etc." })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group custom-form-group ">
+                                    <div class="divPatcopy">
+                                        <label class="required">
+                                            Any other relavant Information   <i class="ion-help-circled" title="1. Is there any urgency on account of publishing in a journal; presentation at a seminar; response to competition etc. If yes, a provisional specification should be filed prior to the same. Details provided for patent filing should cover all that is to be published and more.
+2. Please indicate latest date by when provisional is to be filed."></i>
+                                        </label>
+                                    </div>
+                                    <div class="divTrademark">
+                                        <label class="required">
+                                            Any other relavant Information   <i class="ion-help-circled" title="1. Image details if any, to be filed along with trademark registration.
+2. Please indicate latest date by when trademark is to be filed."></i>
+                                        </label>
+                                    </div>
+                                    @Html.TextBoxFor(m => m.RelevantInformation, new { @class = "form-control", @placeholder = "Is there any urgency on account of publishing in a journal; presentation at a seminar; response to competition etc. If yes, a provisional specification should be filed prior to the same. Details provided for patent filing should cover all that is to be published and more." })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <h3 class="spl-title required">
+                                        Requested Action: Chose Appropriate   <i class="ion-help-circled" title="Note: It is mandatory to undertake Direct International filing only after obtaining Foreign Filing License[FFL] from Indian Patent Office.
+Non Compliance of this stipulation is a punishable offence. Application for the same has to be submitted to Indian Patent Office before directly filing any patent application abroad."></i>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="divPatent">
+                            <div class="row">
+                                @foreach (var action in Model.ListAction)
+                {
+                    <div class="col-md-4">
+                        <div class="form-group custom-form-group ">
+                            @Html.RadioButtonFor(m => m.RequestedAction, action) @action
+                        </div>
+                    </div>
+
+}
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.TextBoxFor(m => m.RequestedtxtAction, new { @class = "form-control txtaction", style = "display: none;", @placeholder = "If Chosen Others, Provide Details" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divCopyRight">
+                            <div class="row">
+                                @foreach (var act1 in Model.CRListAction)
+                {
+                    <div class="col-md-4">
+                        <div class="form-group custom-form-group ">
+                            @Html.RadioButtonFor(m => m.RequestedCRAction, act1) @act1
+                        </div>
+                    </div>}
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.TextBoxFor(m => m.RequestedCRtxtAction, new { @class = "form-control", style = "display: none;", @placeholder = "Provide interested geographies" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divTrademark">
+                            <div class="row">
+                                @foreach (var act2 in Model.TMListAction)
+                {
+                    <div class="col-md-4">
+                        <div class="form-group custom-form-group ">
+                            @Html.RadioButtonFor(m => m.RequestedTMAction, act2) @act2
+                        </div>
+                    </div>
+
+}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab Common">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        <label>
+                                            Brief Description   <i class="ion-help-circled" title="May be provided in a seperate sheet"></i>
+                                        </label>
+                                        @Html.TextBoxFor(m => m.Annex.BriefDescription, new { @class = "form-control", @placeholder = "A Write-up (limited to 100 words) for marketing purposes. Disclosure may be broad, without divulging detailed technical information." })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group ">
+                                        <h3 class="spl-title ">
+                                            Stages Of Development (Technology Readiness Levels)
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @foreach (var dev in Model.Annex.ListStage)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group custom-form-group ">
+                            @Html.RadioButtonFor(m => m.Annex.DevelopmentStage, dev) @dev
+                        </div>
+                    </div>
+}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h3 class="spl-title">
+                                            Application Areas (Please tick as relevant)
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label(" * Application Industry:")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @for (int i = 0; i < Model.Annex.ListIndustry.Count(); i++)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group custom-form-group ">
+                            @*<input type="checkbox" value="@Model.Annex.ListIndustry[i].Value" id="@Model.Annex.ListIndustry[i].Value" />
+                @Model.Annex.ListIndustry[i].Value*@
+                            @Html.CheckBoxFor(m => m.Annex.ListIndustry[i].Selected, new { @id = Model.Annex.ListIndustry[i].Value })
+                            @Html.DisplayFor(m => m.Annex.ListIndustry[i].Value)
+                            @Html.HiddenFor(m => m.Annex.ListIndustry[i].Value)
+                        </div>
+                    </div>
+}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label(" * Industry Sub Category /Technology Area:")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @for (int i = 0; i < Model.Annex.ListIndustry1.Count(); i++)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group custom-form-group ">
+                            @*<input type="checkbox" value="@Model.Annex.ListIndustry1[i].Value" id="@Model.Annex.ListIndustry1[i].Value" />
+                @Model.Annex.ListIndustry1[i].Value*@
+                            @Html.CheckBoxFor(m => m.Annex.ListIndustry1[i].Selected, new { @id = Model.Annex.ListIndustry1[i].Value })
+                            @Html.DisplayFor(m => m.Annex.ListIndustry1[i].Value)
+                            @Html.HiddenFor(m => m.Annex.ListIndustry1[i].Value)
+                        </div>
+                    </div>
+}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        <label>
+                                            Other Information/Leads for Commercialisation:
+                                        </label>
+                                        @Html.TextBoxFor(m => m.Annex.OtherInfo, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab Common">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group ">
+                                        <h3 class="spl-title">
+                                            Commercialisation Mode Proposed
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.Label("IIT Madras: ")
+                                    </div>
+                                </div>
+                                @for (int i = 0; i < Model.Annex.IITMode.Count(); i++)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            @Html.CheckBoxFor(m => m.Annex.IITMode[i].Selected)
+                            @Html.DisplayFor(m => m.Annex.IITMode[i].Value)
+                            @Html.HiddenFor(m => m.Annex.IITMode[i].Value)
+                        </div>
+                    </div>
+}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.Label("Joint Marketing: ")
+                                    </div>
+                                </div>
+                                @for (int i = 0; i < Model.Annex.JointMode.Count(); i++)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            @Html.CheckBoxFor(m => m.Annex.JointMode[i].Selected)
+                            @Html.DisplayFor(m => m.Annex.JointMode[i].Value)
+                            @Html.HiddenFor(m => m.Annex.JointMode[i].Value)
+                        </div>
+                    </div>
+
+}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group ">
+                                        <h3 class="spl-title">
+                                            Level 1 Search
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.RadioButtonFor(m => m.Annex.L1Search, true)@Html.Label("Yes", new { @style = "font-weight:bold;" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.RadioButtonFor(m => m.Annex.L1Search, false)@Html.Label("No", new { @style = "font-weight:bold;" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="L1">
+                                <div class="col-md-12">
+                                    <div class="form-group ">
+                                        <h3 class="spl-title">
+                                            Prior Art Search
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group custom-form-group">
+                                        @Html.Label("Tool")
+                                        @Html.TextBoxFor(m => m.Annex.Tool, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Party /Searcher")
+                                        @Html.TextBoxFor(m => m.Annex.Party, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Outcome")
+                                        @Html.TextBoxFor(m => m.Annex.Outcome, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Comments/Notes")
+                                        @Html.TextBoxFor(m => m.Annex.Comments, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab Trade">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div>
+                                    @Html.Partial("_ApplicantForm", Model.Trade.TAppl)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="spl-title">Category of Mark</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @foreach (var cat in Model.Trade.Catlist)
+                {
+                    <div class="col-md-6">
+                        <div class="form-group custom-form-group ">
+                            @Html.RadioButtonFor(m => m.Trade.Category, cat)@cat
+                            @*@Html.RadioButtonFor(m => m.Trade.Catlist[i].Selected, new { @id = Model.Trade.Catlist[i].Value })
+                @Html.DisplayFor(m => m.Trade.Catlist[i].Value)
+                @Html.HiddenFor(m => m.Trade.Catlist[i].Value)*@
+                        </div>
+                    </div>
+}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab Trade">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("TradeMark (Name to be applied)")
+                                        @Html.TextBoxFor(m => m.Trade.TMName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Description")
+                                        @Html.TextBoxFor(m => m.Trade.Description, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Language")
+                                        @Html.TextBoxFor(m => m.Trade.Language, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Class of Goods or Service")
+                                        @Html.TextBoxFor(m => m.Trade.Class, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Statement as to Use of Mark")
+                                        @Html.TextBoxFor(m => m.Trade.TMStatement, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.CheckBoxFor(m => m.Trade.TMImage)
+                                    @Html.Label("Trademark image")
+                                    @Html.Label("Attach Trademark image in Documents attachment (If available)")
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.CheckBox("Verify")
+                                    @Html.Label("I hereby verify that above mentioned facts are true to best of my knowledge and belief")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab CopyRi">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Category of the applicant")
+                                        @Html.TextBoxFor(m=>m.CR.Category, new { @class = "form-control" })
+                                        @*@Html.DropDownListFor(m => m.CR.Category, new SelectList(ViewBag.CRCat), "", new { @class = "form-control" })*@
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Nature of the applicant interest in the copyright of the work")
+                                        @Html.TextBoxFor(m=>m.CR.Nature,new { @class="form-control"})
+                                        @*@Html.DropDownListFor(m => m.CR.Nature, new SelectList(ViewBag.Nature), "", new { @class = "form-control" })*@
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Appropriate class of the work")
+                                        @Html.TextBoxFor(m => m.CR.ClassofWork, new { @class = "form-control" })
+                                        @*@Html.DropDownListFor(m => m.CR.ClassofWork, new SelectList(ViewBag.CRClass), "", new { @class = "form-control" })*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Description")
+                                        @Html.TextBoxFor(m => m.CR.Description, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.Label("Title of Work")
+                                        @Html.TextBoxFor(m => m.CR.Title, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        <label>Language of the Work<i class="ion-help-circled" title="In case of software work, please tell the programming language"></i></label>
+                                        @Html.TextBoxFor(m => m.CR.Language, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.Partial("_CRAuthor", Model.CR.Author)
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group ">
+                                        @Html.CheckBoxFor(m => m.CR.isPublished, new { @id = "ispub" })
+                                        @Html.Label("Published")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="divCRPublish" hidden="hidden">
+                                @Html.Partial("_CRPublish", Model.CR.Publish)
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        @Html.CheckBoxFor(m => m.CR.isRegistered, new { @id = "isreg" })
+                                        @Html.Label("Is the work to be registered?")
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group custom-form-group">
+                                        @Html.Label("an original work or a translation/adaption")
+                                        @Html.TextBoxFor(m => m.CR.Original)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab Common">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="DocdivContent">
+                                        <div class="row">
+                                            <label class="col-md-3 fn-normal">Attachment Name </label>
+                                            <label class="col-md-3 fn-normal">Attachment </label>
+                                        </div>
+
+                                        <div class="m-b-sm row" id="DocprimaryDiv">
+                                            <div class="col-md-3">
+                                                <input class="form-control" name="AttachName" id="docname" value="" type="text">
+                                                @Html.Hidden("Docid")
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="file" name="file" id="docfile" />&nbsp;&nbsp;&nbsp;
+
+                                            </div>
+                                            <div class="col-md-2 doclink mt6">
+                                                <a href="#" class="link1" target="_blank"></a>
+                                                @Html.Hidden("DocPath", "", new { @class = "HiddenDocPath" })
+                                                @Html.Hidden("DocName", "", new { @class = "HiddenDocName" })
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <button class="dis-none btn-sm btn btn-danger" type="button" name="removeButton"><i class="ion-android-close"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="row p-b-sm">
+                                            <div class="col-md-12">
+                                                <h4 class="text-right">
+                                                    <button type="button" id="btnAddDoc" class="btn-primary btn pull-left"><i class="ion-android-add"></i>Add</button>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-12">
+                                    <div id="flist">
+                                        <div class="row">
+                                            <label class="col-md-3 fn-normal">Uploaded Documents</label>
+                                        </div>
+
+                                        @{ var filecount = Model.Files.Count();}
+                                        @for (int i = 0; i < filecount; i++)
+                        {
+                            if (Model.Files[i].DocName != null)
+                            {
+                                <div class="row">
+                                    @{var fl = Model.Files[i].DocName;
+                        var fpath = Model.Files[i].DocPath + fl;
+                                    }
+                                    @Html.ActionLink(fl.ToString(), "FileLink", new { @f = fpath })
+                                </div>
+            }
+        }
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="custom-nav-btn text-right">
+                        <button type="button" class="btn btn-default pull-left" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+
+                        <button type="button" class="btn btn-primary pull-right" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                        <button type="button" class="btn btn-default pull-right" onclick="window.location.href='@Url.Action("IDFRequestList", "Patent")';">Close</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+    }
+</div>
+<div id="popup"></div>
+@if (ViewBag.succMsg != null)
+{
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("IDFRequestList", "Patent")';">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.succMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("IDFRequestList", "Patent")';">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+
+}
+@if (ViewBag.errMsg != null)
+{
+    <div id="myModal1" class="modal fade modal-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-cancel"></i>
+                    <h3 class="modal-title">Error Message</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.errMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal1').modal('show');
+        });
+
+    </script>
+}
+
+<div id="myModal2" class="modal fade modal-success" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <i class="ion-android-checkmark-circle"></i>
+                <h3 class="modal-title">Deleted successfully</h3>
+            </div>
+            <div class="modal-body">
+
+                <p>The Proposal has been Deleted successfully.</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="ValidationModal" class="modal fade modal-warning" role="dialog">
+    <div class="modal-dialog modal-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <i class="ion-android-warning"></i>
+                <h3 class="modal-title">Warning</h3>
+            </div>
+            <div class="modal-body">
+
+                <p id="MsgValidation"></p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<input type="hidden" id="currentRefId" value="@Model.FileNo" />
+<input type="hidden" id="processGuideLineId" value="@ViewBag.processGuideLineId" />
+@Html.Partial("_ProcessStatus")
+<script>
+    $(function () {
+        $('input, select, textarea').not("[id=ddlActionList],[id=txtProcessComment]").attr('disabled', 'disabled');        
+        var v = $("input:radio[name=IDFType]:checked").val();       
+        currentTab = 0;
+        if (v == "Patent") {
+            var c = $('.tab.Common,.tab.Pat');
+            var d = "li.Common";
+            $('.Patent').show();
+            $('.divPatent').show();
+            $('.divPatcopy').show();
+            $('.Trademark').hide();
+            $('.CopyRight').hide();
+            $('.divCopyRight').hide();
+            $('.divTrademark').hide();
+            showTab(currentTab, c, d);
+        }
+        else if (v == "Trademark") {
+            var c = $('.tab.Common,.tab.Trade');
+            var d = "li.Common,li.Trademark";
+            $('.Trademark').show();
+            $('.Patent').hide();
+            $('.divPatent').hide();
+            $('.divPatcopy').hide();
+            $('.CopyRight').hide();
+            $('.divCopyRight').hide();
+            $('.divTrademark').show();
+            showTab(currentTab, c, d);
+        }
+        else {
+            var c = $('.tab.Common,.tab.Pat,.tab.CopyRi');
+            var d = "li.Common,li.CopyRight";
+            $('.Patent').hide();
+            $('.divPatent').hide();
+            $('.Trademark').hide();
+            $('.divPatcopy').show();
+            $('.CopyRight').show();
+            $('.divCopyRight').show();
+            $('.divTrademark').hide();
+            showTab(currentTab, c, d);
+        }
+    });
+    /* Tab Sections Start*/
+    var currentTab = 0; // Current tab is set to be the first tab (0)
+    showTab(currentTab); // Display the crurrent tab
+    function showTab(n,x,z) {
+        // This function will display the specified tab of the form...
+        //var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        //$(".custom-nav-pills li:eq(" + n + ")").addClass("active");
+        $(".custom-nav-pills").find(z).eq(n).addClass("active");
+        //... and fix the Previous/Next buttons:
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").style.display = "none";
+        } else {
+            document.getElementById("nextBtn").style.display = "inline";
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        //... and run a function that will display the correct step indicator:
+        //fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        var v = $("input:radio[name=IDFType]:checked").val();
+        if (v == "Patent") {
+            // This function will figure out which tab to display
+            var x = $('.tab.Common,.tab.Pat');
+            var y = "li.Common";
+        }
+        else if (v == "Trademark") {
+            var x = $('.tab.Common,.tab.Trade');
+            var y = "li.Common, li.Trademark";
+        }
+        else if (v == "Copyright") {
+            var x = $('.tab.Common,.tab.Pat,.tab.CopyRi');
+            var y = "li.Common,li.CopyRight";
+        }
+        var w = $("input:radio[name=RequestedCRAction]:checked").val();
+        if (w == "Copyright filing outside India") {
+            $('#RequestedCRtxtAction').show();
+        }
+        var v = $("input:radio[name=RequestedAction]:checked").val();
+        if (v == "Others") {
+            $('.txtaction').show();
+        }
+        if ($('#ispub').is(':checked')) {
+            $('#divCRPublish').show();
+        }
+        // This function will figure out which tab to display
+        //var x = document.getElementsByClassName("tab");
+        // Exit the function if any field in the current tab is invalid:
+        //if (n > 0 && !validateForm(n)) return false;
+        if (currentTab + n < x.length) {
+            // Hide the current tab:
+            x[currentTab].style.display = "none";
+            //$(".custom-nav-pills li:eq(" + currentTab + ")").removeClass("active");
+            $(".custom-nav-pills").find(y).eq(currentTab).removeClass("active");
+        }
+        else { x[currentTab].style.display = "inline";}
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+
+        // Otherwise, display the correct tab:
+        showTab(currentTab,x,y);
+    }    
+    //function formSave() {
+    //    $('#formIDF').submit();
+    //}
+
+</script>
+
+

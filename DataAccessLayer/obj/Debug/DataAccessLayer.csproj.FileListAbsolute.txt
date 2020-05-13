@@ -1,0 +1,11 @@
+C:\Projects\IOAS\IOAS\DataAccessLayer\bin\Debug\DynamicReports.dll
+C:\Projects\IOAS\IOAS\DataAccessLayer\bin\Debug\DynamicReports.pdb
+C:\Projects\IOAS\IOAS\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+C:\Projects\IOAS\IOAS\DataAccessLayer\obj\Debug\DynamicReports.dll
+C:\Projects\IOAS\IOAS\DataAccessLayer\obj\Debug\DynamicReports.pdb
+E:\priya\IOAS\DataAccessLayer\bin\Debug\DynamicReports.dll
+E:\priya\IOAS\DataAccessLayer\bin\Debug\DynamicReports.pdb
+E:\priya\IOAS\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+E:\priya\IOAS\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+E:\priya\IOAS\DataAccessLayer\obj\Debug\DynamicReports.dll
+E:\priya\IOAS\DataAccessLayer\obj\Debug\DynamicReports.pdb

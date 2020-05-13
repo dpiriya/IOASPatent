@@ -1,0 +1,174 @@
+﻿@model  IEnumerable<IOAS.Models.Patent.InternationalSecVM>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="spl-title">
+            List Of Country Details
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 mb-sm">
+        <table class="table alter-table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>PCT</th>
+                    <th>Country</th>
+                    <th>Application No</th>
+                    <th>FilingDate</th>
+                    <th>Office Action</th>
+                    <th>OfficeAction Date</th>
+                    <th>Attorney</th>
+                    <th>PublicationNo</th>
+                    <th>PublicationDate</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyIntl">
+                @if (Model.Count() > 0)
+                {
+                    var count = 0;
+                    string cl = "clr";
+                    foreach (var item in Model)
+                    {
+                        var pct = "NationalPhase[" + count + "].PCT";
+                        var cntry = "NationalPhase[" + count + "].Country";
+                        var appno = "NationalPhase[" + count + "].Appln_FilingNo";
+                        var fdt = "NationalPhase[" + count + "].FilingDate";
+                        var oa = "NationalPhase[" + count + "].OfficeAction";
+                        var oadt = "NationalPhase[" + count + "].OfficeActionDate";
+                        var atto = "NationalPhase[" + count + "].Attorney";
+                        var pubno = "NationalPhase[" + count + "].PublicationNo";
+                        var pubdt = "NationalPhase[" + count + "].PublicationDate";
+                        var sno = count + 1;
+                <tr>
+                    <td>
+                        @Html.TextBox("sno", sno, new { @style = "width:30px", @class = "form-control" })
+                        @Html.Hidden("NationalPhase.Index", @count)
+                    </td>
+                    <td>
+                        @Html.DropDownList(pct, new SelectList(ViewBag.PCT, item.PCT), new { @id = "pct", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox(cntry, item.Country, new { @id = "country", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox(appno, item.Appln_FilingNo, new { @id = "appno", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox(fdt, item.FilingDate, new { @id = "fdt", @class = "form-control datepicker" })
+                    </td>
+                    <td>
+                        @Html.TextBox(oa, item.OfficeAction, new { @id = "oa", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox(oadt, item.OfficeActionDate, new { @id = "oadt", @class = "form-control datepicker" })
+                    </td>
+                    <td>
+                        @Html.DropDownList(atto,new SelectList(ViewBag.att,item.Attorney), new { @id = "atto", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox(pubno, item.PublicationNo, new { @id = "pubno", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox(pubdt, item.PublicationDate, new { @id = "pubdt", @class = "form-control datepicker" })
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn-sm btn btn-danger @cl"><i class="ion-android-close"></i></a>
+                    </td>
+                </tr>
+                        count++;
+                        cl = "removeIntl";
+                    }
+                }
+                else
+                {
+                <tr>
+                    <td>
+                        @Html.TextBox("sno", "1", new { @id = "sno", @style = "width:30px" })
+                        @Html.Hidden("NationalPhase.Index", 0)
+                    </td>
+                    <td>
+                        @Html.DropDownList("NationalPhase[0].PCT", new SelectList(ViewBag.PCT), new { @id = "pct", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox("NationalPhase[0].Country", "", new { @id = "country", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox("NationalPhase[0].Appln_FilingNo", "", new { @id = "appno", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox("NationalPhase[0].FilingDate", "", new { @id = "fdt", @class = "form-control datepicker" })
+                    </td>
+                    <td>
+                        @Html.TextBox("NationalPhase[0].OfficeAction", "", new { @id = "oa", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox("NationalPhase[0].OfficeActionDate", "", new { @id = "oadt", @class = "form-control datepicker" })
+                    </td>
+                    <td>
+                        @Html.DropDownList("NationalPhase[0].Attorney", new SelectList(ViewBag.att), new { @id = "atto", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox("NationalPhase[0].PublicationNo", "", new { @id = "pubno", @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.TextBox("NationalPhase[0].PublicationDate", "", new { @id = "pubdt", @class = "form-control datepicker" })
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn-sm btn btn-danger clr"><i class="ion-android-close"></i></a>
+                    </td>
+                </tr>
+                }
+                <tr>
+                    <td colspan="10"></td>
+                    <td><a href="javascript:void(0)" id="btnAddIntl" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    var counter1 = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddIntl').click(function () {
+        var sno = counter1();
+        var cln = $('#tbodyIntl tr:first').clone().find("input[name!='sno'],select,input ").val("").end();
+        //$(cln).find('#TravellerId').parent().replaceWith(bootstrapSelect($(cln).find('#TravellerId').parent().clone(), "empty", '', '', false));
+        $(cln).find('a.clr').removeClass('clr').addClass('removeIntl');
+
+        var index = $('#tbodyIntl tr:last').prev().find("input[name='NationalPhase.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='NationalPhase.Index']").val(index);
+        $(cln).find("input, select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+            $(cln).find("input[name='sno']").val(index+1);
+        });
+        $('#tbodyIntl tr:last').before(cln);
+    });
+    $('.clr').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='pct']").val("");
+        thy.closest('tr').find("input[id='country']").html("");
+        thy.closest('tr').find("input[id='oa']").val("");
+        thy.closest('tr').find("input[id='oadt']").val("");
+        thy.closest('tr').find("input[id='fdt']").val("");
+        thy.closest('tr').find("input[id='pubno']").val("");
+        thy.closest('tr').find("input[id='pubdt']").val("");
+        thy.closest('tr').find("input[id='atto']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeIntl', function () {
+        $(this).closest('tr').remove();
+    });
+    $('.datepicker').datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+</script>

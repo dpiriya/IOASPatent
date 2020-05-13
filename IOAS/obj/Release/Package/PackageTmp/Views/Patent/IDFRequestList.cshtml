@@ -1,0 +1,323 @@
+﻿@{
+    ViewBag.Title = "IDFRequestList";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div class="row hd-tt-bg">
+    <div class="col-md-4">
+        <h3>IDF Request List</h3>
+    </div>
+    <div id="addnewpage" class="col-md-8 flt-nav-links">
+
+        @*<a href="Javascript:void(0)" id="btnFilter" class="pull-right"> <i class="ion-android-funnel"></i>Filters</a>*@
+        <a href="@Url.Action("IDFRequest")"> <i class="ion-plus"></i>Add New</a>
+
+    </div>
+</div>
+<div class="row mt30">
+    <div class="page-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="custom-jsgrid-normal">
+                    <div id="IDFList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken()
+
+<div id="RemarkModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Mention the details for Clarification needed</h3>
+            </div>
+            @using (Html.BeginForm("Clarification", "Patent", FormMethod.Post, new { @id = "form1" }))
+            {
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <td>
+                                @Html.Label("FileNo")
+                                @Html.TextBox("FileNo", "", new { @class = "form-control", @id = "FileNo", @readonly = "readonly" })
+
+                            </td>
+                            <td>
+                                @Html.Label("VersionId")
+                                @Html.TextBox("VersionId", "", new { @class = "form-control", @id = "VersionId", @readonly = "readonly" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.Label("Remarks")
+                                @Html.TextArea("Remarks", "", new { @class = "form-control", @id = "Remarks" })
+                                @*<input type="text" class="form-control" id="Remarks" name="Remarks" />*@
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="SaveMsg(this)">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("IDFRequestList", "Patent")';">Close</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var errMsg = '@TempData["errMsg"]';
+    var succMsg = '@TempData["succMsg"]';
+    $(document).ready(function () {
+        var statusList;
+                    if (succMsg != '') {
+            $('#alertSuccess').html(succMsg);
+            $('#Success').modal('toggle');
+                    }
+                    else if (errMsg != '') {
+            $('#FailedAlert').html(errMsg);
+            $('#Failed').modal('toggle');
+                    }
+                });
+    var DateField = function (config) {
+        jsGrid.Field.call(this, config);
+                };
+                DateField.prototype = new jsGrid.Field({
+        sorter: function (date1, date2) {
+                    return new Date(date1) - new Date(date2);
+                },
+
+        itemTemplate: function (value) {
+                    return new Date(value).toDateString();
+                },
+
+        filterTemplate: function () {
+                    var now = new Date();
+                    this._fromPicker = $("<input>").datepicker({ defaultDate: now.setFullYear(now.getFullYear() - 1), changeYear: true });
+                    this._toPicker = $("<input>").datepicker({ defaultDate: now.setFullYear(now.getFullYear() + 1), changeYear: true });
+                    return $("<div>").append(this._fromPicker).append(this._toPicker);
+                },
+
+        insertTemplate: function (value) {
+                    return this._insertPicker = $("<input>").datepicker({ defaultDate: new Date() });
+                },
+
+        editTemplate: function (value) {
+                    return this._editPicker = $("<input>").datepicker().datepicker("setDate", new Date(value));
+                },
+
+        insertValue: function () {
+                    return this._insertPicker.datepicker("getDate").toISOString();
+                },
+
+        editValue: function () {
+                    return this._editPicker.datepicker("getDate").toISOString();
+                },
+
+        filterValue: function () {
+                    return {
+                        from: this._fromPicker.datepicker("getDate"),
+                to: this._toPicker.datepicker("getDate")
+                    };
+                }
+            });
+    jsGrid.fields.date = DateField;
+    var db;
+    $("#IDFList").jsGrid({
+        paging: true,
+        pageIndex: 1,
+        pageSize: 10,
+        editing: false,
+        filtering: true,
+        controller: {
+
+            loadData: function (filter) {
+                return $.grep(db, function (idf) {
+                    return (!filter.FileNo || idf.FileNo.toLowerCase().indexOf(filter.FileNo.toLowerCase()) > -1)
+                        && (!filter.IDFType || idf.IDFType.toLowerCase().indexOf(filter.IDFType.toLowerCase()) > -1)
+                        && (!filter.VersionId || idf.VersionId.indexOf(filter.VersionId) > -1)
+                        && (!filter.PIDepartment || idf.PIDepartment.toLowerCase().indexOf(filter.PIDepartment.toLowerCase()) > -1)
+                        && (!filter.PrimaryInventorName || idf.PrimaryInventorName.toLowerCase().indexOf(filter.PrimaryInventorName.toLowerCase()) > -1)
+                        && (!filter.Status || idf.Status.toLowerCase().indexOf(filter.Status.toLowerCase()) > -1)
+                        && (!filter.Remarks || idf.Remarks != null && idf.Remarks.toLowerCase().indexOf(filter.Remarks.toLowerCase()) > -1);
+                });
+            }
+        },
+        fields: [
+            { type: "text", name: "FileNo", title: "FileNo", editing: false, width: 100 },
+            { type: "text", name: "IDFType", title: "Type", editing: false, width: 100 },
+            { type: "text", name: "VersionId", title: "Version", editing: false, width: 100 },
+            { type: "text", name: "PIDepartment", title: "Department", editing: false },
+            { type: "text", name: "PrimaryInventorName", title: "PI Name", editing: false },
+            { type: "text", name: "Status", title: "Status", editing: false },
+            { type: "text", name: "Remarks", title: "Remarks", editing: false },
+            {
+                type: "control", editButton: false, deleteButton: false, width: 120, title: "Action",
+
+                itemTemplate: function (value, item) {
+                    var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+                    if (item.Status == "Submitted to IPOffice" || item.Status == "Clarification needed") {
+                            statusList = [{ id: "", name: "Select Action" }, { id: "InProcess", name: "InProcess" }, { id: "View", name: "View" }]
+                    }
+                    else if (item.Status == "InProcess") {
+                        statusList = [{ id: "", name: "Select Action" }, { id: "Need Inputs", name: "Need Inputs" }, { id: "Submit for approval", name: "Submit for approval" }, { id: "View", name: "View" }]
+                    }
+                     else {
+                         statusList = [{ id: "", name: "Select Action" }, { id: "View", name: "View" }]
+                     }
+                     var $customSelect = $("<select>")
+                         .attr("class", "form-control").prop("selectedIndex", "")
+                     $.each(statusList, function (index, itemData) {
+                         $customSelect.append($('<option/>', {
+                                value: itemData.id,
+                             text: itemData.name
+                         }));
+                        });
+                     $customSelect.change(function (e) {
+                            var selVal = $(this).val();
+                            if (selVal == "View") {
+                                var url = '@Url.Action("IDFRequest", "Patent")?ReqNo=' + item.FileNo + '&vid=' + item.VersionId;
+                                window.location.href = url;
+                            }
+                            else if (selVal == "InProcess")
+                            {
+                             $.ajax({
+                                        type: "POST",
+                                     url: '@Url.Action("LockEdit", "Patent")',
+                                     data: {
+                                         fno: item.FileNo,
+                                         vid:item.VersionId
+                                     },
+                                     success: function (result) {
+                                         if (result.locked == true) {
+                                             $('#alertSuccess').html("The File is in process");
+                                             $('#Success').modal('toggle');
+                                             location.reload();
+                                         } else if (result.locked == false) {
+                                             $('#FailedAlert').html(result.msg);
+                                             $('#Failed').modal('toggle');
+                                             location.reload();
+                                            }
+                                        },
+                                     error: function (err) {
+                                            console.log("error1 : " + err);
+                                        }
+                                    });
+                            }
+                            else if (selVal == "Need Inputs") {
+                                $('#RemarkModal').modal('show');
+                                $('#RemarkModal').on('shown.bs.modal', function () {
+                                    $('#FileNo').val(item.FileNo);
+                                    $('#VersionId').val(item.VersionId);
+                                });
+                            }
+                            else if (selVal == "Submit for approval") {
+                                var choice = confirm("Are you sure, Do you want to submit this IDF Request for approval process?");
+                                if (choice === true) {
+                                 $.ajax({
+                                        type: "POST",
+                                     url: '@Url.Action("POWFInit", "Patent")',
+                                     data: {
+                                         fno: item.FileNo,
+                                         vid:item.VersionId,
+                                     },
+                                     success: function (result) {
+                                            if (result.status == true) {
+                                             $('#alertSuccess').html("Request has been submitted for approval process successfully.");
+                                             $('#Success').modal('toggle');
+                                                loadDetails();
+                                            } else if (result.status == false) {
+                                             $('#FailedAlert').html(result.msg);
+                                             $('#Failed').modal('toggle');
+                                            }
+                                        },
+                                     error: function (err) {
+                                            console.log("error1 : " + err);
+                                        }
+                                    });
+                                }
+                            }
+                         $(this).val("");
+                            return false;
+                            e.stopPropagation();
+                        });
+                        return $result.add($customSelect);
+                    },
+                 _createFilterSwitchButton: function () {
+                        return this._createOnOffSwitchButton("filtering", this.searchModeButtonClass, false);
+                    }
+                }
+            @*{
+                type: "control", title: "Action",
+
+                itemTemplate: function (value, item) {
+                    var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+                    var $customButtonEdit = $("<button>")
+                        .attr("class", "ion ion-eye")
+                        .click(function (e) {
+                             var url = '@Url.Action("IDFRequest", "Patent")?ReqNo=' + item.FileNo;
+                             window.location.href = url;
+                            e.stopPropagation();
+                        });
+                    return $("<div>").append($customButtonEdit);
+
+                }
+            }*@
+
+        ]
+    });
+    $("#IDFList").jsGrid("option", "filtering", false);
+    loadDetails();
+    function loadDetails() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetIDFRequestList", "Patent")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                    db = result;
+                    $("#IDFList").jsGrid({ data: db });
+            },
+            error: function (err) {
+                console.log("error : " + err);
+            }
+
+        });
+    }
+    function SaveMsg(x) {
+            var fileno = $('#FileNo').val();
+            var vid = $('#VersionId').val();
+            var rem = $('#Remarks').val();
+            $.ajax({
+                url: '@Url.Action("Clarification","Patent")',
+                type: 'post',
+                dataType: "json",
+                data: { 'fno': fileno, 'vid': vid, 'rem': rem },
+                success: function (data) {
+                    if (data == "Success") {
+                        alert("Sent to Investigator", "success");
+                        $('#RemarkModal').modal('toggle');
+                        window.location.reload();
+                    } else {
+                        alert("Something went wrong please contact administrator", "error");
+                        $('#RemarkModal').modal('toggle');
+                        window.location.reload();
+                    }
+                },
+                error: function (err) {
+                    console.log("error1 : " + err);
+                }
+
+            });
+        }
+</script>
+
+
+
+
+
+

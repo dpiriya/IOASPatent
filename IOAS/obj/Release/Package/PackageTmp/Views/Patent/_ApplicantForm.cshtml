@@ -1,0 +1,157 @@
+﻿@model  IEnumerable<IOAS.Models.Patent.TradeApplicant_trxVM>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="spl-title">
+            List Of Co Applicant Details
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 mb-sm">
+        <table class="table alter-table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Organisation</th>
+                    <th>Country</th>
+                    <th>Jurisdiction</th>
+                    <th>Address</th>
+                    <th>Nature</th>
+                    <th>LegalStatus</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyApplForm">
+                @if (Model.Count() > 0)
+                {
+                    var count = 0;
+                    string cl = "clr";
+                    foreach (var item in Model)
+                    {
+                        var org = "Trade.TAppl[" + count + "].Organisation";
+                        var name = "Trade.TAppl[" + count + "].Country";
+                        var jury = "Trade.TAppl[" + count + "].Jurisdiction";
+                        var addr = "Trade.TAppl[" + count + "].AddressOfService";
+                        var nature = "Trade.TAppl[" + count + "].Nature";
+                        var legal = "Trade.TAppl[" + count + "].LegalStatus";
+                        var sno = count + 1;
+                        <tr>
+                            <td>
+                                @Html.TextBox("sno", sno, new { @style = "width:30px", @class = "form-control" })
+                                @Html.Hidden("TAppl.Index", @count)
+                            </td>
+                            <td>
+                                @Html.TextBox(org, item.Organisation, new { @id = "org", @class = "required form-control", @width = "100px" })
+                            </td>
+                            <td>
+                                @Html.TextBox(name, item.Country, new { @id = "country", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(jury, item.Jurisdiction, new { @id = "jury", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(addr, item.AddressOfService, new { @id = "addr", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(nature, item.Nature, new { @id = "nature", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(legal, item.LegalStatus, new { @id = "legal", @class = "form-control" })
+                            </td>
+
+                            <td>
+                                <a href="javascript:void(0)" class="btn-sm btn btn-danger @cl"><i class="ion-android-close"></i></a>
+                            </td>
+                        </tr>
+                        count++;
+                        cl = "removeCoDetail";
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBox("sno", "1", new { @id = "sno", @style = "width:30px" })
+                            @Html.Hidden("TAppl.Index", 0)
+                        </td>
+                        <td>
+                            @Html.TextBox("Trade.TAppl[0].Organisation", "", new { @id = "org", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Trade.TAppl[0].Country", "", new { @id = "country", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Trade.TAppl[0].Jurisdiction", "", new { @id = "jury", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Trade.TAppl[0].AddressOfService", "", new { @id = "addr", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Trade.TAppl[0].Nature", "", new { @id = "nature", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("Trade.TAppl[0].LegalStatus", "", new { @id = "legal", @class = "form-control" })
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="btn-sm btn btn-danger clr"><i class="ion-android-close"></i></a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="7"></td>
+                    <td><a href="javascript:void(0)" id="btnAddApForm" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    var counter1 = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddApForm').click(function () {
+        var sno = counter1();
+        var cln = $('#tbodyApplForm tr:first').clone().find("input[name!='sno'],select,input ").val("").end();
+        //$(cln).find('#TravellerId').parent().replaceWith(bootstrapSelect($(cln).find('#TravellerId').parent().clone(), "empty", '', '', false));
+        $(cln).find('a.clr').removeClass('clr').addClass('removeCoDetail');
+
+        var index = $('#tbodyApplForm tr:last').prev().find("input[name='TAppl.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='TAppl.Index']").val(index);
+        $(cln).find("input, select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+            $(cln).find("input[name='sno']").val(index+1);
+        });
+        $('#tbodyApplForm tr:last').before(cln);
+        $(cln).find("input[name='TAppl[" + index + "].Organisation']").val($('#tbodyAppl').find("input[name='TAppl[" + index + "].Organisation']").val());
+        $(cln).find("input[name='TAppl[" + index + "].Address']").val($('#tbodyAppl').find("input[name='TAppl[" + index + "].Address']").val());
+    });
+    $('.clr').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='country']").val("");
+        thy.closest('tr').find("input[id='legal']").html("");
+        thy.closest('tr').find("input[id='nature']").val("");
+        thy.closest('tr').find("input[id='jury']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeCoDetail', function () {
+        $(this).closest('tr').remove();
+    });
+    $('#tbodyApplForm').find("input[id='org']").focus(function () {
+        var thy = $(this);
+        thy.val($('#tbodyAppl').find("input[id='org']").val());
+    });
+    $('#tbodyApplForm').find("input[id='addr']").focus(function () {
+        var thy = $(this);
+        thy.val($('#tbodyAppl').find("input[id='addr']").val());
+    });
+</script>
+
+
+

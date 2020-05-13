@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOAS", "IOAS\IOAS.csproj", "{AE952FA8-A51F-43D2-B3E8-5C89CBBC007B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOAS.DataModel", "IOAS.DataModel\IOAS.DataModel.csproj", "{35CF1197-BF57-4576-9F14-9B3B99130428}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{2C8BC32E-68BB-4F30-9034-E6CC67886649}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE952FA8-A51F-43D2-B3E8-5C89CBBC007B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE952FA8-A51F-43D2-B3E8-5C89CBBC007B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE952FA8-A51F-43D2-B3E8-5C89CBBC007B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE952FA8-A51F-43D2-B3E8-5C89CBBC007B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35CF1197-BF57-4576-9F14-9B3B99130428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35CF1197-BF57-4576-9F14-9B3B99130428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35CF1197-BF57-4576-9F14-9B3B99130428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35CF1197-BF57-4576-9F14-9B3B99130428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C8BC32E-68BB-4F30-9034-E6CC67886649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C8BC32E-68BB-4F30-9034-E6CC67886649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C8BC32E-68BB-4F30-9034-E6CC67886649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C8BC32E-68BB-4F30-9034-E6CC67886649}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F55E1A87-48AF-44FE-A008-40D724AB42E1}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.1.22:8080/tfs/lf_projects
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = IOAS.DataModel\\IOAS.DataModel.csproj
+		SccProjectName1 = IOAS.DataModel
+		SccLocalPath1 = IOAS.DataModel
+		SccProjectUniqueName2 = IOAS\\IOAS.csproj
+		SccProjectName2 = IOAS
+		SccLocalPath2 = IOAS
+		SccProjectUniqueName3 = DataAccessLayer\\DataAccessLayer.csproj
+		SccProjectName3 = DataAccessLayer
+		SccLocalPath3 = DataAccessLayer
+	EndGlobalSection
+EndGlobal

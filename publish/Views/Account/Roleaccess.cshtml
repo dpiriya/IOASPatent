@@ -1,0 +1,172 @@
+﻿@model IOAS.Models.Functionviewmodel
+
+@{
+    ViewBag.Title = "Roleaccess";
+    ViewBag.Subtitle = "Add Role wise Function";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+<div id="addnewstatusbar">
+    <div class="row hd-tt-bg">
+        <div class="col-md-4">
+            <h3>Role access</h3>
+      
+        </div>
+        
+    </div>
+</div>
+
+
+<div class="row">
+   
+        <div class="col-md-12">
+            <div class="page-wrapper">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Function Name</label>
+                                @Html.DropDownListFor(M => M.Functionid, new SelectList(ViewBag.Function, "Functionid", "Functionname"), "Select Function", new { @id = "ddlfunction", @class = "form-control" })
+                                <div> @Html.ValidationMessageFor(M => M.Functionid)</div>
+                             </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label>Department</label>
+                                @Html.DropDownListFor(M => M.Departmentid, new SelectList(ViewBag.dept, "Departmentid", "Departmentname"), "Select department", new { @id = "ddldepartment", @class = "form-control" })
+                                <div> @Html.ValidationMessageFor(M => M.Departmentid)</div>
+                            </div>
+                        </div>
+
+                      
+                    </div>
+            </div>  
+                <div class="row mt30">
+                    <div class="col-md-12">
+
+                        <table class="table" id="tbllist">
+                            <thead>
+                                <tr>
+                                    
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Read</th>
+                                    <th scope="col">Write</th>
+                                    <th scope="col">Delete</th>
+                                    <th scope="col">Approve</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>   
+                <div class="row">
+                    <div class="col-md-12 text-center pd-tb-30">
+                         <input type="submit" class="btn btn-primary mr10" value="Save" id="btnSave" />
+                        <input type="reset" class="btn btn-default" value="Cancel"  id = "btnReset" />
+                    </div>
+                </div>
+                <div class="txt-error txt-red">@Html.ValidationSummary(true)</div>
+            </div>
+        </div>
+    
+</div>
+<script type="text/javascript">
+
+    var index = 1;
+    $('#ddlfunction').on('change', function () {
+        $("#tbllist tbody tr>").remove();
+        $("#ddldepartment").prop("selectedIndex", 0);
+    });
+    $('#ddldepartment').on('change', function () {
+            var deptid = $('#ddldepartment').val();
+
+            $.ajax({
+                type: "Post",
+                url: '@Url.Action("Roleaccess", "Account")',
+                data: { Depertmentid: deptid },
+                dataType: "json",
+                success: function (jsonData) {
+                    $("#tbllist tbody tr>").remove();
+
+                    var list = [];
+                    var id = [];
+
+                    for (var i = 0; i < jsonData.result.length; i++) {
+                        list.push = (jsonData.result[i]);
+                        id.push(jsonData.result[i].Roleid);
+                        if ($.inArray(jsonData.result[i].Roleid)) {
+
+                            $('table').append('<tr>' + '<td id="Roleid_' + index + '" style="display:none">' + jsonData.result[i].Roleid + '</td>' +
+                                                '<td id="Rolename_' + index + '">' + jsonData.result[i].Rolename + '</td>' +
+                                                '<td><input type="checkbox" class="checkbox" id="Read_' + index + '" name="readchkbox" </td>' +
+                                                '<td><input type="checkbox" class="checkbox" id="Write_' + index + '" name="writechkbox" ></td>' +
+                                                '<td><input type="checkbox" class="checkbox" id="delete_' + index + '" name="deletechkbox" ></td>' +
+                                                 '<td><input type="checkbox" class="checkbox" id="Approve_' + index + '" name="approvechkbox"  ></td>'
+
+                    );
+                                }
+
+                        else {
+
+
+                        }
+
+
+                        ++index;
+
+                    }
+                 
+                }
+            });
+        });
+    $('#btnSave').on('click', function () {
+        var input = [];
+        var read = null;
+        var write = null;
+        var deletes = null;
+        var approve = null;
+       var table = $("table tbody");
+         funid = $('#ddlfunction').val();
+         deptid = $('#ddldepartment').val();
+        debugger;
+        table.find('tr').each(function () {
+            var roleid = $(this).find("td:eq(0)").text();
+            var readchk = $(this).find('input[name="readchkbox"]').is(':checked');
+            var writechk = $(this).find('input[name="writechkbox"]').is(':checked');
+            var deletechk = $(this).find('input[name="deletechkbox"]').is(':checked');
+            var approvechk = $(this).find('input[name="approvechkbox"]').is(':checked');
+        input.push({
+                Functionid: funid,
+                Departmentid: deptid,
+                Roleid: roleid,
+                Read: readchk,
+                Write: writechk,
+                Delete: deletechk,
+                Approve: approvechk
+            });
+        });
+
+        console.log(input);
+            $.ajax({
+                type: "Post",
+                url: '@Url.Action("Roleaccessadd", "Account")',
+                data: { model: input },
+                dataType: "json",
+                success: function (data) {
+                    $('#ddlfunction,#ddldepartment').prop("selectedIndex", 0);
+
+                    $("#tbllist tbody tr>").remove();
+                    alert('Add successfully')
+                }
+            });
+    });
+    $('#btnReset').on('click', function () {
+        $('#ddlfunction,#ddldepartment').prop("selectedIndex", 0);
+        $("#tbllist tbody tr>").remove();
+    });
+    $('#ddlfunction,#ddldepartment').prop("selectedIndex", 0);
+</script>
+

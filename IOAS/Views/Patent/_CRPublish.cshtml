@@ -1,0 +1,140 @@
+﻿@model  IEnumerable<IOAS.Models.Patent.CRPublish_trxVM>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="spl-title">
+            List of Publishers
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 mb-sm">
+        <table class="table alter-table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Nationality</th>
+                    <th>Year</th>
+                    <th>Country</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyPublish">
+                @if (Model.Count() > 0)
+                {
+                    var count = 0;
+                    string cl = "clr1";
+                    foreach (var item in Model)
+                    {
+                        var name = "CR.Publish[" + count + "].PUName";
+                        var addr = "CR.Publish[" + count + "].PUAddress";
+                        var nat = "CR.Publish[" + count + "].PUNationality";
+                        var yr = "CR.Publish[" + count + "].Year";
+                        var cntry = "CR.Publish[" + count + "].Country";
+                        var sno = count + 1;
+                        <tr>
+                            <td>
+                                @Html.TextBox("sno", sno, new { @style = "width:30px", @class = "form-control" })
+                                @Html.Hidden("Publish.Index", @count)
+                            </td>
+                            <td>
+                                @Html.TextBox(name, item.PUName, new { @id = "namee", @class = "required form-control", @width = "100px" })
+                            </td>
+                            <td>
+                                @Html.TextBox(addr, item.PUAddress, new { @id = "addrs", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(nat, item.PUNationality, new { @id = "nty", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(yr, item.Year, new { @id = "year", @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.TextBox(cntry, item.Country, new { @id = "cnty", @class = "form-control" })
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" class="btn-sm btn btn-danger @cl"><i class="ion-android-close"></i></a>
+                            </td>
+                        </tr>
+                        count++;
+                        cl = "removePub";
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBox("sno", "1", new { @id = "sno", @style = "width:30px" })
+                            @Html.Hidden("Publish.Index", 0)
+                        </td>
+                        <td>
+                            @Html.TextBox("CR.Publish[0].PUName", "", new { @id = "namee", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CR.Publish[0].PUAddress", "", new { @id = "addrs", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CR.Publish[0].PUNationality", "", new { @id = "nty", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CR.Publish[0].Year", "", new { @id = "year", @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CR.Publish[0].Country", "", new { @id = "cnty", @class = "form-control" })
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="btn-sm btn btn-danger clr1"><i class="ion-android-close"></i></a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="6"></td>
+                    <td><a href="javascript:void(0)" id="btnAddPub" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    var counter1 = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddPub').click(function () {
+        var sno = counter1();
+        var cln = $('#tbodyPublish tr:first').clone().find("input[name!='sno'],input").val("").end();
+        //$(cln).find('#TravellerId').parent().replaceWith(bootstrapSelect($(cln).find('#TravellerId').parent().clone(), "empty", '', '', false));
+        $(cln).find('a.clr1').removeClass('clr1').addClass('removePub');
+
+        var index = $('#tbodyPublish tr:last').prev().find("input[name='Publish.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='Publish.Index']").val(index);
+        $(cln).find("input,select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+            $(cln).find("input[name='sno']").val(index+1);
+        });
+        $('#tbodyPublish tr:last').before(cln);
+    });
+    $('.clr1').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='addrs']").val("");
+        thy.closest('tr').find("input[id='namee']").val("");
+        thy.closest('tr').find("input[id='nty']").val("");
+        thy.closest('tr').find("input[id='year']").val("");
+        thy.closest('tr').find("input[id='cnty']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removePub', function () {
+        $(this).closest('tr').remove();
+    });
+</script>
+
+
+
+

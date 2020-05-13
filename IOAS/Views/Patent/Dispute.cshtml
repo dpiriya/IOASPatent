@@ -1,0 +1,406 @@
+﻿@model IOAS.Models.Patent.DisputeVM
+@{
+    ViewBag.Title = "Dispute";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+@Scripts.Render("~/bundles/jqueryval")
+
+<div class="row hd-tt-bg" id="addnewpage">
+    <div class="col-md-4 pull-left">
+        <h3>Dispute</h3>
+    </div>
+    @*<div class="col-md-8 flt-nav-links">
+            <a href="Javascript:void(0)" id="btnaddnew"> <i class="ion-plus"></i>Add New</a>
+        </div>*@
+</div>
+<div class="row">
+    @using (Html.BeginForm("Dispute", "Patent", FormMethod.Post, new { @class = "", role = "form", @id = "formCP", enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-12">
+            <div class="page-wrapper" id="createdispute">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">Dispute References </h3>
+                            @Html.HiddenFor(m => m.DisputeNo)
+                            @Html.HiddenFor(m => m.isUpdate)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="reg-no">
+                                <div class="form-group custom-form-group ">
+                                    <label class="required"> Dispute Number </label>
+                                    @Html.TextBoxFor(m => m.DisputeNo, new { @class = "form-control", @id = "disputeno", @disabled = "disabled" })
+                                    <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.DisputeNo)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group custom-form-group ">
+                                <label> Title</label>
+                                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Title)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Dispute Group</label>
+                                @Html.DropDownListFor(m => m.DGroup, new SelectList(ViewBag.Group), "Select Group",
+new { @class = "form-control", @required = "required", @id = "group" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.DGroup)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Source of Dispute</label>
+                                @Html.DropDownListFor(m => m.DSource, new SelectList(ViewBag.Source), "Select Source",
+new { @class = "form-control", @required = "required", @id = "source" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.DSource)</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Party Name</label>
+                                @Html.TextBoxFor(m => m.PartyName, new { @class = "form-control", @required = "required", @id = "party" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.PartyName)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Estimated Value</label>
+                                @Html.TextBoxFor(m => m.EstimatedValue, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.EstimatedValue)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Value Realization</label>
+                                @Html.TextBoxFor(m => m.RealizationValue, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.RealizationValue)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group">
+                                <label class="required">Internal Coordinator</label>
+                                @Html.DropDownListFor(m => m.Coordinator, new SelectList(ViewBag.Coor, "name", "name"), "Select Coordinator", new { @class = "form-control", @required = "required", @id = "coor" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Coordinator)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Status</label>
+                                @Html.DropDownListFor(m => m.Status, new SelectList(ViewBag.state), new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Status)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group custom-form-group ">
+                                <label>Remarks</label>
+                                @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control" })
+                                <div class="txt-error txt-red">@Html.ValidationMessageFor(m => m.Remarks)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        @Html.Partial("_MDOCRef", Model.MDOC)
+                    </div>
+                    <div>
+                        @Html.Partial("_IDFRef", Model.Idf)
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="spl-title">List of Activities</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-lg">
+                            <table class="table alter-table">
+                                <thead>
+                                    <tr>
+                                        <th>SNo</th>
+                                        <th>Activity Date</th>
+                                        <th>Forum</th>
+                                        <th>Activity Type</th>
+                                        <th>Remarks</th>
+                                        <th>Files</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyactivity">
+                                    @if (Model.activity.Count() > 0)
+                                    {
+                                        var count = 0;
+                                        var cls = "clr";
+                                        foreach (var item in Model.activity)
+                                        {
+                                            var ad = "activity[" + count + "].ActivityDate";
+                                            var forum = "activity[" + count + "].Forum";
+                                            var at = "activity[" + count + "].ActivityType";
+                                            var rem = "activity[" + count + "].Remarks";
+                                            var sno = count + 1;
+                                            <tr>
+                                                <td>
+                                                    @Html.TextBox("sno", sno, new { @id = "sno", @style = "width:30px" })
+                                                    @Html.Hidden("activity.Index", count)
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox(ad, item.ActivityDate, new { @id = "actdt", @class = "datepicker", @style = "width:80px" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextArea(forum, item.Forum, new { @id = "forum", @style = "width:200px" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextArea(at, item.ActivityType, new { @id = "acttype", @style = "width:200px" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextArea(rem, item.Remarks, new { @id = "rem", @style = "width:200px" })
+                                                </td>
+                                                <td>
+                                                    @{ var fn = item.fn; }
+                                                    @if (fn != null)
+                                                    {
+                                                        @Html.ActionLink(fn.ToString(), "FileLink", new { @f = item.FilePath + item.fn }, new { @class = "fd" })
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="file" name="activity[@count].FileName" ,id="fno" />
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="btn-sm btn btn-danger @cls"><i class="ion-android-close"></i></a>
+                                                </td>
+                                            </tr>
+                                            count++;
+                                            cls = "removeactDetail";
+                                        }
+                                        <tr>
+                                            <td colspan="5"></td>
+                                            <td><a href="javascript:void(0)" id="btnAddactivity" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.TextBox("sno", "1", new { @id = "sno", @style = "width:30px" })
+                                                @Html.Hidden("activity.Index", 0)
+                                            </td>
+                                            <td>
+                                                @Html.TextBox("activity[0].ActivityDate", "", new { @id = "actdt", @class = "datepicker", @style = "width:80px" })
+                                            </td>
+                                            <td>
+                                                @Html.TextArea("activity[0].Forum", "", new { @id = "forum", @style = "width:200px" })
+                                            </td>
+                                            <td>
+                                                @Html.TextArea("activity[0].ActivityType", "", new { @id = "acttype", @style = "width:200px" })
+                                            </td>
+                                            <td>
+                                                @Html.TextArea("activity[0].Remarks", "", new { @id = "rem", @style = "width:200px" })
+                                            </td>
+                                            <td>
+                                                <input type="file" name="activity[0].FileName" ,id="fno" />
+                                            </td>
+
+                                            <td>
+                                                <a href="javascript:void(0)" class="btn-sm btn btn-danger clr"><i class="ion-android-close"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                            <td><a href="javascript:void(0)" id="btnAddactivity" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="savedispute">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Save" name="Button" id="btnSave" />
+                        <input type="button" onclick="window.location.href='@Url.Action("DisputeList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+                <div class="row" id="updatedispute">
+                    <div class="col-md-12 text-center pd-tb-30">
+                        <input type="submit" class="btn btn-primary mr10" value="Update" name="Button" id="btnupdate" />
+                        <input type="button" onclick="window.location.href='@Url.Action("DisputeList", "Patent")';" class="btn btn-default" value="Close" id="btnclose" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row mt30" id="gridlist">
+                <div class="col-md-12">
+                    <div class="page-wrapper">
+                        <div class="custom-jsgrid-normal">
+                            <div id="gridDisputeList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    }
+</div>
+@if (ViewBag.succMsg != null)
+{
+    <div id="myModal" class="modal fade modal-success" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='@Url.Action("DisputeList", "Patent")';">&times;</button>
+                    <i class="ion-android-checkmark-circle"></i>
+                    <h3 class="modal-title">Saved successfully</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.succMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='@Url.Action("DisputeList", "Patent")';">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+
+}
+@if (ViewBag.errMsg != null)
+{
+    <div id="myModal1" class="modal fade modal-error" role="dialog">
+        <div class="modal-dialog modal-sm">
+
+            Modal content
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <i class="ion-android-cancel"></i>
+                    <h3 class="modal-title">Error Message</h3>
+                </div>
+                <div class="modal-body">
+
+                    <p>@ViewBag.errMsg</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myModal1').modal('show');
+        });
+
+    </script>
+}
+<script type="text/javascript">
+    $('#party').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '../Patent/GetParty',
+                type: 'post',
+                dataType: 'json',
+                delay: 500,
+                data: { Prefix: request.term, source: $('#source').val() },
+                success: function (data) {
+                    console.log(data);
+                    response($.map(data, function (item) {
+                        console.log(item);
+                        return { label: item, value: item };
+                    }));
+                }
+            })
+        },
+        messages: {
+            noResults: "",
+            results: function (count) {
+                return count + (count > 1 ? 'results' : 'result') + 'found';
+            }
+        }
+    });
+    $('.datepicker').datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+
+    $('#btnAddactivity').click(function () {
+        var sno = counter();
+        var cln = $('#tbodyactivity tr:first').clone().find("input[name!='sno'],select ").val("").end();
+        $(cln).find('a.clr').removeClass('clr').addClass('removeactDetail');
+        $(cln).find("input[name='sno']").val(sno);
+        var index = $('#tbodyactivity tr:last').prev().find("input[name='activity.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='activity.Index']").val(index);
+        $(cln).find("input[type=text], textarea, input[type='file']").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            // $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+        });
+        $('#tbodyactivity tr:last').before(cln);
+    });
+    $('.clr').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='actdt']").val("");
+        thy.closest('tr').find("input[id='forum']").val("");
+        thy.closest('tr').find("input[id='acttype']").val("");
+        thy.closest('tr').find("input[id='rem']").val("");
+        var f = thy.closest('tr').find(".fd").html("");
+
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeactDetail', function () {
+        var choice = confirm("Do you want to remove this record?");
+        //if (choice === true) {
+        //    var token = $("input[name=__RequestVerificationToken]").val();
+        //    $.ajax({
+        //        type: "POST",
+        //        url: 'DeleteActFile',
+        //        data: { __RequestVerificationToken: token, fn: item.filename },
+        //        success: function (data) {
+        //            if (data.Status == "success") {
+        //                messageBox("Verified dispute record has been removed successfully", "success");
+        //                location.reload();
+        //            } else {
+        //                messageBox("Something went wrong please contact administrator", "error");
+        //            }
+        //        },
+        //        error: function (err) {
+        //            console.log("error1 : " + err);
+        //        }
+        //    });
+        //}
+        $(this).closest('tr').remove();
+    });
+    $(function () {
+        if ($('#isUpdate').val() == "True") {
+            $('#savedispute').hide();
+            $('#updatedispute').show();
+        }
+        else {
+            $('#updatedispute').hide();
+            $('#savedispute').show();
+        }
+    });
+
+</script>
+
+

@@ -1,0 +1,68 @@
+﻿@model IOAS.Models.EmpITDeductionModel
+
+<div class="white-bg br-rd">
+    <h3 class="mt-null">Other Income</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-b-sm">
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Particulars
+                            </th>
+                            <th>
+                                Eligible Amount
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                            <th></th>
+                        </tr>
+                        @{
+                            if (Model.ItSOP != null && Model.ItSOP.Count > 0)
+                            {
+                                var sno = 0;
+
+                                foreach (var item in Model.ItOtherIncome)
+                                {
+                                    sno++;
+                                    <tr>
+
+                                        <td>
+                                            <label>@sno</label>
+                                        </td>
+                                        <td>
+                                            <label>@Html.DisplayFor(modelItem => item.EligibleAmount)</label>
+                                        </td>
+                                        <td>
+                                            <label>@Html.DisplayFor(modelItem => item.Amount)</label>
+                                        </td>
+
+                                    </tr>
+
+                                }
+                            }
+
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,166 @@
+﻿@model  IEnumerable<IOAS.Models.Patent.ReceiptSecVM>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="spl-title">
+            Detailed Information
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mb-lg">
+        <table class="table alter-table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>IDF No</th>
+                    <th>Title</th>
+                    <th>Receipt Group</th>
+                    <th>Amt in INR</th>
+                    <th>Remarks</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyReceipt">
+                @if (Model.Count() > 0)
+                {
+                    var count = 0;
+                    string cl = "clr";
+                    foreach (var item in Model)
+                    {
+                        var fileno = "RDetail[" + count + "].FileNo";
+                        var tit = "RDetail[" + count + "].Title";
+                        var grp = "RDetail[" + count + "].RGroup";
+                        var amt = "RDetail[" + count + "].SplitAmtInr";
+                        var rem = "RDetail[" + count + "].Remarks";
+                        var sno = count + 1;
+                        <tr>
+                            <td>
+                                @Html.TextBox("sno", sno, new { @class = "form-control", @style = "width:40px" })
+                                @Html.Hidden("RDetail.Index", @count)
+                            </td>
+                            <td>
+                                @Html.DropDownList(fileno, new SelectList(ViewBag.IDF, item.FileNo), "", new { @id = "Idf", @class = "required form-control", @width = "100px" })
+                            </td>
+                            <td>                               
+                                @Html.TextBox(tit, item.Title, new { @class = "form-control", @id = "title" })
+                            </td>
+                            <td>
+                                @Html.DropDownList(grp,new SelectList(ViewBag.rgrp,item.RGroup),"", new { @class = "form-control", @id = "grp" })
+                            </td>
+                            <td>
+                                @Html.TextBox(amt, item.SplitAmtInr, new { @class = "form-control", @id = "amt", @onkeypress = "return ValidateNumberOnly(event)" })
+                            </td>
+                            <td>
+                                @Html.TextBox(rem, item.Remarks, new { @class = "form-control", @id = "rem" })
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" class="btn-sm btn btn-danger @cl"><i class="ion-android-close"></i></a>
+                            </td>
+                        </tr>
+                        count++;
+                        cl = "removeReceipt";
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBox("sno", "1", new { @class = "form-control", @id = "sno", @style = "width:30px" })
+                            @Html.Hidden("RDetail.Index", 0)
+                        </td>
+                        <td>
+                            @Html.DropDownList("RDetail[0].FileNo",new SelectList(ViewBag.IDF), "", new { @id = "Idf", @class = "required form-control" })
+                        </td>
+                        <td>                            
+                            @Html.TextBox("RDetail[0].Title", "", new { @class = "form-control", @id = "title" })
+                        </td>
+                        <td>
+                            @Html.DropDownList("RDetail[0].RGroup",new SelectList(ViewBag.rgrp),"", new { @class = "form-control", @id = "grp" })
+                        </td>
+                        <td>
+                            @Html.TextBox("RDetail[0].SplitAmtInr", "", new { @class = "form-control", @id = "amt", @onkeypress = "return ValidateNumberOnly(event)" })
+                        </td>
+                        <td>
+                            @Html.TextBox("RDetail[0].Remarks", "", new { @class = "form-control", @id = "rem", @style = "width:180px" })
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="btn-sm btn btn-danger clr"><i class="ion-android-close"></i></a>
+                        </td>
+                    </tr>
+
+                }
+                <tr>
+                    <td colspan="6"></td>
+                    <td><a href="javascript:void(0)" id="btnAddReceipt" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    // $('#Mdoc').change(function () {
+    $(document).on('change', 'select[id="Idf"]', function () {
+        var Idf = this.value;
+        var thy = $(this);
+        if (Idf != '') {
+            $.ajax({
+                url: '../Patent/GetIdfDetails',
+                type: 'post',
+                dataType: 'json',
+                data: { idf: Idf },
+                success: function (data) {
+                    if (data.result == "success") {
+                        thy.closest('tr').find("input[id='title']").val(data.tit);                        
+                    }
+                    else {
+                        alert('Idf is wrong');
+                        thy.closest('tr').find("input[id='title']").val("");                        
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if (xhr.status == 404) {
+                        alert(thrownError)
+                    }
+                }
+            });
+        }
+    });
+    var counter = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddReceipt').click(function () {
+        var sno = counter();
+        //var sno =parseInt($('#sno').val(),10);
+        //++sno;
+        var cln = $('#tbodyReceipt tr:first').clone().find("input[name!='sno'],select ").val("").end();
+        //$(cln).find('#TravellerId').parent().replaceWith(bootstrapSelect($(cln).find('#TravellerId').parent().clone(), "empty", '', '', false));
+        $(cln).find('a.clr').removeClass('clr').addClass('removeReceipt');
+        $(cln).find("input[name='sno']").val(sno);
+        var index = $('#tbodyReceipt tr:last').prev().find("input[name='RDetail.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='RDetail.Index']").val(index);
+        $(cln).find("input, select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+        });
+        $('#tbodyReceipt tr:last').before(cln);
+    });
+    $('.clr').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='Idf']").val("");
+        thy.closest('tr').find("input[id='title']").val("");
+        thy.closest('tr').find("input[id='grp']").val("");
+        thy.closest('tr').find("input[id='amt']").val("");
+        thy.closest('tr').find("input[id='rem']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeReceipt', function () {
+        $(this).closest('tr').remove();
+    });    
+</script>
+

@@ -1,0 +1,103 @@
+﻿@model IOAS.Models.SalaryTransaction
+@{
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+
+
+<div class="wrapper">
+    <div class="row hd-tt-bg">
+        <div class="col-md-12">
+            <h4><b>Salary Processing</b></h4>
+            <ul class="nav nav-pills custom-nav-pills custom-spl-nav">
+                <li id="picDel"><a href="javascript:void(0)" class="ml-null brd-rd-md">Salary Initiation</a></li>
+                <li id="allOca"><a href="javascript:void(0)" class="ml-null brd-rd-md">Commitment</a></li>
+                <li class="active" id="trans"><a href="javascript:void(0)" class="ml-null brd-rd-md">Transaction</a></li>
+                <li id="modEof1"><a href="javascript:void(0)" class="ml-null brd-rd-md">Payment Process</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Transaction", "StaffPayment", new { page = 1, pageSize = 10 }, FormMethod.Post, new { @class = "form-horizontal", @id = "frmSalaryPayment", @name = "frmSalaryPayment", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    if (!String.IsNullOrEmpty(ViewBag.Errors))
+    {
+        @:<script type="text/javascript">$.alert({title:'Validation', content:'@ViewBag.Errors'})</script>
+    }
+    if (!String.IsNullOrEmpty(ViewBag.Message))
+    {
+        @:<script type="text/javascript">$.alert({title:'Message', content:'@ViewBag.Message'})</script>
+    }
+
+    <div class="col-md-12 col-sm-12 m-b-sm">
+        <div class="">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="bl-lg-panel-box pb-null">
+                        <div id="pnlTotalSalary" class="cmn-panel-box">
+                            
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group custom-form-group">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group custom-form-group">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-md-offset-2">
+                                    <div class="reg-no mt-m-md">
+                                        <div class="form-group custom-form-group">
+                                            <label>Total Salary</label>
+                                            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @autocomplete = "off", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.Amount)
+                                            @Html.HiddenFor(m => m.PaymentHeadId)
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @Html.Partial("_TransactionDetails", Model)
+
+        </div>
+
+
+    </div>
+
+    <div class="row mb-lg">
+        <div class="col-md-6">
+            @*<a href='@Url.Action("List", "StaffPayment")' role="button" class="btn btn-gray  btn-md">List</a>*@
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <button type="submit" name="btnBack" class="btn btn-default">Back</button>
+
+            <button type="submit" name="btnSave" class="btn btn-primary" @ViewBag.AllowSave>Save</button>
+            <button type="submit" name="btnProceed" class="btn btn-primary" @ViewBag.AllowProceed>Proceed</button>
+        </div>
+
+    </div>
+
+}
+
+
+<script type="text/javascript">
+    $("#btnAddExpense").css({'display':'none'});
+    $(".removeExpense").css({'display':'none'});
+    $("#pnlLedgerInfo").css({'display':'none'});
+    $("#ttlCr").val('@ViewBag.CreditAmount');
+    $("#ttlDr").val('@ViewBag.DebitAmount');
+    CalculateDeductionTotal();
+
+</script>

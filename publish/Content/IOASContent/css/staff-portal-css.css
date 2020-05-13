@@ -1,0 +1,257 @@
+body{
+	font-family: 'Poppins', sans-serif;
+	line-height: 1.8;
+	letter-spacing:0.5px;
+	color:#5b5e62;
+}
+h1,h2,h3,h4,h5,h6{
+	font-family: 'Montserrat', sans-serif;
+	color:#092e53;
+}
+
+.custom-header{
+	position:relative;
+	}
+.custom-header::before{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	width:100%;
+	height:50px;
+	content:"";
+	background:#085cb0;	
+}
+.custom-navbar {
+	padding-top: 10px;
+	height: auto;
+	padding-bottom: 0px;
+	margin: 0;
+	background: #fff;
+	border-bottom: 1px solid #ccc;
+}
+.custom-navbar-title {
+    width: calc( 100% - 160px );
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    float: left;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+    padding: 10px 15px;
+    margin: 0;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    font-size: 13px;
+	/*font-family: 'Open sans', sans-serif;*/
+}
+.navbar-default .navbar-nav > li > a:hover {
+	background:#fff;
+	border-radius:4px;
+}
+#main-menu {
+    margin-bottom: 0px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.custom-navbar-title {
+	width: calc( 100% - 220px );
+	text-align: left;
+	font-size: 16px;
+	font-weight: normal;
+	float: left;
+	margin-left: 20px;	
+	line-height: 1.2;
+}
+
+.custom-navbar-menu .navbar-nav{
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#main-menu {
+    padding: 0;
+}
+
+.custom-header .navbar{
+	margin-bottom:0px;
+}
+.custom-header .navbar-header{
+	padding:10px 0px;
+}
+
+.custom-header .navbar-default{
+	background:transparent;
+	border-color:transparent;
+}
+
+.hero-section{
+	background:url(../img/news-bg.jpg);
+	background-size:cover;
+	min-height:400px;
+	color:#fff;	
+}
+.hero-section h3{
+	margin-bottom: 30px;
+	margin-top: 60px;
+	font-size:24px;
+	font-weight:bold;
+	color:#fff;
+}
+
+.hero-section ul{
+	padding-left:30px;
+}
+.hero-section ul li {
+    margin-bottom: 30px;
+    line-height: 1.8;
+}
+
+.aboutus-section{
+	position:relative;
+	padding:60px 0px;
+}
+
+.aboutus-section::before{
+	position:absolute;
+	right:0;
+	top:0;
+	bottom:0;
+	width:50%;
+	background:url(../img/aboutus-bg.jpg);
+	background-size:cover;
+	content:"";
+	min-height:500px;
+}
+.mt80{
+	margin-top: 80px;
+}
+.main-content{
+
+	}
+.main-content h2{
+	font-size:24px;
+	font-weight:bold;
+	margin-bottom:30px;
+	position:relative;
+}
+.main-content h2::before{
+	position: absolute;
+	bottom: -15px;
+	left: 0;
+	width: 50px;
+	height: 3px;
+	background: #fbf300;
+	content: "";
+}
+.features-section{
+	background:url(../img/features-bg.jpg);
+	position:relative;
+	z-index:1;
+	padding:60px 0px;
+}
+/*
+.features-section::before{
+	position:absolute;
+	left:0;
+	top:0;
+	bottom:0;
+	right:0;
+	content:"";
+	z-index:0;
+	background:#000;
+	opacity: 0.1;
+}
+*/
+
+.features-section .action-btn h2{
+	font-size:32px;
+	color:#fff;
+	line-height: 1.4;	
+	
+}
+.features-section .action-btn h2 b{
+	font-size:24px;
+}
+
+.icon-box {
+    color: #fff;
+    width: 250px;
+    display: inline-block;
+}
+.icon-box span{
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+	border-radius: 50%;
+	color: #085cb0;
+	text-align: center;
+	background: #f9f21b;
+	display: inline-block;
+	margin-bottom: 15px;
+	font-size: 50px;
+	}
+.icon-box p a{
+	color:#fff;
+	}	
+
+.team-member-section{
+	padding:60px 0px;
+	}
+.team-member-section .tm-content{	
+	background: #f6f6f6;
+	padding: 30px;
+	border-radius: 4px;	
+}
+.team-member-section .tm-content h3{
+	margin-top: 0px;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+.team-member-section .tm-title{
+	text-align:center;
+	}
+.team-member-section .tm-title img{
+	border-radius:4px;	
+}
+.team-member-section .tm-title h4{
+	font-size:15px;
+	margin-top:30px;
+
+}
+
+.custom-footer{
+	background:#085cb0;
+	color:#fff;
+	padding:15px;
+}
+.custom-footer p{
+	margin-bottom:0px;
+}
+
+.login-bg{
+background: rgba(0,0,0,0.7);
+padding: 30px;
+margin-top: 15%;
+border-radius: 4px;
+}
+.login-bg h4{
+	font-size: 18px;
+margin-bottom: 30px;
+color:#fff;
+}
+.login-bg .form-control{
+margin-bottom: 15px;
+border: 1px solid #fff;
+}
+.login-bg .btn-bg{
+	margin-top:30px;
+}
+
+.login-bg .btn-primary{
+	margin-right:5px;
+} 

@@ -1,0 +1,150 @@
+﻿@model IOAS.Models.PagedData<IOAS.Models.SqlReportModel>
+@using System.Data;
+@{
+    ViewBag.Title = "Report Viewer";
+    Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
+
+
+<aside class="right-side sidebar-offcanvas">
+
+    @using (Html.BeginForm("List", "Reports", new { page = 1 }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.ValidationSummary(true, "Please correct the errors and try again.", new { @class = "alert alert-block alert-error" })
+        @*@Html.AntiForgeryToken()*@
+        <fieldset>
+            <section class="content">
+                <div class="white-bg">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="page-wrapper">
+
+                                @Html.Partial("ReportList")
+                                @*<div id="reportGrid"></div>*@
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-4">
+
+                            <div class="form-actions">
+                                <a href='@Url.Action("ReportBuilder", "Reports")' role="button" class="btn btn-primary  btn-md">ADD</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </fieldset>
+
+
+    }
+
+
+</aside> <!-- right pane -->
+
+
+<script type="text/javascript" language="javascript">
+
+    $("#ReportId").change(function () {
+        SelectedTablesChanged();
+    });
+    getReportList();
+    function getReportList() {
+        //var token = $("input[name=__RequestVerificationToken]").val();
+        var searchdata = {}; //{ "__RequestVerificationToken": token };
+        var headers = {
+            contentType: 'application/x-www-form-urlencoded'
+        }
+        //headers['__RequestVerificationToken'] = token;
+
+        searchdata.page = 1;
+        searchdata.size = 10;
+        $.ajax({
+            url: '@Url.Action("List", "Reports")',
+            type: "POST",
+            headers: headers,
+            data: searchdata,
+            success: function (response) {
+                var data = response;
+                createGrid(data);
+            },
+            error: function (err) {
+                alert(err);
+            }
+        });
+    }
+
+
+    function createGrid(reportJson) {
+        var db = (function () {
+            return {
+                data: reportJson,
+                loadData: function (filter) {
+                    return $.grep(this.data, function (item) {
+                        return (!filter.ReportName || item.ReportName.indexOf(filter.ReportName) > -1)
+                            && (!filter.Description || item.Description.indexOf(filter.Description) > -1);
+                    });
+                }
+            };
+        }());
+
+        $("#reportGrid").jsGrid({
+            width: "100%",
+            height: "auto",
+            filtering: true,
+            //inserting: true,
+            editing: true,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            pageIndex: 1,
+            pageSize: 10,
+            pageButtonCount: 10,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            pagePrevText: "Prev",
+            pageNextText: "Next",
+            pageFirstText: "First",
+            pageLastText: "Last",
+            pageNavigatorNextText: "...",
+            pageNavigatorPrevText: "...",
+            //data: reportJson,
+            controller: db,
+            deleteButton: false,
+            fields: [
+                { name: "ReportName", type: "text", width: 150 },
+                { name: "Description", type: "text", width: 100 },
+                { name: "Fields", type: "text", width: 50 },
+                {
+                    type: "control", width: 100, editButton: false, deleteButton: false,
+                    itemTemplate: function (value, item) {
+                        //var $result = reportGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+
+                        var $customEditButton = $("<button>").attr({ class: "customGridEditbutton jsgrid-button jsgrid-edit-button" })
+                            .click(function (e) {
+                                alert("ID: " + item.ReportName);
+                                //window.location = "/Reports/ReportBuilder?ReportID=" + item.ReportName;
+                                e.stopPropagation();
+                            });
+
+                        var $customDeleteButton = $("<button>").attr({ class: "customGridDeletebutton jsgrid-button jsgrid-delete-button" })
+                            .click(function (e) {
+                                alert("Title: " + item.title);
+                                e.stopPropagation();
+                            });
+
+                        return $("<div>").append($customEditButton).append($customDeleteButton);
+                        //return $result.add($customButton);
+                    }
+                }
+            ]
+        });
+        //$("#reportGrid").jsGrid("option", "filtering", true);
+
+    }
+
+
+</script>

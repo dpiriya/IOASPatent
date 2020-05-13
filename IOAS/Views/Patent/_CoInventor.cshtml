@@ -1,0 +1,192 @@
+﻿@model  IEnumerable<IOAS.Models.Patent.CoInventor_trxVM>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="spl-title">
+            List Of Co Inventor Details
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mb-lg">
+        <table class="table alter-table">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Dept Code/Organisation</th>
+                    <th>ContactNo</th>
+                    <th>EmailId</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyCoInventor">
+                @if (Model.Count() > 0)
+                {
+                    var count = 0;
+                    string cl = "clr";
+                    foreach (var item in Model)
+                    {
+                        var type = "CoIn[" + count + "].Type";
+                        var name = "CoIn[" + count + "].Name";
+                        var dept = "CoIn[" + count + "].Dept";
+                        var ph = "CoIn[" + count + "].Ph";
+                        var mail = "CoIn[" + count + "].Mail";
+                        var sno = count + 1;
+                        <tr>
+                            <td>
+                                @Html.TextBox("sno", sno, new { @class = "form-control", @style = "width:30px" })
+                                @Html.Hidden("CoIn.Index", @count)
+                            </td>
+                            <td>
+                                @Html.TextBox(type,item.Type, new { @id = "Cotype", @class = "required form-control", @width = "100px" })
+                            </td>
+                            <td>
+                                @*@Html.DropDownList(name, new SelectList(""), item.Name, new { @class = "form-control", @id = "coname" })*@
+                                @Html.TextBox(name, item.Name, new { @class = "form-control", @id = "coname" })
+                            </td>
+                            <td>
+                                @Html.TextBox(dept, item.Dept, new { @class = "form-control", @id = "codept" })
+                            </td>
+                            <td>
+                                @Html.TextBox(ph, item.Ph, new { @class = "form-control", @id = "ph" })
+                            </td>
+                            <td>
+                                @Html.TextBox(mail, item.Mail, new { @class = "form-control", @id = "mail" })
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" class="btn-sm btn btn-danger @cl"><i class="ion-android-close"></i></a>
+                            </td>
+                        </tr>
+                        count++;
+                        cl = "removeCoDetail";
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBox("sno", "1", new { @class = "form-control", @id = "sno", @style = "width:30px" })
+                            @Html.Hidden("CoIn.Index", 0)
+                        </td>
+                        <td>
+                            @Html.TextBox("CoIn[0].Type","", new { @id = "Cotype", @class = "required form-control" })
+                        </td>
+                        <td>
+                            @*@Html.DropDownList("CoIn[0].Name", new SelectList(""), "Select Name", new { @class = "form-control", @required = "required", @id = "coname" })*@
+                            @Html.TextBox("CoIn[0].Name", "", new { @class = "form-control", @id = "coname" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CoIn[0].Dept", "", new { @class = "form-control", @id = "codept" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CoIn[0].Ph", "", new { @class = "form-control", @id = "ph", @style = "width:100px" })
+                        </td>
+                        <td>
+                            @Html.TextBox("CoIn[0].Mail", "", new { @class = "form-control", @id = "mail", @style = "width:180px" })
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" class="btn-sm btn btn-danger clr"><i class="ion-android-close"></i></a>
+                        </td>
+                    </tr>
+
+                }
+                <tr>
+                    <td colspan="6"></td>
+                    <td><a href="javascript:void(0)" id="btnAddCo" class="btn-circle"><i class="ion-plus-round"></i></a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).on('keydown', 'input[id="coname"]', function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='coname']").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '../PatentIS/Getpiname',
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 500,
+                    data: { Prefix: request.term, source: thy.closest('tr').find("select[id='Cotype']").val()},
+                    success: function (data) {
+                        console.log(data);
+                        response($.map(data, function (item) {
+                            console.log(item);
+                            return { label: item, value: item };
+                        }));
+                    }
+                })
+            },
+            messages: {
+                noResults: "",
+                results: function (count) {
+                    return count + (count > 1 ? 'results' : 'result') + 'found';
+                }
+            }
+        });
+    });
+    $(document).on('blur', 'input[id="coname"]', function () {
+        var thy = $(this);
+        if (thy.closest('tr').find("select[id='Cotype']").val() == "Faculty" || thy.closest('tr').find("select[id='Cotype']").val() == "Institute Staff" || thy.closest('tr').find("select[id='Cotype']").val() == "Student") {
+            $.ajax({
+                url: '../PatentIS/GetDept',
+                data: { type: thy.closest('tr').find("select[id='Cotype']").val(), name: thy.closest('tr').find("input[id='coname']").val() },
+                dataType: 'json',
+                success: function (msg) {
+                    thy.closest('tr').find("input[id='codept']").val(msg);
+                    thy.closest('tr').find("input[id='codept']").attr("readonly", true);
+                }
+            });
+        }
+        else {
+            thy.closest('tr').find("input[id='codept']").attr("readonly", false);
+        }
+    });
+    $(document).on('change', 'select[id="Cotype"]', function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='codept']").attr("readonly", false);
+        thy.closest('tr').find("input[id='coname']").val("");
+    });
+    var counter = (function () {
+        var count = 1;
+        return function () {
+            count++;
+            return count;
+        };
+    })();
+    $('#btnAddCo').click(function () {
+        var sno = counter();
+        //var sno =parseInt($('#sno').val(),10);
+        //++sno;
+        var cln = $('#tbodyCoInventor tr:first').clone().find("input[name!='sno'],select ").val("").end();
+        //$(cln).find('#TravellerId').parent().replaceWith(bootstrapSelect($(cln).find('#TravellerId').parent().clone(), "empty", '', '', false));
+        $(cln).find('a.clr').removeClass('clr').addClass('removeCoDetail');
+
+        var index = $('#tbodyCoInventor tr:last').prev().find("input[name='CoIn.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='CoIn.Index']").val(index);
+        $(cln).find("input, select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+            $(cln).find("input[name='sno']").val(index + 1);
+        });
+        $('#tbodyCoInventor tr:last').before(cln);
+    });
+    $('.clr').click(function () {
+        var thy = $(this);
+        thy.closest('tr').find("input[id='coname']").val("");
+        thy.closest('tr').find("input[id='Cotype']").html("");
+        thy.closest('tr').find("input[id='codept']").val("");
+        thy.closest('tr').find("input[id='txtconame']").val("");
+        thy.closest('tr').find("input[id='ph']").val("");
+        thy.closest('tr').find("input[id='mail']").val("");
+        $(this).closest('tr').val("");
+    });
+    $(document).on('click', 'a.removeCoDetail', function () {
+        $(this).closest('tr').remove();
+    });
+</script>
+

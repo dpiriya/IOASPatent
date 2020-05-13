@@ -1,0 +1,314 @@
+﻿@model IOAS.Models.AgencyStaffDetailsModel
+    @using (Html.BeginForm("VerifedEmployeeDetail", "StaffPayment", FormMethod.Post, new { @class = "form-horizontal", @id = "frmVerify", role = "form" }))
+    {
+<div id="AgencySalaryDetailsModal" class="modal fade modal-pr-vw" role="dialog">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="row hd-tt-bg">
+                    <div class="col-md-12">
+                        <h4><b>Salary Details</b></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="white-bg ad-navbar">
+                        <div class="col-md-3 ds-spl-bg">
+                            <div class="ds-tt">
+                                <span>Employee Name</span>
+                                <h4>@Model.Name</h4>
+                                @Html.HiddenFor(m => m.EmployeeId, new { @id = "hdnEmployeeID" })
+                                @Html.HiddenFor(m => m.AgencySalaryID, new { @id = "hdnAgencySalID" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 ds-spl-bg">
+                            <div class="ds-tt">
+                                <span>Employee ID</span>
+                                <h4>@Model.EmployeeId</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="white-bg br-rd ">
+                                    <div class="col-md-12">
+                                        <h4><b>EARNINGS</b></h4><hr />
+                                        <div class="row">
+                                            <div class="form-group custom-form-group mb-null ">
+                                                <label class="col-md-8">BASIC PAY</label>
+                                                <h4 class="col-md-4 mt-xs">@Model.BasicSalary</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group custom-form-group mb-null  ">
+                                                <label class="col-md-8">HRA</label>
+                                                <h4 class="col-md-4 mt-xs">@Model.HRA</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group custom-form-group mb-null ">
+                                                <label class="col-md-8">BONUS</label>
+                                                <h4 class="col-md-4 mt-xs">@Model.Bonus</h4>
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="row">
+                                            <div class="form-group custom-form-group mb-null ">
+                                                <label class="col-md-8">SPECIAL ALLOWANCE</label>
+                                                <h4 class="col-md-4 mt-xs">@Model.SpecialAllowance</h4>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="form-group custom-form-group mb-null ">
+                                                <label class="col-md-8 text-right"><b>Total Gross Salary</b></label>
+                                                <h4 class="col-md-4 mt-xs">@Model.GrossSalary</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="white-bg br-rd ">                                
+                                <div class="col-md-12">
+                                    <h4><b>DEDUCTION </b></h4><hr />
+                                    <div class="row">
+                                        <div class="form-group custom-form-group mb-null">
+                                            <label class="col-md-8">EMPLOYEE PF</label>
+                                            <h4 class="col-md-4 mt-xs">@Model.PF</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="form-group custom-form-group  mb-null">
+                                            <label class="col-md-8">EMPLOYEE ESIC</label>
+                                            <h4 class="col-md-4 mt-xs">@Model.ESI</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group custom-form-group mb-null">
+                                            <label class="col-md-8">PROFESSIONALTAX</label>
+                                            <h4 class="col-md-4 mt-xs">@Model.IncomeTax</h4>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="form-group custom-form-group mb-null ">
+                                            <label class="col-md-8 text-right"><b>Total Deduction</b></label>
+                                            <h4 class="col-md-4 mt-xs">@Model.TotalDeduction</h4>
+                                        </div>
+                                    </div>
+                                </div>                               
+                            </div>
+                        </div>                       
+                    </div>
+                    <div class="col-md-12">
+                        <div class="m-b-sm">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Head</th>
+                                        <th>Amount</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodySalaryBUList">
+                                    @if (Model.breakUpDetail != null && Model.breakUpDetail.Count() > 0)
+                                    {
+                                        var count = 0;
+                                        foreach (var item in Model.breakUpDetail)
+                                        {
+                                            var typeId = "breakUpDetail[" + count + "].TypeId";
+                                            var headId = "breakUpDetail[" + count + "].HeadId";
+                                            var remarks = "breakUpDetail[" + count + "].Remarks";
+                                            var amt = "breakUpDetail[" + count + "].Amount";
+                                            <tr>
+                                                <td>
+                                                    @Html.DropDownList(@typeId, new SelectList(ViewBag.TypeList, "id", "name", item.TypeId), new { @class = "form-control" })
+                                                    @Html.ValidationMessage(@typeId)
+                                                    @Html.Hidden("breakUpDetail.Index", @count)
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownList(@headId, new SelectList(item.HeadList, "id", "name", item.HeadId), new { @class = "form-control" })
+                                                    @Html.ValidationMessage(@headId)
+                                                </td>                                               
+                                                <td>
+                                                    @Html.TextBox(@amt, item.Amount, new { @class = "form-control", @onkeypress = "return ValidateDecimalOnly(event)", @onblur = "CalculateSALBreakUp()", @autocomplete = "off" })
+                                                    @Html.ValidationMessage(@amt)
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox(@remarks, item.Remarks, new { @class = "form-control" })
+                                                    @Html.ValidationMessage(@remarks)
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="removeBU btn-circle"><i class="ion-close-round"></i></a>
+                                                </td>
+                                            </tr>
+                                            count++;
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DropDownList("breakUpDetail[0].TypeId", new SelectList(ViewBag.TypeList, "id", "name"), "Select any", new { @class = "form-control" })
+                                                @Html.ValidationMessage("breakUpDetail[0].TypeId")
+                                                @Html.Hidden("breakUpDetail.Index", "0")
+                                            </td>
+                                            <td>
+                                                @Html.DropDownList("breakUpDetail[0].HeadId", new SelectList(ViewBag.HeadList, "id", "name"), "Select any", new { @class = "form-control" })
+                                                @Html.ValidationMessage("breakUpDetail[0].HeadId")
+                                            </td>
+                                            <td>
+                                                @Html.TextBox("breakUpDetail[0].Amount", "", new { @class = "form-control ", @onkeypress = "return ValidateDecimalOnly(event)", @onblur = "CalculateSALBreakUp()", @autocomplete = "off" })
+                                                @Html.ValidationMessage("breakUpDetail[0].Amount")                                               
+                                            </td>
+                                            <td>
+                                                @Html.TextBox("breakUpDetail[0].Remarks", "", new { @class = "form-control" })
+                                                @Html.ValidationMessage("breakUpDetail[0].Remarks")
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" class="removeBU btn-circle"><i class="ion-close-round"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
+                            <div class="col-md-6 mt-md">
+                                <a href="javascript:void(0)" id="btnAddSalaryBU" class="btn btn-primary">Add New</a>
+                            </div>
+                        </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                          <div class="col-md-6 text-right"><label>NET SALARY :</label></div>
+                        <div class="col-md-6 text-left">
+                        <input type="text" id="netSal" value="@Model.NetSalary" class="form-control" disabled="disabled">
+                        @Html.HiddenFor(m => m.NetSalary)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-primary" id="btnVerify">Verify</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+               
+            </div>
+        </div>
+
+    </div>
+
+</div>
+    </div>
+    }
+<script type="text/javascript">
+    $(document).ready(function () {
+        CalculateSALBreakUp();
+    });
+    $(document).on('change', 'select[name$=".TypeId"]', function () {
+        var typeId = $(this).val();
+        var ele = $(this).closest('tr');
+        var select = ele.find("select[name$='.HeadId']");
+        select.empty();
+        select.append($('<option/>', {
+            value: "",
+            text: "Select any",
+        }));        
+        if (typeId != '') {
+            $.getJSON("@Url.Action("GetSalaryBreakUpHead", "StaffPayment")", { "categoryId": 1, "groupId": typeId },
+             function (locationdata) {
+                 $.each(locationdata, function (index, itemData) {
+                     select.append($('<option/>', {
+                         value: itemData.id,
+                         text: itemData.name,
+                     }));
+                 });
+             });
+            select.addClass('required');
+            ele.find("input[name$='.Amount']").addClass('required');
+        } else {
+            select.val('');
+            ele.find("input[name$='.Amount']").val('');
+            ele.find("input[name$='.Remarks']").val('');
+            select.removeClass('required');
+            ele.find("input[name$='.Amount']").removeClass('required');
+        }
+        CalculateSALBreakUp();
+    });
+    $("button[id='btnVerify']").click(function (e) {
+        e.preventDefault();
+        var valid = $('#frmVerify').valid();
+        if (!valid)
+            return false;
+        var Employeeid = $("#hdnEmployeeID").val() || 0;
+        var AgencySalid = $("#hdnAgencySalID").val() || 0;
+        var arrBrkup = [];
+        $('#tbodySalaryBUList tr').each(function () {
+            var objBrkup = {};
+            var type = $(this).find("select[name$='.TypeId']").val();
+            var amt = parseFloat($(this).find("input[name$='.Amount']").val()) || 0;
+            var head = $(this).find("select[name$='.HeadId']").val();
+            if (type != "" && amt != 0 && head != "") {
+                var remarks = $(this).find("input[name$='.Remarks']").val();
+                objBrkup.TypeId = type;
+                objBrkup.Amount = amt;
+                objBrkup.HeadId = head;
+                objBrkup.Remarks = remarks;
+                arrBrkup.push(objBrkup);
+            }
+        });
+        //var strData =  JSON.stringify(arrBrkup);
+        verifyEmpDetail(Employeeid, AgencySalid, arrBrkup)
+    });
+    $(document).on('click', 'a.removeBU', function () {
+        if ($('#tbodySalaryBUList tr').length != 1) {
+            $(this).closest('tr').remove();
+            CalculateSALBreakUp();
+        }
+    });
+    $("#btnAddSalaryBU").click(function () {
+        var cln = $('#tbodySalaryBUList tr:first').clone().find("select,input").val("").end();
+        var index = $('#tbodySalaryBUList tr:last').find("input[name='breakUpDetail.Index']").val();
+        index = parseInt(index) + 1;
+        $(cln).find("input[name='breakUpDetail.Index']").val(index);
+        $(cln).find("input, select").each(function () {
+            $(this).attr("name", $(this).attr("name").replace(/\d+/, index));
+            $(this).attr("id", $(this).attr("id").replace(/\d+/, index));
+        });
+        $(cln).find("span[data-valmsg-for]").each(function () {
+            $(this).attr("data-valmsg-for", $(this).attr("data-valmsg-for").replace(/\d+/, index));
+        });
+        $('#tbodySalaryBUList').append(cln);
+    });
+    function CalculateSALBreakUp() {
+        var netSal = parseFloat($('#NetSalary').val()) || 0;
+        $('#tbodySalaryBUList tr').each(function () {
+            var type = $(this).find("select[name$='.TypeId']").val();
+            if (type == 1) {
+                var allowance = parseFloat($(this).find("input[name$='.Amount']").val()) || 0;
+                netSal += allowance;
+            } else if (type == 2) {
+                var deduction = parseFloat($(this).find("input[name$='.Amount']").val()) || 0;
+                netSal -= deduction;
+            }
+        });
+        $('#netSal').val(netSal);
+    }
+</script>

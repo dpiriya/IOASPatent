@@ -1,0 +1,273 @@
+/*.txt-wrap{overflow-wrap: break-word;
+          width:100%;
+}
+.bootstrap-select .btn.btn-default {
+    background: transparent;
+    border-color: #cccccc;
+    color: #0b1522;
+    height: 40px;
+}
+
+.bootstrap-select  .btn.btn-default:hover{
+    background: transparent;
+    border-color: #cccccc;
+    color: #0b1522;
+}
+.wdth80{
+    width:80%;
+}
+.sidebar-nav .nav-ls ul li.active a{
+background:#f6f6f6;
+color:#597df0;
+}
+
+.sidebar-nav .nav-ls ul li.active ul li a{
+color: #d9d9d9;
+background:transparent;
+}
+
+
+.sidebar-nav .nav-ls ul li.active ul li a:hover{
+background:transparent;
+color:#597df0;
+}
+
+.sidebar-nav .nav-ls ul li a:hover {
+    color: #597df0;
+    font-weight: bold;
+    background: #f6f6f6;
+}
+.sidebar-nav .nav-ls ul li.active ul li a.active{
+color:#597df0;
+}
+
+.sidebar-nav .nav-ls ul li a ul li a:hover{
+background:transparent;
+color:#597df0;
+}
+.ds-notify {
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.ds-notify:hover {
+    background: #f6f6f6;
+}
+.jsgrid
+{           
+    overflow-wrap: break-word; 
+    white-space: normal !important;    
+}
+
+.half-form:nth-child(even){
+	margin-right: 0%;
+}
+.ronly{
+    color : #808080;
+}
+.ronly:hover{
+    cursor:not-allowed;
+}
+.m10{
+    margin:10px;
+}
+.dyn-cont-box{
+    border: 1px solid #f2f2f2;
+padding: 10px;
+margin: 5px;
+}
+.wrp-bg{
+    padding:15px;
+}
+.cmn-frm-bg .popup-dts {
+    width: 700px;
+}
+
+
+.custom-list{
+	background: #f6f6f6;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	position: absolute;
+	width: 100%;
+	z-index: 2000;
+	top: 67px;
+	padding: 15px;
+	height: 290px;
+	overflow: auto;
+}
+.custom-list ul{
+	margin:0 0 10px 0;
+	padding:10px 0 0 0;
+	background:#fff;
+	border-radius:4px;
+	
+}
+.custom-list ul li{
+	list-style:none;	
+}
+.custom-list ul li a{
+	padding: 5px;
+	display: inline-block;
+	width: 100%;
+	color:#0b1522;
+	
+}
+.custom-list ul li a .checkbox{
+    float: left;
+    min-height: 22px;
+    margin: 0 10px;
+}
+.custom-list ul li a span{
+	float:left;
+	width: 60px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	overflow-wrap: break-word;	
+}
+.custom-list ul li a em{
+	float:left;
+	width: calc( 100% - 100px);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	overflow-wrap: break-word;	
+}
+.custom-list  .tag{
+	background: #fff;
+	padding: 2px 10px;
+	border-radius: 4px;
+	font-size: 12px;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+	margin-bottom: 10px;
+	display: inline-block;
+}
+.ls-dts.active p span{
+color: #597df0;
+}
+.ls-dts.active p b{
+color: #597df0;
+}
+.quarter-form {
+    width: 20%;
+    float: left;
+    margin-right: 2.5%;
+}
+.custom-nav-pills.nav-pills > li.active > a, .custom-nav-pills.nav-pills > li.active > a:focus, .custom-nav-pills.nav-pills > li.active > a:hover {
+ color: #333333;
+ background-color: #fff;
+ border-radius: 4px 4px 0px 0px;
+ border-top: 2px solid #597df0;
+}
+
+.tab {
+    padding: 30px 15px;
+    border-radius: 4px 4px 0px 0px;
+    width:100%;
+}
+.custom-nav-btn{
+background: #fff;
+display: inline-block;
+width: 100%;
+padding: 0px 30px 30px 30px;
+border-radius: 0px 0px 4px 4px;
+}
+
+.ovr-hd{overflow:hidden;}
+
+.menu-show {
+        display: block;
+    }
+
+    .menu-hide {
+        display: none;
+    }
+
+    .gray-bg-md{
+background: rgba(0,0,0,0.1);
+padding: 15px;
+}
+
+.gray-lg-bg-md{
+padding: 15px 15px 0px 15px;
+background: rgba(0,0,0,0.05);
+}
+
+.panel-tt{
+background: #597df0;
+margin: 0;
+padding: 15px;
+color: #fff;
+border-radius: 4px 4px 0px 0px;
+}
+
+.fn-normal{font-weight: normal;}
+.p-b-md{padding-bottom:30px;}
+.p-b-sm{padding-bottom:15px;}
+.m-b-sm{margin-bottom:15px;}
+.mb20{margin-bottom:20px;}
+.mb30{margin-bottom:30px;}
+.btn-sm{padding:5px 10px;}
+.bost-sel-ht-sm .bootstrap-select .btn.btn-default {
+   height: 34px;
+}*/
+.m-b-sm > table > thead > tr > th { font-weight:bold;
+background: #fff;
+color:#000; 
+border-bottom: 0px;
+padding: 20px 15px;
+}
+.m-b-sm > table > tbody > tr > td {
+    color:#000;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+background:#f4fa91;
+opacity: 1.07;
+}
+
+.rec-tb-scrl{
+	width: 100%;
+    height: 330px;
+    overflow: auto;	
+}
+
+.mt15{
+	margin-top:15px !important;
+}
+.mt5{
+	margin-top:5px !important;
+}
+.mt20{
+	margin-top:20px!important;
+}
+.mt40{
+	margin-top:40px!important;
+}
+textarea.form-control {
+    resize: none;
+}
+
+.bl-lg-adj{
+    display: inline-block;
+    padding: 30px 15px;
+}
+
+.tx-dts-wht{
+	background: #fff;
+	border-radius: 4px;	
+}
+.mt46{margin-top:46px!important;}
+
+.mr20{
+	margin-right:20px!important;
+}
+.ronly{
+    background: #f4fa91; 
+}
+.ml45{
+	margin-left:45px!important;
+}
+.ml15{
+	margin-left:15px!important;
+}
